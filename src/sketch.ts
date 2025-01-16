@@ -1,9 +1,14 @@
 //---- GLOBAL VARIABLES ----//
-let game: Game;
+let game: DinoStroids;
+const mainMenu = new MainMenu();
+
 let music: {
   mystery: p5.SoundFile;
+  laserSound: p5.SoundFile;
 };
-
+let imageAssets: {  
+  dino: p5.Image;
+}
 /**
  * Built in preload function in P5
  * This is a good place to load assets such as
@@ -11,7 +16,11 @@ let music: {
  */
 function preload() {
   music = {
-    mystery: loadSound("/assets/music/mystery.mp3"),
+    mystery: loadSound("/assets/music/backgroundMusic.mp3"),
+    laserSound: loadSound("/assets/music/laserSound.mp3"),
+  };
+  imageAssets = {
+    dino: loadImage("/assets/music/dino.gif"),
   };
 }
 
@@ -26,8 +35,12 @@ function setup() {
   frameRate(60);
   music.mystery.setVolume(0.8);
 
-  game = new Game();
+  game = new DinoStroids(mainMenu);
 }
+
+
+
+
 
 /**
  * Built in draw function in P5
@@ -37,6 +50,13 @@ function setup() {
 function draw() {
   game.update();
   game.draw();
+}
+
+function keyPressed() {
+  if (key === ' ') {
+    console.log('Spacebar pressed, switching to GameScene...');
+    game.changeActiveScene(new MainMenu());
+  }
 }
 
 /**

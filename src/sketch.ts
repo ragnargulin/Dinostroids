@@ -8,7 +8,10 @@ let music: {
 };
 let imageAssets: {  
   dino: p5.Image;
+  background: p5.Image;
+
 }
+
 /**
  * Built in preload function in P5
  * This is a good place to load assets such as
@@ -21,6 +24,7 @@ function preload() {
   };
   imageAssets = {
     dino: loadImage("/assets/music/dino.gif"),
+    background: loadImage("assets/music/background.png")
   };
 }
 
@@ -37,6 +41,8 @@ function setup() {
 
   game = new DinoStroids(mainMenu);
 }
+
+
 
 
 

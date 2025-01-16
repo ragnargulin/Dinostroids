@@ -1,7 +1,5 @@
 //---- GLOBAL VARIABLES ----//
 let game: DinoStroids;
-const mainMenu = new MainMenu();
-
 let music: {
   mystery: p5.SoundFile;
   laserSound: p5.SoundFile;
@@ -35,12 +33,8 @@ function setup() {
   frameRate(60);
   music.mystery.setVolume(0.8);
 
-  game = new DinoStroids(mainMenu);
+  game = new DinoStroids();
 }
-
-
-
-
 
 /**
  * Built in draw function in P5
@@ -54,8 +48,8 @@ function draw() {
 
 function keyPressed() {
   if (key === ' ') {
-    console.log('Spacebar pressed, switching to GameScene...');
-    game.changeActiveScene(new MainMenu());
+    console.log('Spacebar pressed');
+    music.laserSound.play();
   }
 }
 

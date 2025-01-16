@@ -1,19 +1,27 @@
 class MainMenu implements IScene {
+    private buttons: Button[] = [];
+
     constructor() {
         console.log('MainMenu created');
+        this.buttons.push(
+            new Button('ABOUT', createVector(width * 0.5, height * 0.45), () => console.log('About selected')),
+            new Button('HOW TO PLAY',  createVector(width * 0.5, height * 0.50), () => console.log('How to Play selected')),
+            new Button('SCOREBOARD', createVector(width * 0.5, height * 0.55), () => console.log('Scoreboard selected')),
+            new Button('START GAME', createVector(width * 0.5, height * 0.60), () => console.log('Game started'))
+        );
     }
+    
+    public update(): void {}
+    
+    public draw(): void {
+        // CSS
+        fill("grey");
 
-    update(): void {
-        // Implement logic for updating the MainMenu scene.
-        console.log('MainMenu updating...');
-    }
+        // HTML
+        rect(width * 0.25 , height * 0.25 , width * 0.5, height * 0.5)
 
-    draw(): void {
-        // Implement logic for rendering the MainMenu scene.
-        background('pink');
-        createButton('About').position(19, 19);
-        createButton('How to play').position(19, 40);
-        createButton('Scoreboard').position(19, 60);
-        createButton('Start game').position(19, 80);
-    }
+        for(const button of this.buttons) {
+            button.draw();
+        }
+    }  
 }

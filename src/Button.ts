@@ -21,8 +21,9 @@ class Button {
         push();
         // CSS
         textAlign(CENTER, CENTER)
-        fill("black");
-        textFont("Arial", 24);
+        fill("white");
+    
+        textFont("Pixelify Sans", 24);
         textStyle(BOLD);
     
         // HTML

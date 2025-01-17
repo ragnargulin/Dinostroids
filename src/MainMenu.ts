@@ -5,10 +5,10 @@ class MainMenu implements IScene {
     constructor() {
         console.log('MainMenu created');
         this.buttons.push(
-            new Button('ABOUT', createVector(width * 0.5, height * 0.45), () => console.log('About selected')),
-            new Button('HOW TO PLAY',  createVector(width * 0.5, height * 0.50), () => console.log('How to Play selected')),
-            new Button('SCOREBOARD', createVector(width * 0.5, height * 0.55), () => console.log('Scoreboard selected')),
-            new Button('START GAME', createVector(width * 0.5, height * 0.60), () => console.log('Game started'))
+            new Button('ABOUT', createVector(width * 0.5, height * 0.40), () => console.log('About selected')),
+            new Button('HOW TO PLAY',  createVector(width * 0.5, height * 0.48), () => console.log('How to Play selected')),
+            new Button('SCOREBOARD', createVector(width * 0.5, height * 0.56), () => console.log('Scoreboard selected')),
+            new Button('START GAME', createVector(width * 0.5, height * 0.64), () => console.log('Game started'))
         );
 
         // this.background = loadImage('../assets/images/background.png');

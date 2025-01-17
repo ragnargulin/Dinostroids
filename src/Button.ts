@@ -7,7 +7,7 @@ class Button {
 
     constructor(label: string, position: p5.Vector) {
         this.label = label;
-        this.color = "blue";
+        this.color = "Maroon";
         this.position = position;
     }
     // position: absolut/fixed
@@ -37,9 +37,10 @@ class Button {
     private drawLabel() {
         push();
         // CSS
-        textAlign(CENTER, CENTER);
-        fill("black");
-        textFont("Arial", 24);
+        textAlign(CENTER, CENTER)
+        fill("white");
+    
+        textFont("Pixelify Sans", 24);
         textStyle(BOLD);
     
         // HTML
@@ -51,7 +52,7 @@ class Button {
         push();
         noStroke();
         rectMode(CENTER)
-        fill("#88F");
+        fill("black");
         rect(this.position.x, this.position.y, 210, 30)
         rect(this.position.x, this.position.y, 190, 50)
         fill(this.color);

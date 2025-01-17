@@ -34,9 +34,10 @@ class MainMenu implements IScene {
     }
     
     public draw(): void {
+        image(this.background, 0, 0, width, height);
+        imageMode(CORNER);
         // CSS
-        fill("grey");
-
+        fill("lightgrey");
         // HTML
         rect(width * 0.25 , height * 0.25 , width * 0.5, height * 0.5)
 

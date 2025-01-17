@@ -2,11 +2,15 @@
 let game: DinoStroids;
 let music: {
   mystery: p5.SoundFile;
+};
+
+let soundeffects: {
   laserSound: p5.SoundFile;
 };
 let imageAssets: {  
   dino: p5.Image;
   background: p5.Image;
+  mainBackground: p5.Image;
 
 }
 
@@ -17,12 +21,17 @@ let imageAssets: {
  */
 function preload() {
   music = {
-    mystery: loadSound("/assets/music/backgroundMusic.mp3"),
-    laserSound: loadSound("/assets/music/laserSound.mp3"),
+    mystery: loadSound("../assets/music/backgroundMusic.mp3"),
   };
+  soundeffects = {
+    laserSound: loadSound("../assets/soundeffects/laserSound.mp3"),
+
+  }
   imageAssets = {
-    dino: loadImage("/assets/music/dino.gif"),
-    background: loadImage("assets/music/background.png")
+    dino: loadImage("../assets/images/dino.gif"),
+    background: loadImage("../assets/images/background.png"),
+    mainBackground: loadImage("../assets/images/mainBackground.jpg")
+
   };
 }
 
@@ -53,7 +62,7 @@ function draw() {
 function keyPressed() {
   if (key === ' ') {
     console.log('Spacebar pressed');
-    music.laserSound.play();
+    soundeffects.laserSound.play();
   }
 }
 

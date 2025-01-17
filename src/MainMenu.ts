@@ -1,5 +1,6 @@
 class MainMenu implements IScene {
     private buttons: Button[] = [];
+    private background: p5.Image;
 
     constructor() {
         console.log('MainMenu created');
@@ -9,14 +10,20 @@ class MainMenu implements IScene {
             new Button('SCOREBOARD', createVector(width * 0.5, height * 0.55), () => console.log('Scoreboard selected')),
             new Button('START GAME', createVector(width * 0.5, height * 0.60), () => console.log('Game started'))
         );
+
+        // this.background = loadImage('../assets/images/background.png');
+        this.background = loadImage('../assets/images/mainBackground.jpg');
+
+
     }
     
     public update(): void {}
     
     public draw(): void {
+        image(this.background, 0, 0, width, height);
+        imageMode(CORNER);
         // CSS
-        fill("grey");
-
+        fill("lightgrey");
         // HTML
         rect(width * 0.25 , height * 0.25 , width * 0.5, height * 0.5)
 

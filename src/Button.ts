@@ -5,7 +5,7 @@ class Button {
 
     constructor(label: string, position: p5.Vector, onClick: () => void) {
         this.label = label;
-        this.color = "blue";
+        this.color = "Maroon";
         this.position = position;
     }
     // position: absolut/fixed
@@ -35,7 +35,7 @@ class Button {
         push();
         noStroke();
         rectMode(CENTER)
-        fill("#88F");
+        fill("black");
         rect(this.position.x, this.position.y, 210, 30)
         rect(this.position.x, this.position.y, 190, 50)
         

@@ -2,8 +2,10 @@ class Button {
     private label: string;
     private color: string;
     private position: p5.Vector;
+    private width: number = 200;
+    private height: number = 40;
 
-    constructor(label: string, position: p5.Vector, onClick: () => void) {
+    constructor(label: string, position: p5.Vector) {
         this.label = label;
         this.color = "blue";
         this.position = position;
@@ -11,6 +13,21 @@ class Button {
     // position: absolut/fixed
     // left: 50%
     // top: 50%
+    public isClicked(): boolean {
+        // console.log("button clicked")
+        const isMouseOver = 
+            mouseX > this.position.x - this.width / 2 &&
+            mouseX > this.position.x + this.width / 2 &&
+            mouseY > this.position.y - this.height / 2 &&
+            mouseY > this.position.y - this.height / 2;
+
+            if (isMouseOver && mouseIsPressed) {
+                return true;
+            }
+
+        
+        return false;
+    }
     
     public draw() {
         this.drawBackground();
@@ -20,7 +37,7 @@ class Button {
     private drawLabel() {
         push();
         // CSS
-        textAlign(CENTER, CENTER)
+        textAlign(CENTER, CENTER);
         fill("black");
         textFont("Arial", 24);
         textStyle(BOLD);
@@ -37,7 +54,6 @@ class Button {
         fill("#88F");
         rect(this.position.x, this.position.y, 210, 30)
         rect(this.position.x, this.position.y, 190, 50)
-        
         fill(this.color);
         rect(this.position.x, this.position.y, 200, 40)
         pop();

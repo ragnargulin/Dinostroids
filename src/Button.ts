@@ -39,6 +39,11 @@ class Button {
     return clickedThisFrame;
   }
 
+  //Gör att knappen kan ändra tesxtutseende
+  public setLabel(newLabel: string): void {
+    this.label = newLabel;
+  }
+
   public draw(): void {
     this.drawBackground();
     this.drawLabel();

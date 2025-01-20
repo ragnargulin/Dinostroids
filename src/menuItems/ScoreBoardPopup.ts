@@ -14,7 +14,7 @@ class ScoreBoardPopup implements IScene {
   constructor(dinoStroids: IChangeableScene) {
     this.dinoStroids = dinoStroids;
     // Same background as the main menu
-    this.backgroundImage = loadImage("../assets/images/background.png");
+    this.backgroundImage = imageAssets.background;
 
     // Popup box dimensions (similar to HowToPlayPopup)
     this.popupX = width * 0.25;

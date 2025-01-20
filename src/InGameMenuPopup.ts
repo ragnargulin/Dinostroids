@@ -8,6 +8,12 @@ class InGameMenuPopup implements IScene {
     private continueBtn: Button;
     private musicOnOffBtn: Button;
     private isMusicPlaying: boolean;
+    private closeButton: Button;
+    // Popup coordinates
+    private popupX: number;
+    private popupY: number;
+    private popupW: number;
+    private popupH: number;
 
     constructor(dinoStroids: IChangeableScene) {
 
@@ -21,6 +27,18 @@ class InGameMenuPopup implements IScene {
         this.continueBtn = new Button('CONTINUE', createVector(width * 0.5, height * 0.59));
         this.musicOnOffBtn = new Button('MUSIC ON', createVector(width * 0.5, height * 0.70));
         this.isMusicPlaying = false;
+
+        // Coordinates for the popuop box
+        this.popupX = width * 0.25;
+        this.popupY = height * 0.20;
+        this.popupW = width * 0.5;
+        this.popupH = height * 0.6;
+
+        const xButtonSize = 40;
+        const xButtonCenterX = (this.popupX + this.popupW) - (xButtonSize / 2);
+        const xButtonCenterY = this.popupY + (xButtonSize / 2);
+
+        this.closeButton = new Button("X", createVector(xButtonCenterX, xButtonCenterY), 40, 40);
     }
 
     public update(): void {
@@ -40,6 +58,10 @@ class InGameMenuPopup implements IScene {
         if (this.musicOnOffBtn.isClicked()) {
             this.shiftMusicOnOff(); //Möjliggör att växla till MUSIC ON/OFF när man klickar
         }
+        if (this.closeButton.isClicked()) {
+            soundeffects.buttonClick.play();
+            this.dinoStroids.changeActiveScene(new GameBoard(this.dinoStroids));
+        }
     }
 
     public draw(): void {
@@ -52,13 +74,17 @@ class InGameMenuPopup implements IScene {
 
         //Box Colour and box size
         fill("lightgrey");
-        rect(width * 0.25, height * 0.20, width * 0.5, height * 0.6)
+        rect(width * 0.25, height * 0.20, width * 0.5, height * 0.6);
+
+        rect(this.popupX, this.popupY, this.popupW, this.popupH);
 
         this.quitBtn.draw();
         this.restartBtn.draw();
         this.continueBtn.draw();
         this.musicOnOffBtn.draw();
         this.drawTextInsideBox();
+
+        this.closeButton.draw();
     }
 
     private drawTextInsideBox(): void {

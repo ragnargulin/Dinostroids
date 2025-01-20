@@ -13,6 +13,8 @@ let imageAssets: {
   dino: p5.Image;
   background: p5.Image;
   gameTitle: p5.Image;
+  moveImage: p5.Image;
+  shootImage: p5.Image;
 }
 
 /**
@@ -32,6 +34,8 @@ function preload() {
     dino: loadImage("../assets/images/dino.gif"),
     background: loadImage("../assets/images/background.png"),
     gameTitle: loadImage("../assets/images/gameTitle.png"),
+    moveImage: loadImage("../assets/images/Frame-17.png"),
+    shootImage: loadImage("../assets/images/Frame-19.png")
   };
 }
 

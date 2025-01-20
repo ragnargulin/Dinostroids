@@ -36,9 +36,9 @@ class HowToPlayPopup implements IScene {
 
     // Create an array of multiple pages of text
     this.textParts = [
-      "Controls:\nArrow keys to move left/right. Space to shoot.\n\nPowerups:\nShield, Superlaser, Lives, etc.",
-      "Characters:\nDinosaur (player), picks up power-ups.\nAsteroids (enemy), fall randomly.\nAvoid or destroy them!",
-      "Regular Asteroid: Destroyed by 1 laser.\nBig Asteroid: Splits into 2 small ones.\nSuper Asteroid: Needs 5 shots or 1 superlaser.\nGives extra points."
+        "Controls:\nArrow keys to move right and left. Space to shoot laser.\n\nPowerups:\nShield: A power-up that falls from the sky. The shield protects the player from an asteroid. If the shield is hit by an asteroid, it disappears, but the player remains unharmed. Only one shield can be carried at a time.\n\nSuperlaser: A power-up that falls from the sky.\n\nLives: Hearts in the form of lives fall from the sky. The full health is five hearts. When lives run out, the player dies.",
+        "Characters:\nDinosaur (player's character): If the dinosaur is hit by an object, it can take damage (if the object is an asteroid). The dinosaur can pick up power-ups (to increase its vitality).\n\nAsteroids (enemy): Fall from the sky. Their position on the x-axis is randomly generated. Depending on the asteroid type that hits the player, it causes varying amounts of damage.",
+        "Regular Asteroid: Disappears when hit by a laser shot. \n\n Big Asteroid: Breaks into two regular asteroids when hit by a laser shot or destroyed by a superlaser shot.\nSuper Asteroid: Requires five laser shots to be destroyed or one superlaser shot. Grants extra points."
     ];
 
    
@@ -61,23 +61,20 @@ class HowToPlayPopup implements IScene {
       this.dinoStroids.changeActiveScene(new MainMenu(this.dinoStroids));
     }
 
-    // Next page
     if (this.nextPageBtn.isClicked()) {
-      soundeffects.buttonClick.play();
-      this.currentPage++;
-      if (this.currentPage > 3) {
-        this.currentPage = 3;
-      }
+        soundeffects.buttonClick.play();
+
+        this.currentPage = (this.currentPage + 1) % 4;
+    }
+    if (this.prevPageBtn.isClicked()) {
+        soundeffects.buttonClick.play();
+
+        this.currentPage--;
+        if (this.currentPage < 0) {
+          this.currentPage = 0;
+        }
     }
 
-    // Previous page
-    if (this.prevPageBtn.isClicked()) {
-      soundeffects.buttonClick.play();
-      this.currentPage--;
-      if (this.currentPage < 0) {
-        this.currentPage = 0;
-      }
-    }
   }
 
   public draw(): void {
@@ -108,6 +105,7 @@ class HowToPlayPopup implements IScene {
   private drawCurrentPage(): void {
     push();
     fill("black");
+    textFont("Pixelify Sans");
     textSize(width * 0.02); // scale text
     textAlign(CENTER, TOP);
 

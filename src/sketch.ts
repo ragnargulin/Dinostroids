@@ -71,10 +71,4 @@ function draw() {
   game.draw();
 }
 
-function keyPressed() {
-  if (key === ' ') {
-    console.log('Spacebar pressed');
-    soundeffects.laserSound.play();
-  }
-}
 

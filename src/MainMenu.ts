@@ -9,9 +9,9 @@ class MainMenu implements IScene {
     private buttonClickedSound: p5.SoundFile;
 
     constructor(dinoStroids: IChangeableScene) {
-        this.backgroundImage = loadImage("../assets/images/background.png");
-        this.gameTitle = loadImage("assets/images/gameTitle.png");
-        this.buttonClickedSound = loadSound("../assets/soundeffects/buttonClick.mp3");
+        this.backgroundImage = imageAssets.background;
+        this.gameTitle = imageAssets.gameTitle;
+        this.buttonClickedSound = soundeffects.buttonClick;
 
         this.dinoStroids = dinoStroids;
         console.log("MainMenu created");

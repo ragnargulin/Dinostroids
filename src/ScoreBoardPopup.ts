@@ -1,18 +1,33 @@
 class ScoreBoardPopup implements IScene {
     private backgroundImage: p5.Image;
-    private returnBtn: Button;
+    private closeButton: Button;
     private dinoStroids: IChangeableScene;
+
+    // Popup coordinates
+    private popupX: number;
+    private popupY: number;
+    private popupW: number;
+    private popupH: number;
 
     constructor(dinoStroids: IChangeableScene) {
         this.backgroundImage = loadImage("../assets/images/background.png");
-
         this.dinoStroids = dinoStroids;
-        this.returnBtn = new Button("Return", createVector(width * 0.5, height * 0.75));
+
+        // Coordinates for the popuop box
+        this.popupX = width * 0.25;
+        this.popupY = height * 0.20;
+        this.popupW = width * 0.5;
+        this.popupH = height * 0.4;
+
+        const xButtonSize = 40;
+        const xButtonCenterX = (this.popupX + this.popupW) - (xButtonSize / 2);
+        const xButtonCenterY = this.popupY + (xButtonSize / 2);
+
+        this.closeButton = new Button("X", createVector(xButtonCenterX, xButtonCenterY), 40, 40);
     }
 
     public update(): void {
-        // Return to MainMenu when the button is clicked
-        if (this.returnBtn.isClicked()) {
+        if (this.closeButton.isClicked()) {
             soundeffects.buttonClick.play();
             this.dinoStroids.changeActiveScene(new MainMenu(this.dinoStroids));
         }
@@ -22,31 +37,29 @@ class ScoreBoardPopup implements IScene {
         imageMode(CORNER);
         image(this.backgroundImage, 0, 0, width, height);
 
-        //Dim Background effact
-        push();
-        fill(0, 0, 0, 100); 
+        // Dim background 
+        fill(0, 0, 0, 100);
         rect(0, 0, width, height);
-        pop();
 
-        //Draw the popup
-        push();
+        // Draw the popup box
         fill("lightgrey");
-        rect(width * 0.25, height * 0.20, width * 0.5, height * 0.4);
-        pop();
+        rect(this.popupX, this.popupY, this.popupW, this.popupH);
 
-        // Put text inside popup
-        this.drawTextInsidePopup();
+        // Draw the text INSIDEteh popup box
+        this.drawTextInsideBox();
 
-        this.returnBtn.draw();
+        this.closeButton.draw();
     }
 
-    private drawTextInsidePopup(): void {
+    private drawTextInsideBox(): void {
         push();
         fill("black");
         textSize(24);
         textAlign(CENTER, CENTER);
 
-        text("Scoreboard Table Here!", width * 0.5, height * 0.35);
+        const centerX = this.popupX + this.popupW / 2;
+        const centerY = this.popupY + this.popupH / 2;
+        text("SCOREBOARD", centerX, centerY);
         pop();
     }
 }

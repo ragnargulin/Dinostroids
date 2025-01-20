@@ -47,9 +47,9 @@ class MainMenu implements IScene {
         imageMode(CORNER);
         image(this.backgroundImage, 0, 0, width, height);
 
-        // CSS
+        // Box Colour
         fill("lightgrey");
-        // HTML
+        // Box Size
         rect(width * 0.25 , height * 0.20 , width * 0.5, height * 0.6)
 
         this.aboutBtn.draw();

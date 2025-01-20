@@ -1,9 +1,9 @@
-class DinoStroids implements IChangeableScene{
+class DinoStroids implements IChangeableScene {
     private activeScene: IScene;
-    
+
 
     constructor() {
-        this.activeScene = new HowToPlayPopup(this); //ändra scene här för att starta på den scenen. Bra om man ska jobba i specifik scen MainMenu är default
+        this.activeScene = new MainMenu(this); //ändra scene här för att starta på den scenen. Bra om man ska jobba i specifik scen MainMenu är default
     }
 
     public update() {

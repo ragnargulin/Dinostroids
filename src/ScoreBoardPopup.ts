@@ -81,7 +81,7 @@ class ScoreBoardPopup implements IScene {
     textAlign(CENTER, CENTER);
 
     const titleX = this.popupX + (this.popupW / 2);
-    const titleY = this.popupY + (this.popupH * 0.1);
+    const titleY = this.popupY + (this.popupH * 0.15);
     text("SCOREBOARD", titleX, titleY);
     pop();
 
@@ -107,8 +107,8 @@ class ScoreBoardPopup implements IScene {
         textFont("Pixelify Sans", width * 0.035);
         textAlign(LEFT, TOP);
 
-        const scoreX = this.popupX + this.popupW * 0.3;
-        const scoreY = this.popupY + this.popupH * 0.45 + (index * 30);
+        const scoreX = this.popupX + this.popupW * 0.2;
+        const scoreY = this.popupY + this.popupH * 0.3 + (index * 30);
         text(`${index + 1}. ${entry.name}: ${entry.score}`, scoreX, scoreY);
         pop();
       });

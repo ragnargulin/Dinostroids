@@ -1,5 +1,10 @@
-class DinoStroids {
+class DinoStroids implements IChangeableScene{
     private activeScene: IScene;
+    
+
+    constructor() {
+        this.activeScene = new MainMenu(this); //ändra scene här för att starta på den scenen. Bra om man ska jobba i specifik scen MainMenu är default
+    }
 
     public update() {
         this.activeScene.update();
@@ -12,10 +17,5 @@ class DinoStroids {
     public changeActiveScene(scene: IScene) {
         this.activeScene = scene;
     }
-
-    constructor(initialScene: IScene) {
-        this.activeScene = initialScene;
-        this.draw();
-        this.update();
-    }
 }
+  

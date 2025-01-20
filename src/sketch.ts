@@ -1,14 +1,20 @@
 //---- GLOBAL VARIABLES ----//
 let game: DinoStroids;
-const mainMenu = new MainMenu();
+let cnv: any;
 
 let music: {
   mystery: p5.SoundFile;
-  laserSound: p5.SoundFile;
 };
+let soundeffects: {
+  laserSound: p5.SoundFile;
+  buttonClick: p5.SoundFile;
+}
 let imageAssets: {  
   dino: p5.Image;
+  background: p5.Image;
+  gameTitle: p5.Image;
 }
+
 /**
  * Built in preload function in P5
  * This is a good place to load assets such as
@@ -16,11 +22,16 @@ let imageAssets: {
  */
 function preload() {
   music = {
-    mystery: loadSound("/assets/music/backgroundMusic.mp3"),
-    laserSound: loadSound("/assets/music/laserSound.mp3"),
+    mystery: loadSound("../assets/music/backgroundMusic.mp3"),
   };
+  soundeffects = {
+    buttonClick: loadSound("../assets/soundeffects/buttonClick.mp3"),
+    laserSound: loadSound("../assets/soundeffects/laserSound.mp3"),
+  }
   imageAssets = {
-    dino: loadImage("/assets/music/dino.gif"),
+    dino: loadImage("../assets/images/dino.gif"),
+    background: loadImage("../assets/images/background.png"),
+    gameTitle: loadImage("../assets/images/")
   };
 }
 
@@ -31,17 +42,21 @@ function preload() {
  * in the draw function belows
  */
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  cnv = createCanvas(1000, 666);
+  centerCanvas();
   frameRate(60);
-  music.mystery.setVolume(0.8);
-
-  game = new DinoStroids(mainMenu);
+  game = new DinoStroids();
 }
 
+function centerCanvas() {
+  const x = (windowWidth - width) / 2;
+  const y = (windowHeight - height) / 2;
+  cnv.position(x, y);
+}
 
-
-
-
+function windowResized() {
+  centerCanvas();
+}
 /**
  * Built in draw function in P5
  * This is a good place to call public methods of the object
@@ -54,14 +69,8 @@ function draw() {
 
 function keyPressed() {
   if (key === ' ') {
-    console.log('Spacebar pressed, switching to GameScene...');
-    game.changeActiveScene(new MainMenu());
+    console.log('Spacebar pressed');
+    soundeffects.laserSound.play();
   }
 }
 
-/**
- *  Built in windowResize listener function in P5
- */
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
-}

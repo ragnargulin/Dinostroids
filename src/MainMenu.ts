@@ -1,19 +1,59 @@
 class MainMenu implements IScene {
-    constructor() {
+    private backgroundImage: p5.Image;
+    private aboutBtn: Button;
+    private howToPlayBtn: Button;
+    private dinoStroids: IChangeableScene;
+    private scoreBoardBtn: Button;
+    private startGameBtn: Button;
+    private buttonClickedSound: p5.SoundFile;
+
+    constructor(dinoStroids: IChangeableScene) {
+
+        this.backgroundImage = loadImage("../assets/images/background.png");
+        this.buttonClickedSound = loadSound("../assets/soundeffects/buttonClick.mp3")
+
+
+        this.dinoStroids = dinoStroids;
         console.log('MainMenu created');
+        this.aboutBtn = new Button('ABOUT', createVector(width * 0.5, height * 0.37)),
+        this.howToPlayBtn = new Button('HOW TO PLAY',  createVector(width * 0.5, height * 0.48)),
+        this.scoreBoardBtn = new Button('SCOREBOARD', createVector(width * 0.5, height * 0.59)),
+        this.startGameBtn = new Button('START GAME', createVector(width * 0.5, height * 0.70))
     }
+    
+    public update(): void {
 
-    update(): void {
-        // Implement logic for updating the MainMenu scene.
-        console.log('MainMenu updating...');
+        if (this.aboutBtn.isClicked()) {
+            console.log("aboutBtn");
+            this.buttonClickedSound.play();
+            this.dinoStroids.changeActiveScene(new AboutPopup(this.dinoStroids));
+        }
+        if (this.howToPlayBtn.isClicked()) {
+            // soundeffects.buttonClick.play()
+            this.dinoStroids.changeActiveScene(new HowToPlayPopup(this.dinoStroids))
+        }
+        if (this.scoreBoardBtn.isClicked()) {
+            // soundeffects.buttonClick.play()
+            this.dinoStroids.changeActiveScene(new ScoreBoardPopup(this.dinoStroids))
+        }
+        if (this.startGameBtn.isClicked()) {
+            // soundeffects.buttonClick.play()
+            this.dinoStroids.changeActiveScene(new GameBoard(this.dinoStroids))
+        } 
     }
+    
+    public draw(): void {
+        imageMode(CORNER);
+        image(this.backgroundImage, 0, 0, width, height);
 
-    draw(): void {
-        // Implement logic for rendering the MainMenu scene.
-        background('pink');
-        createButton('About').position(19, 19);
-        createButton('How to play').position(19, 40);
-        createButton('Scoreboard').position(19, 60);
-        createButton('Start game').position(19, 80);
-    }
+        // CSS
+        fill("lightgrey");
+        // HTML
+        rect(width * 0.25 , height * 0.20 , width * 0.5, height * 0.6)
+
+        this.aboutBtn.draw();
+        this.howToPlayBtn.draw();
+        this.scoreBoardBtn.draw();
+        this.startGameBtn.draw();
+    }  
 }

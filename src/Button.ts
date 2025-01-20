@@ -5,11 +5,14 @@ class Button {
     private width: number = 200;
     private height: number = 40;
 
-    constructor(label: string, position: p5.Vector) {
+    constructor(label: string, position: p5.Vector, width: number = 200, height: number = 40, color: string = "Maroon") {
         this.label = label;
-        this.color = "Maroon";
         this.position = position;
+        this.width = width;
+        this.height = height;
+        this.color = color;
     }
+    
     // position: absolut/fixed
     // left: 50%
     // top: 50%
@@ -51,25 +54,40 @@ class Button {
     private drawBackground() {
         push();
         noStroke();
-        rectMode(CENTER);
-
+        rectMode(CENTER); // Börjar rita från mitten av knappen
+    
         const isMouseOver =
             mouseX > this.position.x - this.width / 2 &&
             mouseX < this.position.x + this.width / 2 &&
             mouseY > this.position.y - this.height / 2 &&
             mouseY < this.position.y + this.height / 2;
+    
+        if (this.label === "START GAME") {
+            // Background styling for startBtn
+            fill("darkgreen");
+            rect(this.position.x, this.position.y, this.width + 10, this.height - 10);
+    
+            fill("darkgreen");
+            rect(this.position.x, this.position.y, this.width - 10, this.height + 10);
+    
+            // Primary colour and hover effect
+            const hoverColor = isMouseOver ? "lightgreen" : "green";
+            fill(hoverColor);
+            rect(this.position.x, this.position.y, this.width, this.height);
+        } else {
 
-        // Pixelated Button
-        fill("red");
-        rect(this.position.x, this.position.y, this.width + 10, this.height - 10);
-
-        fill("red");
-        rect(this.position.x, this.position.y, this.width - 10, this.height + 10);
-
-        fill(isMouseOver ? "red" : this.color);
-        rect(this.position.x, this.position.y, this.width, this.height);
-
-
+            // Styling for standardBtns
+            fill("red");
+            rect(this.position.x, this.position.y, this.width + 10, this.height - 10);
+    
+            fill("red");
+            rect(this.position.x, this.position.y, this.width - 10, this.height + 10);
+    
+            fill(isMouseOver ? "crimson" : this.color);
+            rect(this.position.x, this.position.y, this.width, this.height);
+        }
+    
         pop();
     }
+    
 }

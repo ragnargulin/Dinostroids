@@ -15,10 +15,11 @@ class MainMenu implements IScene {
 
         this.dinoStroids = dinoStroids;
         console.log('MainMenu created');
-        this.aboutBtn = new Button('ABOUT', createVector(width * 0.5, height * 0.37)),
-        this.howToPlayBtn = new Button('HOW TO PLAY',  createVector(width * 0.5, height * 0.48)),
-        this.scoreBoardBtn = new Button('SCOREBOARD', createVector(width * 0.5, height * 0.59)),
-        this.startGameBtn = new Button('START GAME', createVector(width * 0.5, height * 0.7))
+        this.aboutBtn = new Button('ABOUT', createVector(width * 0.5, height * 0.40)),
+        this.howToPlayBtn = new Button('HOW TO PLAY',  createVector(width * 0.5, height * 0.50)),
+        this.scoreBoardBtn = new Button('SCOREBOARD', createVector(width * 0.5, height * 0.60)),
+        this.startGameBtn = new Button("START GAME", createVector(width * 0.5, height * 0.74), 250, 60, "green");
+        
     }
     
     public update(): void {

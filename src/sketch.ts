@@ -15,6 +15,17 @@ let imageAssets: {
   gameTitle: p5.Image;
 }
 
+// Placeholder Scoreboard array (global)
+let topScores: { name: string; score: number }[] = [
+  { name: "Ragnar", score: 5000 },
+  { name: "Ragnar", score: 3000 },
+  { name: "Ragnar", score: 7000 },
+  { name: "Catharina", score: 4500 },
+  { name: "Lil' Creep", score: 2000 }
+];
+
+let latestScore: number = 42;
+
 /**
  * Built in preload function in P5
  * This is a good place to load assets such as

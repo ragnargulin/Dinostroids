@@ -18,7 +18,7 @@ class MainMenu implements IScene {
         this.aboutBtn = new Button('ABOUT', createVector(width * 0.5, height * 0.37)),
         this.howToPlayBtn = new Button('HOW TO PLAY',  createVector(width * 0.5, height * 0.48)),
         this.scoreBoardBtn = new Button('SCOREBOARD', createVector(width * 0.5, height * 0.59)),
-        this.startGameBtn = new Button('START GAME', createVector(width * 0.5, height * 0.70))
+        this.startGameBtn = new Button('START GAME', createVector(width * 0.5, height * 0.7))
     }
     
     public update(): void {
@@ -49,7 +49,7 @@ class MainMenu implements IScene {
         // CSS
         fill("lightgrey");
         // HTML
-        rect(width * 0.25 , height * 0.20 , width * 0.5, height * 0.6)
+        rect(width * 0.25 , height * 0.15 , width * 0.5, height * 0.7)
 
         this.aboutBtn.draw();
         this.howToPlayBtn.draw();

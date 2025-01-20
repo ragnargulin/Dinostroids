@@ -14,6 +14,7 @@ let imageAssets: {
   gameTitle: p5.Image;
   moveImage: p5.Image;
   shootImage: p5.Image;
+  hearts: p5.Image;
 }
 
 // Placeholder Scoreboard array (global)
@@ -45,7 +46,8 @@ function preload() {
     background: loadImage("../assets/images/background.png"),
     gameTitle: loadImage("../assets/images/gameTitle.png"),
     moveImage: loadImage("../assets/images/Frame-17.png"),
-    shootImage: loadImage("../assets/images/Frame-19.png")
+    shootImage: loadImage("../assets/images/Frame-19.png"),
+    hearts: loadImage("../assets/images/heart.png"),
   };
 }
 

@@ -12,15 +12,15 @@ class InGameMenuPopup implements IScene {
     constructor(dinoStroids: IChangeableScene) {
 
         this.backgroundImage = loadImage("../assets/images/background.png");
-        this.buttonClickedSound = loadSound("../assets/soundeffects/buttonClick.mp3")
+        this.buttonClickedSound = loadSound("../assets/soundeffects/buttonClick.mp3");
         this.backgroundMusic = loadSound("../assets/music/backgroundMusic.mp3");
         this.dinoStroids = dinoStroids;
 
         this.quitBtn = new Button('QUIT', createVector(width * 0.5, height * 0.37)),
             this.restartBtn = new Button('RESTART', createVector(width * 0.5, height * 0.48)),
-            this.continueBtn = new Button('CONTINUE', createVector(width * 0.5, height * 0.59))
-        this.musicOnOffBtn = new Button('MUSIC ON', createVector(width * 0.5, height * 0.70))
-        this.isMusicPlaying = true;
+            this.continueBtn = new Button('CONTINUE', createVector(width * 0.5, height * 0.59)),
+            this.musicOnOffBtn = new Button('MUSIC ON', createVector(width * 0.5, height * 0.70)),
+            this.isMusicPlaying = false;
     }
 
     public update(): void {
@@ -78,10 +78,10 @@ class InGameMenuPopup implements IScene {
         if (this.isMusicPlaying) {
             //this.backgroundMusic.isPlaying();
             this.backgroundMusic.pause();
-            this.musicOnOffBtn.setLabel("MUSIC OFF"); // Uppdatera knappens text
+            this.musicOnOffBtn.setLabel("MUSIC ON"); // Uppdatera knappens text
         } else {
             this.backgroundMusic.loop(); // Spela musiken i loop
-            this.musicOnOffBtn.setLabel("MUSIC ON"); // Uppdatera knappens text
+            this.musicOnOffBtn.setLabel("MUSIC OFF"); // Uppdatera knappens text
         }
         this.isMusicPlaying = !this.isMusicPlaying; // Växla status 
     }

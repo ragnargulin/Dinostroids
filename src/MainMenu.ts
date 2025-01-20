@@ -15,6 +15,7 @@ class MainMenu implements IScene {
 
         this.dinoStroids = dinoStroids;
         console.log('MainMenu created');
+
         this.aboutBtn = new Button('ABOUT', createVector(width * 0.5, height * 0.37)),
         this.howToPlayBtn = new Button('HOW TO PLAY',  createVector(width * 0.5, height * 0.48)),
         this.scoreBoardBtn = new Button('SCOREBOARD', createVector(width * 0.5, height * 0.59)),
@@ -24,25 +25,25 @@ class MainMenu implements IScene {
     public update(): void {
 
         if (this.aboutBtn.isClicked()) {
-            console.log("aboutBtn");
             this.buttonClickedSound.play();
             this.dinoStroids.changeActiveScene(new AboutPopup(this.dinoStroids));
         }
         if (this.howToPlayBtn.isClicked()) {
-            // soundeffects.buttonClick.play()
-            this.dinoStroids.changeActiveScene(new HowToPlayPopup(this.dinoStroids))
+            soundeffects.buttonClick.play()
+            this.dinoStroids.changeActiveScene(new HowToPlayPopup(this.dinoStroids));
         }
         if (this.scoreBoardBtn.isClicked()) {
-            // soundeffects.buttonClick.play()
-            this.dinoStroids.changeActiveScene(new ScoreBoardPopup(this.dinoStroids))
+            soundeffects.buttonClick.play()
+            this.dinoStroids.changeActiveScene(new ScoreBoardPopup(this.dinoStroids));
         }
         if (this.startGameBtn.isClicked()) {
-            // soundeffects.buttonClick.play()
-            this.dinoStroids.changeActiveScene(new GameBoard(this.dinoStroids))
+            soundeffects.buttonClick.play()
+            this.dinoStroids.changeActiveScene(new GameBoard(this.dinoStroids));
         } 
     }
     
     public draw(): void {
+        // background(0);
         imageMode(CORNER);
         image(this.backgroundImage, 0, 0, width, height);
 

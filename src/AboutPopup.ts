@@ -2,38 +2,52 @@ class AboutPopup implements IScene {
     private backgroundImage: p5.Image;
     private returnBtn: Button;
     private dinoStroids: IChangeableScene;
-    
+
     constructor(dinoStroids: IChangeableScene) {
+        // Reuse the exact same image used in MainMenu
         this.backgroundImage = loadImage("../assets/images/background.png");
 
         this.dinoStroids = dinoStroids;
-        this.returnBtn = new Button('Return', createVector(width * 0.5, height * 0.37));
+        this.returnBtn = new Button("Return", createVector(width * 0.5, height * 0.75));
     }
-    update(): void {
-        throw new Error("Method not implemented.");
+
+    public update(): void {
+        // Return to MainMenu when the button is clicked
         if (this.returnBtn.isClicked()) {
-            // soundeffects.buttonClick.play()
-            this.dinoStroids.changeActiveScene(new HowToPlayPopup(this.dinoStroids))
+            soundeffects.buttonClick.play();
+            this.dinoStroids.changeActiveScene(new MainMenu(this.dinoStroids));
         }
     }
-    draw(): void {
-        // throw new Error("Method not implemented.");
+
+    public draw(): void {
         imageMode(CORNER);
         image(this.backgroundImage, 0, 0, width, height);
-        
+
+        //Dim Background effact
+        push();
+        fill(0, 0, 0, 100); 
+        rect(0, 0, width, height);
+        pop();
+
+        //Draw the popup
+        push();
         fill("lightgrey");
-        // HTML
-        rect(width * 0.25 , height * 0.20 , width * 0.5, height * 0.6)
-        this.drawText();
+        rect(width * 0.25, height * 0.20, width * 0.5, height * 0.4);
+        pop();
+
+        // Put text inside popup
+        this.drawTextInsidePopup();
+
         this.returnBtn.draw();
     }
-    public drawText() {
+
+    private drawTextInsidePopup(): void {
         push();
         fill("black");
-        textSize(width * 0.1);
-        textStyle("bold");
-        textAlign("center");
-        text("Hello world", width * 0.5, height * 0.5);
+        textSize(24);
+        textAlign(CENTER, CENTER);
+
+        text("About Here!", width * 0.5, height * 0.35);
         pop();
     }
 }

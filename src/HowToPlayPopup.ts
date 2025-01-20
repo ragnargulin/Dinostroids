@@ -129,22 +129,8 @@ class HowToPlayPopup implements IScene {
   private drawImages(): void {
     imageMode(CENTER);
 
-    let centerY = this.popupY + (this.popupH / 2);
+    image(this.moveImage, width * 0.3, height * 0.45, width * 0.3, height * 0.25);
 
-    image(
-      this.moveImage, 
-      width * 0.35, 
-      centerY, 
-      width * 0.3, 
-      height * 0.25
-    );
-
-    image(
-      this.shootImage, 
-      width * 0.65, 
-      centerY, 
-      width * 0.3, 
-      height * 0.25
-    );
+    image(this.shootImage, width * 0.7, height * 0.45, width * 0.3, height * 0.25);
   }
 }

@@ -42,7 +42,7 @@ class AboutPopup implements IScene {
         textStyle(NORMAL);
         textAlign(LEFT, TOP);
         const textX = width * 0.28; //Flyttar texten lite mot mitten
-        const textY = height * 0.35;
+        const textY = height * 0.33; //Ändrar utrymmet mellan rubrik och brödtext
         const textBlockWidth = width * 0.45; //Minskad bredd för smalare textblock
         const textBlockHeight = height * 0.3; //Höjdbegränsning (valfritt)
 

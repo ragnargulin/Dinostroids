@@ -55,7 +55,8 @@ class AboutPopup implements IScene {
     private drawTextInsideBox(): void {
         push();
         fill("black");
-        textSize(24);
+        textFont("Pixelify Sans", 34);
+        textStyle(BOLD);
         textAlign(CENTER, CENTER);
 
         const centerX = this.popupX + this.popupW / 2;

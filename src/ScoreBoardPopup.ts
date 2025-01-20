@@ -17,7 +17,7 @@ class ScoreBoardPopup implements IScene {
         this.popupX = width * 0.25;
         this.popupY = height * 0.20;
         this.popupW = width * 0.5;
-        this.popupH = height * 0.4;
+        this.popupH = height * 0.6;
 
         const xButtonSize = 40;
         const xButtonCenterX = (this.popupX + this.popupW) - (xButtonSize / 2);
@@ -54,7 +54,8 @@ class ScoreBoardPopup implements IScene {
     private drawTextInsideBox(): void {
         push();
         fill("black");
-        textSize(24);
+        textFont("Pixelify Sans", 34);
+        textStyle(BOLD);        
         textAlign(CENTER, CENTER);
 
         const centerX = this.popupX + this.popupW / 2;

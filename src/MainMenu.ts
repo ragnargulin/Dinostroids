@@ -25,15 +25,7 @@ class MainMenu implements IScene {
         this.scoreBoardBtn = new Button("SCOREBOARD", createVector(width * 0.5, height * 0.60));
         this.musicOnOffBtn = new Button("MUSIC ON", createVector(width * 0.5, height * 0.70));
         this.isMusicPlaying = false;
-
-        this.startGameBtn = new Button(
-            "START GAME",
-            createVector(width * 0.5, height * 0.74),
-            250,
-            60,
-            "green"
-        );
-
+        this.startGameBtn = new Button("START GAME", createVector(width * 0.5, height * 0.80), 200, 40, "green");
     }
 
     public update(): void {

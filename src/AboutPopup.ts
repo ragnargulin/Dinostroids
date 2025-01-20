@@ -1,4 +1,3 @@
-// AboutPopup.ts
 class AboutPopup implements IScene {
     private backgroundImage: p5.Image;
     private closeButton: Button;
@@ -37,9 +36,6 @@ class AboutPopup implements IScene {
         imageMode(CORNER);
         image(this.backgroundImage, 0, 0, width, height);
 
-
-   
-
         // Dim background 
         fill(0, 0, 0, 100);
         rect(0, 0, width, height);
@@ -56,9 +52,8 @@ class AboutPopup implements IScene {
 
     private drawTextInsideBox(): void {
         push();
-        fill("black"); 
-
-       textStyle(BOLD);
+        fill("black");
+        textStyle(BOLD);
         textAlign("center");
         textFont("Pixelify Sans");
         textSize(width * 0.05);
@@ -81,7 +76,6 @@ class AboutPopup implements IScene {
         text(textBlock3, textX, textY + 195, textBlockWidth, textBlockHeight);
         const textBlock4 = "Upload! Fight back! Save Mars!"
         text(textBlock4, textX, textY + 275, textBlockWidth, textBlockHeight);
-
         pop();
     }
 }

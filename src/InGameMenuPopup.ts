@@ -4,20 +4,23 @@ class InGameMenuPopup implements IScene {
     private restartBtn: Button;
     private dinoStroids: IChangeableScene;
     private continueBtn: Button;
-    //private musicOnOffBtn: Button;
+    private musicOnOffBtn: Button;
+    private isMusicPlaying: boolean;
+    private backgroundMusic: p5.SoundFile;
     private buttonClickedSound: p5.SoundFile;
 
     constructor(dinoStroids: IChangeableScene) {
 
         this.backgroundImage = loadImage("../assets/images/background.png");
         this.buttonClickedSound = loadSound("../assets/soundeffects/buttonClick.mp3")
-
+        this.backgroundMusic = loadSound("../assets/music/backgroundMusic.mp3");
         this.dinoStroids = dinoStroids;
 
         this.quitBtn = new Button('QUIT', createVector(width * 0.5, height * 0.37)),
             this.restartBtn = new Button('RESTART', createVector(width * 0.5, height * 0.48)),
             this.continueBtn = new Button('CONTINUE', createVector(width * 0.5, height * 0.59))
-        //this.musicOnOffBtn = new Button('MUSIC ON OFF', createVector(width * 0.5, height * 0.70))
+        this.musicOnOffBtn = new Button('MUSIC ON', createVector(width * 0.5, height * 0.70))
+        this.isMusicPlaying = true;
     }
 
     public update(): void {
@@ -33,6 +36,9 @@ class InGameMenuPopup implements IScene {
         if (this.continueBtn.isClicked()) {
             soundeffects.buttonClick.play()
             this.dinoStroids.changeActiveScene(new GameBoard(this.dinoStroids));
+        }
+        if (this.musicOnOffBtn.isClicked()) {
+            this.shiftMusicOnOff();
         }
     }
 
@@ -53,6 +59,7 @@ class InGameMenuPopup implements IScene {
         this.quitBtn.draw();
         this.restartBtn.draw();
         this.continueBtn.draw();
+        this.musicOnOffBtn.draw();
         this.drawTextInsideBox();
     }
 
@@ -65,5 +72,17 @@ class InGameMenuPopup implements IScene {
         textSize(width * 0.05);
         text("MENU", width * 0.5, height * 0.3);
         pop();
+    }
+
+    private shiftMusicOnOff(): void {
+        if (this.isMusicPlaying) {
+            //this.backgroundMusic.isPlaying();
+            this.backgroundMusic.pause();
+            this.musicOnOffBtn.setLabel("MUSIC OFF"); // Uppdatera knappens text
+        } else {
+            this.backgroundMusic.loop(); // Spela musiken i loop
+            this.musicOnOffBtn.setLabel("MUSIC ON"); // Uppdatera knappens text
+        }
+        this.isMusicPlaying = !this.isMusicPlaying; // Växla status 
     }
 }

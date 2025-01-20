@@ -1,5 +1,6 @@
 class MainMenu implements IScene {
     private backgroundImage: p5.Image;
+    private gameTitle: p5.Image;
     private aboutBtn: Button;
     private howToPlayBtn: Button;
     private dinoStroids: IChangeableScene;
@@ -10,6 +11,7 @@ class MainMenu implements IScene {
     constructor(dinoStroids: IChangeableScene) {
 
         this.backgroundImage = loadImage("../assets/images/background.png");
+        this.gameTitle = loadImage("assets/images/gameTitle.png")
         this.buttonClickedSound = loadSound("../assets/soundeffects/buttonClick.mp3")
 
 
@@ -51,6 +53,15 @@ class MainMenu implements IScene {
         fill("lightgrey");
         // HTML
         rect(width * 0.25 , height * 0.15 , width * 0.5, height * 0.7)
+
+        imageMode(CENTER);
+        image(this.gameTitle, width / 2, height * 0.17, 566, 275);
+
+        textAlign(CENTER, CENTER); 
+        textSize(35);
+        textFont("Pixelify Sans", width * 0.04);
+        fill("black"); 
+        text("DINOSTROIDS", width / 2, height * 0.25); 
 
         this.aboutBtn.draw();
         this.howToPlayBtn.draw();

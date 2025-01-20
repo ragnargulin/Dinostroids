@@ -31,7 +31,7 @@ function preload() {
   imageAssets = {
     dino: loadImage("../assets/images/dino.gif"),
     background: loadImage("../assets/images/background.png"),
-    gameTitle: loadImage("../assets/images/")
+    gameTitle: loadImage("../assets/images/gameTitle.png"),
   };
 }
 

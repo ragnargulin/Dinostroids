@@ -27,6 +27,7 @@ class MainMenu implements IScene {
             60,
             "green"
         );
+
     }
 
     public update(): void {
@@ -69,6 +70,7 @@ class MainMenu implements IScene {
         fill("black");
         text("DINOSTROIDS", width / 2, height * 0.25);
         pop();
+
 
         // Draw buttons
         this.aboutBtn.draw();

@@ -82,9 +82,6 @@ class AboutPopup implements IScene {
         const textBlock4 = "Upload! Fight back! Save Mars!"
         text(textBlock4, textX, textY + 275, textBlockWidth, textBlockHeight);
 
-        const centerX = this.popupX + this.popupW / 2;
-        const centerY = this.popupY + this.popupH / 2;
-        text("ABOUT", centerX, centerY);
         pop();
     }
 }

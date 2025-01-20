@@ -47,7 +47,7 @@ class MainMenu implements IScene {
         image(this.backgroundImage, 0, 0, width, height);
 
         // CSS
-        fill("lightgrey");
+        fill("red");
         // HTML
         rect(width * 0.25 , height * 0.20 , width * 0.5, height * 0.6)
 

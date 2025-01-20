@@ -1,13 +1,13 @@
 //---- GLOBAL VARIABLES ----//
-let game: DinoStroids;
-const mainMenu = new MainMenu();
+let game: Game;
 
-let music: {
-  mystery: p5.SoundFile;
-  laserSound: p5.SoundFile;
-};
-let imageAssets: {  
-  dino: p5.Image;
+
+let images: {  
+  player: p5.Image;
+  astroid: p5.Image;
+  bigAstoid: p5.Image;
+  superAstroid: p5.Image;
+  background: p5.Image;
 }
 /**
  * Built in preload function in P5
@@ -15,12 +15,13 @@ let imageAssets: {
  * sound files, images etc...
  */
 function preload() {
-  music = {
-    mystery: loadSound("/assets/music/backgroundMusic.mp3"),
-    laserSound: loadSound("/assets/music/laserSound.mp3"),
-  };
-  imageAssets = {
-    dino: loadImage("/assets/music/dino.gif"),
+
+  images = {
+    player: loadImage("../assets/assets/images/dino.gif"),
+    astroid: loadImage("../assets/assets/images/smallMeteor.png"),
+    bigAstoid: loadImage("../assets/assets/images/bigAstro.png"),
+    superAstroid: loadImage("../assets/assets/images/superAstro.png"),
+    background: loadImage("../assets/assets/images/Background.png")
   };
 }
 
@@ -33,9 +34,8 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   frameRate(60);
-  music.mystery.setVolume(0.8);
 
-  game = new DinoStroids(mainMenu);
+  game = new Game();
 }
 
 
@@ -52,12 +52,6 @@ function draw() {
   game.draw();
 }
 
-function keyPressed() {
-  if (key === ' ') {
-    console.log('Spacebar pressed, switching to GameScene...');
-    game.changeActiveScene(new MainMenu());
-  }
-}
 
 /**
  *  Built in windowResize listener function in P5

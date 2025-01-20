@@ -1,17 +1,18 @@
 //---- GLOBAL VARIABLES ----//
 let game: DinoStroids;
+let cnv: any;
+
 let music: {
   mystery: p5.SoundFile;
 };
-
 let soundeffects: {
   laserSound: p5.SoundFile;
-};
+  buttonClick: p5.SoundFile;
+}
 let imageAssets: {  
   dino: p5.Image;
   background: p5.Image;
-  mainBackground: p5.Image;
-
+  gameTitle: p5.Image;
 }
 
 /**
@@ -24,14 +25,13 @@ function preload() {
     mystery: loadSound("../assets/music/backgroundMusic.mp3"),
   };
   soundeffects = {
+    buttonClick: loadSound("../assets/soundeffects/buttonClick.mp3"),
     laserSound: loadSound("../assets/soundeffects/laserSound.mp3"),
-
   }
   imageAssets = {
     dino: loadImage("../assets/images/dino.gif"),
     background: loadImage("../assets/images/background.png"),
-    mainBackground: loadImage("../assets/images/mainBackground.jpg")
-
+    gameTitle: loadImage("../assets/images/")
   };
 }
 
@@ -42,13 +42,21 @@ function preload() {
  * in the draw function belows
  */
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  cnv = createCanvas(1000, 666);
+  centerCanvas();
   frameRate(60);
-  music.mystery.setVolume(0.8);
-
   game = new DinoStroids();
 }
 
+function centerCanvas() {
+  const x = (windowWidth - width) / 2;
+  const y = (windowHeight - height) / 2;
+  cnv.position(x, y);
+}
+
+function windowResized() {
+  centerCanvas();
+}
 /**
  * Built in draw function in P5
  * This is a good place to call public methods of the object
@@ -66,9 +74,3 @@ function keyPressed() {
   }
 }
 
-/**
- *  Built in windowResize listener function in P5
- */
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
-}

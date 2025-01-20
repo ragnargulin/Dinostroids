@@ -14,24 +14,25 @@ class Button {
     // left: 50%
     // top: 50%
     public isClicked(): boolean {
-        // console.log("button clicked")
         const isMouseOver = 
-            mouseX > this.position.x - this.width / 2 &&
-            mouseX > this.position.x + this.width / 2 &&
-            mouseY > this.position.y - this.height / 2 &&
-            mouseY > this.position.y - this.height / 2;
+        mouseX > this.position.x - this.width / 2 &&
+        mouseX < this.position.x + this.width / 2 &&
+        mouseY > this.position.y - this.height / 2 &&
+        mouseY < this.position.y + this.height / 2;
 
-            if (isMouseOver && mouseIsPressed) {
-                return true;
-            }
-
-        
+        if (isMouseOver && mouseIsPressed) {
+            console.log("button clicked");
+            return true;
+        }
         return false;
     }
-    
+
+   
+   
     public draw() {
         this.drawBackground();
         this.drawLabel();
+
     }
     
     private drawLabel() {
@@ -42,7 +43,6 @@ class Button {
     
         textFont("Pixelify Sans", 24);
         textStyle(BOLD);
-    
         // HTML
         text(this.label, this.position.x, this.position.y)
         pop();
@@ -51,12 +51,25 @@ class Button {
     private drawBackground() {
         push();
         noStroke();
-        rectMode(CENTER)
-        fill("black");
-        rect(this.position.x, this.position.y, 210, 30)
-        rect(this.position.x, this.position.y, 190, 50)
-        fill(this.color);
-        rect(this.position.x, this.position.y, 200, 40)
+        rectMode(CENTER);
+
+        const isMouseOver =
+            mouseX > this.position.x - this.width / 2 &&
+            mouseX < this.position.x + this.width / 2 &&
+            mouseY > this.position.y - this.height / 2 &&
+            mouseY < this.position.y + this.height / 2;
+
+        // Pixelated Button
+        fill("red");
+        rect(this.position.x, this.position.y, this.width + 10, this.height - 10);
+
+        fill("red");
+        rect(this.position.x, this.position.y, this.width - 10, this.height + 10);
+
+        fill(isMouseOver ? "red" : this.color);
+        rect(this.position.x, this.position.y, this.width, this.height);
+
+
         pop();
     }
 }

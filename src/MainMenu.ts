@@ -67,6 +67,7 @@ class MainMenu implements IScene {
     textSize(35);
     textFont("Pixelify Sans", width * 0.04);
     fill("black");
+    text("DINOSTROIDS", width / 2, height * 0.25); 
     pop();
 
     // Draw buttons

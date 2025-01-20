@@ -30,6 +30,7 @@ class GameBoard implements IScene {
     public drawText() {
         push();
         fill("black");
+        
         textSize(width * 0.1);
         textStyle("bold");
         textAlign("center");

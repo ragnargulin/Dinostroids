@@ -1,18 +1,26 @@
 class GameBoard implements IScene {
     private dinoStroids: IChangeableScene;
-
-    constructor(dinoStroids: IChangeableScene) {
-        this.dinoStroids = dinoStroids;
+    private playerName: string;
+  
+    constructor(dinoStroids: IChangeableScene, playerName: string) {
+      this.dinoStroids = dinoStroids;
+      this.playerName = playerName;
+      console.log("Player name:", this.playerName);
+      // ...
     }
-
+  
     public update(): void {
-        // Game logic
+      // ...
     }
-
+  
     public draw(): void {
-        // Draw your game here
-        background(0);
-        fill(255);
-        text("Game Running", width / 2, height / 2);
+      background(0);
+      // Show name somewhere
+      fill(255);
+      textAlign(CENTER, TOP);
+      textSize(24);
+      text("Welcome, " + this.playerName, width / 2, 50);
+      // ...
     }
-}
+  }
+  

@@ -1,4 +1,3 @@
-//---- GLOBAL VARIABLES ----//
 let game: DinoStroids;
 let cnv: any;
 
@@ -82,4 +81,26 @@ function draw() {
   game.draw();
 }
 
+
+function keyPressed() {
+  if (game && typeof game.getActiveScene === "function") {
+    const scene = game.getActiveScene();
+    if (scene && typeof scene.keyPressed === "function") {
+      scene.keyPressed();
+    }
+  }
+}
+
+/**
+ * FORWARD MOUSEPRESSED
+ * So your custom scenes can detect clicks (e.g. focusing a text box).
+ */
+function mousePressed() {
+  if (game && typeof game.getActiveScene === "function") {
+    const scene = game.getActiveScene();
+    if (scene && typeof scene.mousePressed === "function") {
+      scene.mousePressed();
+    }
+  }
+}
 

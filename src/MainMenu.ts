@@ -17,6 +17,8 @@ class MainMenu implements IScene {
         this.buttonClickedSound = loadSound("../assets/soundeffects/buttonClick.mp3");
         this.backgroundMusic = loadSound("../assets/music/backgroundMusic.mp3");
 
+       
+
         this.dinoStroids = dinoStroids;
         console.log("MainMenu created");
 

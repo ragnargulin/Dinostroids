@@ -27,7 +27,7 @@ class InputNamePopup implements IScene {
     constructor(dinoStroids: IChangeableScene) {
         this.dinoStroids = dinoStroids;
 
-        this.backgroundImage = loadImage("../assets/images/background.png");
+        this.backgroundImage = imageAssets.background;
 
         // Popup box dimensions
         this.boxW = width * 0.6;
@@ -43,7 +43,7 @@ class InputNamePopup implements IScene {
 
         // START button
         const startBtnPos = createVector(width * 0.5, this.boxY + this.boxH * 0.75);
-        this.startButton = new Button("START", startBtnPos, 120, 50, "Maroon");
+        this.startButton = new Button("START GAME", startBtnPos, 200, 40, "green");
 
         // Cancel button
         const xButtonSize = 40;

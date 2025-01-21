@@ -24,7 +24,7 @@ class GameBoard implements IScene {
     public update(): void {
         if (this.menuButton.isClicked()) {
             console.log("Menu button clicked. (Add code to open a menu/popup here.)");
-            // this.dinoStroids.changeActiveScene(new PauseMenu(this.dinoStroids));
+            this.dinoStroids.changeActiveScene(new InGameMenuPopup(this.dinoStroids));
         }
 
     }

@@ -10,7 +10,7 @@ class AboutPopup implements IScene {
     private popupH: number;
 
     constructor(dinoStroids: IChangeableScene) {
-        this.backgroundImage = loadImage("../assets/images/background.png");
+        this.backgroundImage = imageAssets.background;
         this.dinoStroids = dinoStroids;
 
         // Coordinates for the popuop box

@@ -38,6 +38,11 @@ class Button {
         return clickedThisFrame;
     }
 
+    public setLabel(newLabel: string): void {
+        this.label = newLabel;
+    }
+    
+
 
     public draw(): void {
         this.drawBackground();

@@ -1,4 +1,3 @@
-//---- GLOBAL VARIABLES ----//
 let game: DinoStroids;
 let cnv: any;
 
@@ -15,6 +14,7 @@ let imageAssets: {
   gameTitle: p5.Image;
   moveImage: p5.Image;
   shootImage: p5.Image;
+  hearts: p5.Image;
 }
 
 // Placeholder Scoreboard array (global)
@@ -23,7 +23,7 @@ let topScores: { name: string; score: number }[] = [
   { name: "Ragnar", score: 3000 },
   { name: "Ragnar", score: 7000 },
   { name: "Catharina", score: 4500 },
-  { name: "Lil' Creep", score: 2000 }
+  { name: "CEO", score: 6000 }
 ];
 
 let latestScore: number = 42;
@@ -46,7 +46,8 @@ function preload() {
     background: loadImage("../assets/images/background.png"),
     gameTitle: loadImage("../assets/images/gameTitle.png"),
     moveImage: loadImage("../assets/images/Frame-17.png"),
-    shootImage: loadImage("../assets/images/Frame-19.png")
+    shootImage: loadImage("../assets/images/Frame-19.png"),
+    hearts: loadImage("../assets/images/heart.png"),
   };
 }
 
@@ -82,4 +83,26 @@ function draw() {
   game.draw();
 }
 
+
+function keyPressed() {
+  if (game && typeof game.getActiveScene === "function") {
+    const scene = game.getActiveScene();
+    if (scene && typeof scene.keyPressed === "function") {
+      scene.keyPressed();
+    }
+  }
+}
+
+/**
+ * FORWARD MOUSEPRESSED
+ * So your custom scenes can detect clicks (e.g. focusing a text box).
+ */
+function mousePressed() {
+  if (game && typeof game.getActiveScene === "function") {
+    const scene = game.getActiveScene();
+    if (scene && typeof scene.mousePressed === "function") {
+      scene.mousePressed();
+    }
+  }
+}
 

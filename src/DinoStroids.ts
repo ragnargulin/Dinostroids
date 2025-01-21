@@ -17,4 +17,8 @@ class DinoStroids implements IChangeableScene {
     public changeActiveScene(scene: IScene): void {
         this.activeScene = scene;
     }
+
+    public getActiveScene(): IScene {
+        return this.activeScene;
+    }
 }

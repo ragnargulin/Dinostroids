@@ -17,7 +17,7 @@ class MainMenu implements IScene {
         this.buttonClickedSound = loadSound("../assets/soundeffects/buttonClick.mp3");
         this.backgroundMusic = loadSound("../assets/music/backgroundMusic.mp3");
 
-       
+
 
         this.dinoStroids = dinoStroids;
         console.log("MainMenu created");
@@ -85,11 +85,11 @@ class MainMenu implements IScene {
     }
     private shiftMusicOnOff(): void {
         if (this.isMusicPlaying) {
-            this.backgroundMusic.pause();
-            //this.musicOnOffBtn.setLabel("MUSIC ON"); //Uppdatera knappens text
+            this.backgroundMusic.loop();
+            this.musicOnOffBtn.setLabel("MUSIC OFF"); //Uppdatera knappens text
         } else {
-            this.backgroundMusic.loop(); //Loopa musiken
-            //this.musicOnOffBtn.setLabel("MUSIC OFF"); //Uppdatera knappens text
+            this.backgroundMusic.pause(); //Loopa musiken
+            this.musicOnOffBtn.setLabel("MUSIC ON"); //Uppdatera knappens text
         }
 
         //Växlar musiken

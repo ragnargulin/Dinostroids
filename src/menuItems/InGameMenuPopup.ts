@@ -17,9 +17,8 @@ class InGameMenuPopup implements IScene {
 
     constructor(dinoStroids: IChangeableScene) {
 
-        this.backgroundImage = loadImage("../assets/images/background.png");
-        //this.buttonClickedSound = loadSound("../assets/soundeffects/buttonClick.mp3");
-        this.backgroundMusic = loadSound("../assets/music/backgroundMusic.mp3");
+        this.backgroundImage = imageAssets.background;
+        this.backgroundMusic = music.mystery;
         this.dinoStroids = dinoStroids;
 
         this.quitBtn = new Button('QUIT', createVector(width * 0.5, height * 0.37));

@@ -6,8 +6,9 @@ class GameBoard implements IScene {
     private heartImage: p5.Image;
 
     private menuButton: Button;
+    private dinoStroids: IChangeableScene;
 
-    private moveableObject: MoveableObject[];
+    private moveableObjects: MoveableObject[];
 
     constructor(dinoStroids: IChangeableScene) {
         this.dinoStroids = dinoStroids;
@@ -17,7 +18,7 @@ class GameBoard implements IScene {
 
         this.menuButton = new Button("MENU", createVector(width * 0.1, height * 0.06), 100, 40, "maroon");
 
-        this.moveableObject = [new Player()];
+        this.moveableObjects = [new Player(this)];
     }
 
     public update(): void {
@@ -25,11 +26,15 @@ class GameBoard implements IScene {
             console.log("Menu button clicked. (Add code to open a menu/popup here.)");
             this.dinoStroids.changeActiveScene(new InGameMenuPopup(this.dinoStroids));
         }
-        for (const gameObject of this.moveableObject) {
+        for (const gameObject of this.moveableObjects) {
             gameObject.update();
-          }
+        }
       
 
+    }
+
+    public addGameObject(SomeMoveableObjects: MoveableObject) {
+        this.moveableObjects.push(SomeMoveableObjects);
     }
 
     public draw(): void {
@@ -43,7 +48,7 @@ class GameBoard implements IScene {
         this.drawLives();
 
         //KEVIN
-        for (const gameObject of this.moveableObject) {
+        for (const gameObject of this.moveableObjects) {
             gameObject.draw();
           }
     }

@@ -1,7 +1,7 @@
 class MoveableObject  {
-    public position: p5.Vector;
-    public size: p5.Vector;
-    public image: p5.Image;
+    protected position: p5.Vector;
+    protected size: p5.Vector;
+    protected image: p5.Image;
     protected velocity: p5.Vector;
   
     // x, y, width, height

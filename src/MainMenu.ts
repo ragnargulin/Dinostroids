@@ -1,5 +1,6 @@
 class MainMenu implements IScene {
     private backgroundImage: p5.Image;
+    private backgroundMusic: p5.SoundFile;
     private gameTitle: p5.Image;
     private aboutBtn: Button;
     private howToPlayBtn: Button;
@@ -7,11 +8,16 @@ class MainMenu implements IScene {
     private scoreBoardBtn: Button;
     private startGameBtn: Button;
     private buttonClickedSound: p5.SoundFile;
+    private musicOnOffBtn: Button;
+    private isMusicPlaying: boolean;
 
     constructor(dinoStroids: IChangeableScene) {
-        this.backgroundImage = imageAssets.background;
-        this.gameTitle = imageAssets.gameTitle;
-        this.buttonClickedSound = soundeffects.buttonClick;
+        this.backgroundImage = loadImage("../assets/images/background.png");
+        this.gameTitle = loadImage("assets/images/gameTitle.png");
+        this.buttonClickedSound = loadSound("../assets/soundeffects/buttonClick.mp3");
+        this.backgroundMusic = loadSound("../assets/music/backgroundMusic.mp3");
+
+       
 
         this.dinoStroids = dinoStroids;
         console.log("MainMenu created");
@@ -19,15 +25,9 @@ class MainMenu implements IScene {
         this.aboutBtn = new Button("ABOUT", createVector(width * 0.5, height * 0.40));
         this.howToPlayBtn = new Button("HOW TO PLAY", createVector(width * 0.5, height * 0.50));
         this.scoreBoardBtn = new Button("SCOREBOARD", createVector(width * 0.5, height * 0.60));
-
-        this.startGameBtn = new Button(
-            "START GAME",
-            createVector(width * 0.5, height * 0.74),
-            250,
-            60,
-            "green"
-        );
-
+        this.musicOnOffBtn = new Button("MUSIC ON", createVector(width * 0.5, height * 0.70));
+        this.isMusicPlaying = false;
+        this.startGameBtn = new Button("START GAME", createVector(width * 0.5, height * 0.80), 200, 40, "green");
     }
 
     public update(): void {
@@ -49,6 +49,9 @@ class MainMenu implements IScene {
         if (this.startGameBtn.isClicked()) {
             soundeffects.buttonClick.play();
             this.dinoStroids.changeActiveScene(new InputNamePopup(this.dinoStroids));
+        }
+        if (this.musicOnOffBtn.isClicked()) {
+            this.shiftMusicOnOff();
         }
     }
 
@@ -76,6 +79,25 @@ class MainMenu implements IScene {
         this.aboutBtn.draw();
         this.howToPlayBtn.draw();
         this.scoreBoardBtn.draw();
+        this.musicOnOffBtn.draw();
+        this.musicOnOffBtn.draw();
         this.startGameBtn.draw();
     }
+    private shiftMusicOnOff(): void {
+        if (this.isMusicPlaying) {
+            this.backgroundMusic.pause();
+            //this.musicOnOffBtn.setLabel("MUSIC ON"); //Uppdatera knappens text
+        } else {
+            this.backgroundMusic.loop(); //Loopa musiken
+            //this.musicOnOffBtn.setLabel("MUSIC OFF"); //Uppdatera knappens text
+        }
+
+        //Växlar musiken
+        if (this.isMusicPlaying) {
+            this.isMusicPlaying = false;
+        } else {
+            this.isMusicPlaying = true;
+        }
+    }
+
 }

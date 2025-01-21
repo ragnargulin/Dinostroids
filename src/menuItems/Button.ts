@@ -37,6 +37,7 @@ class Button {
         this.wasPressedLastFrame = mouseIsPressed;
         return clickedThisFrame;
     }
+
     public setLabel(newLabel: string): void {
         this.label = newLabel;
     }

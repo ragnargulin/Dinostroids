@@ -1,24 +1,23 @@
 class GameBoard implements IScene {
-    private dinoStroids: IChangeableScene;
-    private playerName: string;
 
     private score: number = 999;
-
     private lives: number = 5;
-
     private backgroundImage: p5.Image;
     private heartImage: p5.Image;
 
     private menuButton: Button;
 
-    constructor(dinoStroids: IChangeableScene, playerName: string) {
+    private moveableObject: MoveableObject[];
+
+    constructor(dinoStroids: IChangeableScene) {
         this.dinoStroids = dinoStroids;
-        this.playerName = playerName;
 
         this.backgroundImage = imageAssets.background;
         this.heartImage = imageAssets.hearts;
 
         this.menuButton = new Button("MENU", createVector(width * 0.1, height * 0.06), 100, 40, "maroon");
+
+        this.moveableObject = [new Player()];
     }
 
     public update(): void {
@@ -26,6 +25,10 @@ class GameBoard implements IScene {
             console.log("Menu button clicked. (Add code to open a menu/popup here.)");
             // this.dinoStroids.changeActiveScene(new PauseMenu(this.dinoStroids));
         }
+        for (const gameObject of this.moveableObject) {
+            gameObject.update();
+          }
+      
 
     }
 
@@ -38,6 +41,11 @@ class GameBoard implements IScene {
         this.drawPlayerInfo();
 
         this.drawLives();
+
+        //KEVIN
+        for (const gameObject of this.moveableObject) {
+            gameObject.draw();
+          }
     }
 
     private drawPlayerInfo(): void {
@@ -50,7 +58,7 @@ class GameBoard implements IScene {
         const playerInfoX = width * 0.5;
         const playerInfoY = height * 0.03;
 
-        text(`${this.playerName} | Score: ${this.score}`, playerInfoX, playerInfoY);
+        text(`Score: ${this.score}`, playerInfoX, playerInfoY);
         pop();
     }
 
@@ -71,4 +79,5 @@ class GameBoard implements IScene {
 
         pop();
     }
+
 }

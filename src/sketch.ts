@@ -6,22 +6,20 @@ let images: {
   player: p5.Image;
   astroid: p5.Image;
   bigAstoid: p5.Image;
-  superAstroid: p5.Image;
+  superAstoid: p5.Image;
   background: p5.Image;
+  laser: p5.Image; // Add laser image
 }
-/**
- * Built in preload function in P5
- * This is a good place to load assets such as
- * sound files, images etc...
- */
-function preload() {
 
+// preload function
+function preload() {
   images = {
     player: loadImage("../assets/assets/images/dino.gif"),
     astroid: loadImage("../assets/assets/images/smallMeteor.png"),
     bigAstoid: loadImage("../assets/assets/images/bigAstro.png"),
-    superAstroid: loadImage("../assets/assets/images/superAstro.png"),
-    background: loadImage("../assets/assets/images/Background.png")
+    superAstoid: loadImage("../assets/assets/images/superAstro.png"),
+    background: loadImage("../assets/assets/images/Background.png"),
+    laser: loadImage("../assets/assets/images/Laserboltreal.png") // Make sure the image exists
   };
 }
 

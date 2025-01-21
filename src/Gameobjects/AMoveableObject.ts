@@ -1,7 +1,7 @@
 class GameObject {
-  private position: p5.Vector;
-  private size: p5.Vector;
-  private image: p5.Image;
+  protected position: p5.Vector;
+  protected size: p5.Vector;
+  protected image: p5.Image;
   protected velocity: p5.Vector;
 
   // x, y, width, height

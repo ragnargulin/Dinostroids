@@ -31,24 +31,32 @@ class Player extends MoveableObject {
 }
 
 private shootLaser() {
+  let laserStartX = this.position.x + this.size.x / 2 + 25;
+  
+  // Adjust laser position based on facing direction
+  if (!this.isFacingRight) {
+    laserStartX = this.position.x - this.size.x / 2 + 75;  // Adjust for left-facing Dino
+  }
+  
   // Create a laser at the player's current position
-  const laser = new Laser(this.position.x + this.size.x / 2 + 20, this.position.y, imageAssets.laser);
+  const laser = new Laser(laserStartX, this.position.y, imageAssets.laser);
   this.gameBoard.addGameObject(laser);  // Add laser to the game through GameBoard reference
 }
 
 public draw() {
+  push();  // Save the current transformation state
   
-  
-    if (!this.isFacingRight) {
-      // Flip the canvas horizontally for the player
-      translate(this.position.x + this.size.x, this.position.y); // Adjust for flipping
-      scale(-1, 1); // Flip horizontally
-    } else {
-      // Normal rendering
-      translate(this.position.x, this.position.y);
-    }
-  
-    // Draw the image at the adjusted position
-    image(this.image, 0, 0, this.size.x, this.size.y);
+  if (!this.isFacingRight) {
+    // Flip the canvas horizontally for the player
+    translate(this.position.x + this.size.x, this.position.y); // Adjust for flipping
+    scale(-1, 1); // Flip horizontally
+  } else {
+    // Normal rendering
+    translate(this.position.x, this.position.y);
   }
-}
+  
+  // Draw the player image
+  image(this.image, 0, 0, this.size.x, this.size.y);
+  
+  pop();  // Restore the original transformation state
+}}

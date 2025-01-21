@@ -1,6 +1,9 @@
 interface IScene {
     update(): void;
     draw(): void;
+
+    mousePressed?(): void;
+    keyPressed?(): void;
     
 }
 

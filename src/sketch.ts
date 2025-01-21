@@ -23,7 +23,7 @@ let topScores: { name: string; score: number }[] = [
   { name: "Ragnar", score: 3000 },
   { name: "Ragnar", score: 7000 },
   { name: "Catharina", score: 4500 },
-  { name: "Lil' Creep", score: 2000 }
+  { name: "CEO", score: 6000 }
 ];
 
 let latestScore: number = 42;

@@ -1,5 +1,10 @@
 class GameBoard implements IScene {
-    private score: number = 999;
+
+    private dinoStroids: IChangeableScene;
+    private memory: GameMemory;
+
+    private localScore: number = 0;
+
     private lives: number = 5;
     private backgroundImage: p5.Image;
     private heartImage: p5.Image;
@@ -10,31 +15,37 @@ class GameBoard implements IScene {
     private moveableObjects: MoveableObject[];
   
     constructor(dinoStroids: IChangeableScene) {
-      this.dinoStroids = dinoStroids;
-  
-      this.backgroundImage = imageAssets.background;
-      this.heartImage = imageAssets.hearts;
-  
-      this.menuButton = new Button(
-        "MENU",
-        createVector(width * 0.1, height * 0.06),
-        100,
-        40,
-        "maroon"
-      );
-  
-      this.moveableObjects = [new Player(this)];
+     
+        this.dinoStroids = dinoStroids;
+        this.memory = this.dinoStroids.getMemory();
+
+        this.backgroundImage = imageAssets.background;
+        this.heartImage = imageAssets.hearts;
+
+        this.menuButton = new Button("MENU", createVector(width * 0.1, height * 0.06), 100, 40, "maroon");
+
+        //this.moveableObject = [new Player()];
+        this.moveableObjects = [new Player(this)];
+
     }
   
     public update(): void {
-      if (this.menuButton.isClicked()) {
-        console.log("Menu button clicked. (Add code to open a menu/popup here.)");
-        this.dinoStroids.changeActiveScene(new InGameMenuPopup(this.dinoStroids));
-      }
-      for (const gameObject of this.moveableObjects) {
-        gameObject.update();
-      }
-  
+
+        this.localScore++;
+
+
+        if (this.menuButton.isClicked()) {
+            console.log("Menu button clicked. (Add code to open a menu/popup here.)");
+
+            this.memory.playerScore = this.localScore;
+
+            this.dinoStroids.changeActiveScene(new InGameMenuPopup(this.dinoStroids));
+        }
+
+        for (const gameObject of this.moveableObject) {
+            gameObject.update();
+        }
+      
       this.moveableObjects = this.moveableObjects.filter((gameObject) => {
         if (gameObject.isOffCanvas()) {
           return false; // Remove the object from the array
@@ -47,36 +58,39 @@ class GameBoard implements IScene {
   
     public addGameObject(SomeMoveableObjects: MoveableObject) {
       this.moveableObjects.push(SomeMoveableObjects);
+
     }
   
     public draw(): void {
-      imageMode(CORNER);
-      image(this.backgroundImage, 0, 0, width, height);
-  
-      this.menuButton.draw();
-  
-      this.drawPlayerInfo();
-  
-      this.drawLives();
-  
-      //KEVIN
-      for (const gameObject of this.moveableObjects) {
-        gameObject.draw();
-      }
+
+        imageMode(CORNER);
+        image(this.backgroundImage, 0, 0, width, height);
+
+        this.menuButton.draw();
+
+        this.drawPlayerInfo();
+
+        this.drawLives();
+
+        //KEVIN
+        for (const gameObject of this.moveableObject) {
+            gameObject.draw();
+        }
     }
   
     private drawPlayerInfo(): void {
-      push();
-      fill("white");
-      textAlign(CENTER, TOP);
-      textFont("Pixelify Sans", 24);
-      textStyle(BOLD);
-  
-      const playerInfoX = width * 0.5;
-      const playerInfoY = height * 0.03;
-  
-      text(`Score: ${this.score}`, playerInfoX, playerInfoY);
-      pop();
+
+        push();
+        fill("white");
+        textAlign(CENTER, TOP);
+        textFont("Pixelify Sans", 24);
+        textStyle(BOLD);
+
+        const playerInfoX = width * 0.5;
+        const playerInfoY = height * 0.03;
+
+        text(`${this.memory.playerName} | Score: ${this.localScore}`, playerInfoX, playerInfoY);
+        pop();
     }
   
     private drawLives(): void {

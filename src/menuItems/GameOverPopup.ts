@@ -1,6 +1,7 @@
 class GameOverPopup implements IScene {
     private backgroundImage: p5.Image;
     private dinoStroids: IChangeableScene;
+    private memory: GameMemory;
   
     // Popup box coordinates
     private popupX: number;
@@ -13,8 +14,9 @@ class GameOverPopup implements IScene {
   
     constructor(dinoStroids: IChangeableScene) {
       this.dinoStroids = dinoStroids;
+      this.memory = this.dinoStroids.getMemory();
       // Same background as the main menu
-      this.backgroundImage = loadImage("../assets/images/background.png");
+      this.backgroundImage = imageAssets.background;
   
       // Popup box dimensions
       this.popupX = width * 0.25;
@@ -31,12 +33,16 @@ class GameOverPopup implements IScene {
       // Add button click logic
       if (this.tryAgainBtn.isClicked()) {
         soundeffects.buttonClick.play();
+
+        this.memory.addScore(this.memory.playerName, this.memory.playerScore);
         // Restart the game 
         this.dinoStroids.changeActiveScene(new GameBoard(this.dinoStroids));
       }
   
       if (this.homeBtn.isClicked()) {
         soundeffects.buttonClick.play();
+
+        this.memory.addScore(this.memory.playerName, this.memory.playerScore);
         // Go back to the main menu
         this.dinoStroids.changeActiveScene(new MainMenu(this.dinoStroids));
       }
@@ -64,7 +70,7 @@ class GameOverPopup implements IScene {
     }
   
     private getTopScores(): { name: string; score: number }[] {
-      return topScores.sort((a, b) => b.score - a.score).slice(0, 10);
+      return this.memory.topScores.sort((a, b) => b.score - a.score).slice(0, 5);
     }
   
     private drawScoreBoardContent(): void {
@@ -87,7 +93,7 @@ class GameOverPopup implements IScene {
       textStyle(BOLD);
       textAlign(CENTER, CENTER);
   
-      text(`Your score: ${latestScore}`, this.popupX + this.popupW / 2, this.popupY + this.popupH * 0.3);
+      text(`Your score: ${this.memory.playerScore}`, this.popupX + this.popupW / 2, this.popupY + this.popupH * 0.3);
   
       // Draw the top scores
       const topScoresList = this.getTopScores();

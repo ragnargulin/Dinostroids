@@ -11,5 +11,5 @@ interface IScene {
 //interface för att byta scen
 interface IChangeableScene {
   changeActiveScene(scene: IScene): void;
-
+  getMemory(): GameMemory;
 }

@@ -168,7 +168,7 @@ class InputNamePopup implements IScene {
         if (this.isFocused) {
             const cursorX = textX + textWidth(this.playerNameLocal) + 5;
             if (floor(frameCount / 30) % 2 === 0) {
-                stroke("white");
+                stroke("black");
                 line(cursorX, this.nameBoxY + 5, cursorX, this.nameBoxY + this.nameBoxH - 5);
             }
         }

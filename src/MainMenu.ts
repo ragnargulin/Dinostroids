@@ -53,8 +53,8 @@ class MainMenu implements IScene {
             soundeffects.buttonClick.play();
 
             // Reset memory when starting a new game
-            this.memory.playerName = "";
-            this.memory.playerScore = 0;
+            // this.memory.playerName = "";
+            // this.memory.playerScore = 0;
 
             this.dinoStroids.changeActiveScene(new InputNamePopup(this.dinoStroids));
         }

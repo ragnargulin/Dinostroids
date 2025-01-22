@@ -1,8 +1,8 @@
 class GameObject {
-  protected position: p5.Vector;
-  protected size: p5.Vector;
-  protected image: p5.Image;
-  protected velocity: p5.Vector;
+  public position: p5.Vector;
+  public size: p5.Vector;
+  public image: p5.Image;
+  public velocity: p5.Vector;
 
   // x, y, width, height
   constructor(
@@ -26,6 +26,7 @@ class GameObject {
 
     // this.position.add(this.velocity);
   }
+  
 
   public draw() {
     push();
@@ -38,4 +39,24 @@ class GameObject {
     );
     pop();
   }
+
+  public isOffCanvas(): boolean {
+    return this.position.y <- 100 || this.position.y > height;
+  }
+
+  public collidesWith(other: GameObject): boolean {
+    const left = this.position.x;
+    const right = this.position.x + this.size.x;
+    const top = this.position.y;
+    const bottom = this.position.y + this.size.y;
+
+    const otherLeft = other.position.x;
+    const otherRight = other.position.x + other.size.x;
+    const otherTop = other.position.y;
+    const otherBottom = other.position.y + other.size.y;
+
+    // Check if bounding boxes overlap
+    return !(right < otherLeft || left > otherRight || bottom < otherTop || top > otherBottom);
+  }
+
 }

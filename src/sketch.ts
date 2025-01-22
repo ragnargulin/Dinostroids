@@ -49,7 +49,7 @@ function preload() {
     moveImage: loadImage("../assets/images/Frame-17.png"),
     shootImage: loadImage("../assets/images/Frame-19.png"),
     hearts: loadImage("../assets/images/heart.png"),
-    laser: loadImage("../assets/images/heart.png")
+    laser: loadImage("../assets/images/regularLaser.gif")
   };
 }
 
@@ -95,6 +95,7 @@ function keyPressed() {
   }
 }
 
+
 /**
  * FORWARD MOUSEPRESSED
  * So your custom scenes can detect clicks (e.g. focusing a text box).
@@ -108,3 +109,12 @@ function mousePressed() {
   }
 }
 
+function keyReleased() {
+  if (game && typeof game.getActiveScene === "function") {
+    const scene = game.getActiveScene();
+    if (scene && typeof scene.keyReleased === "function") {
+      scene.keyReleased();
+    }
+  }
+}
+ 

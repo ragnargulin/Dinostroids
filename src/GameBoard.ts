@@ -102,5 +102,13 @@ class GameBoard implements IScene {
   
       pop();
     }
+//keyPressed används för att beräkna laser-logik. Den behövs både här och i sketch.ts. Går nog att lösa på ett snyggare sätt
+    public keyPressed(): void {
+        for (const gameObject of this.moveableObjects) {
+          if (gameObject instanceof Player) {
+            gameObject.handleKeyPress();
+          }
+        }
+      }
   }
   

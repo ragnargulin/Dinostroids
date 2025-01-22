@@ -4,8 +4,14 @@ class GameBoard implements IScene {
   private backgroundImage: p5.Image;
   private heartImage: p5.Image;
 
-  private menuButton: Button;
-  private dinoStroids: IChangeableScene;
+
+    private menuButton: Button;
+    private dinoStroids: IChangeableScene;
+    private score: number = 999;
+    private lives: number = 5;
+    private backgroundImage: p5.Image;
+    private heartImage: p5.Image;
+
 
   private moveableObjects: MoveableObject[];
 
@@ -31,8 +37,10 @@ class GameBoard implements IScene {
       console.log("Menu button clicked. (Add code to open a menu/popup here.)");
       this.dinoStroids.changeActiveScene(new InGameMenuPopup(this.dinoStroids));
     }
+
     for (const gameObject of this.moveableObjects) {
       gameObject.update();
+
     }
 
     this.moveableObjects = this.moveableObjects.filter((gameObject) => {
@@ -52,6 +60,13 @@ class GameBoard implements IScene {
   public draw(): void {
     imageMode(CORNER);
     image(this.backgroundImage, 0, 0, width, height);
+
+        //KEVIN
+        for (const gameObject of this.moveableObject) {
+            gameObject.draw();
+        }
+    }
+
 
     this.menuButton.draw();
 

@@ -1,10 +1,12 @@
 class MoveableObject  {
-    public position: p5.Vector;
-    public size: p5.Vector;
-    public image: p5.Image;
+    protected position: p5.Vector;
+    protected size: p5.Vector;
+    protected image: p5.Image;
     protected velocity: p5.Vector;
+    public isOffCanvas(): boolean {
+      return this.position.y <- 100 || this.position.y > height;
+    }
   
-    // x, y, width, height
     constructor(
       x: number,
       y: number,

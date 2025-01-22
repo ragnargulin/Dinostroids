@@ -72,8 +72,11 @@ class InGameMenuPopup implements IScene {
     }
 
     public draw(): void {
-        imageMode(CORNER);
-        image(this.backgroundImage, 0, 0, width, height);
+        // imageMode(CORNER);
+        // image(this.backgroundImage, 0, 0, width, height);
+
+        this.pausedBoard.draw();
+        
         push();
         fill(0, 0, 0, 100);
         rect(0, 0, width, height);

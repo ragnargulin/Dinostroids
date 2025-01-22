@@ -47,16 +47,11 @@ public draw() {
   push();  // Save the current transformation state
   
   if (!this.isFacingRight) {
-    // Flip the canvas horizontally for the player
-    translate(this.position.x + this.size.x, this.position.y); // Adjust for flipping
+    translate(this.position.x + this.size.x, this.position.y); // Adjust position for flipping
     scale(-1, 1); // Flip horizontally
   } else {
-    // Normal rendering
     translate(this.position.x, this.position.y);
   }
-  
-  // Draw the player image
   image(this.image, 0, 0, this.size.x, this.size.y);
-  
-  pop();  // Restore the original transformation state
+  pop(); 
 }}

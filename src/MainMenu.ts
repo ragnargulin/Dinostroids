@@ -10,16 +10,17 @@ class MainMenu implements IScene {
     private buttonClickedSound: p5.SoundFile;
     private musicOnOffBtn: Button;
     private isMusicPlaying: boolean;
+    private memory: GameMemory;
 
     constructor(dinoStroids: IChangeableScene) {
-        this.backgroundImage = loadImage("../assets/images/background.png");
-        this.gameTitle = loadImage("assets/images/gameTitle.png");
-        this.buttonClickedSound = loadSound("../assets/soundeffects/buttonClick.mp3");
-        this.backgroundMusic = loadSound("../assets/music/backgroundMusic.mp3");
-
-
-
         this.dinoStroids = dinoStroids;
+        this.memory = this.dinoStroids.getMemory();
+
+        this.backgroundImage = imageAssets.background;
+        this.gameTitle = imageAssets.gameTitle;
+        this.buttonClickedSound = soundeffects.buttonClick;
+        this.backgroundMusic = music.mystery;
+
         console.log("MainMenu created");
 
         this.aboutBtn = new Button("ABOUT", createVector(width * 0.5, height * 0.40));
@@ -28,6 +29,8 @@ class MainMenu implements IScene {
         this.musicOnOffBtn = new Button("MUSIC ON", createVector(width * 0.5, height * 0.70));
         this.isMusicPlaying = false;
         this.startGameBtn = new Button("START GAME", createVector(width * 0.5, height * 0.80), 200, 40, "green");
+    
+        // console.log("current name is: " + this.dinoStroids.playerName);
     }
 
     public update(): void {
@@ -48,6 +51,11 @@ class MainMenu implements IScene {
 
         if (this.startGameBtn.isClicked()) {
             soundeffects.buttonClick.play();
+
+            // Reset memory when starting a new game
+            this.memory.playerName = "";
+            this.memory.playerScore = 0;
+
             this.dinoStroids.changeActiveScene(new InputNamePopup(this.dinoStroids));
         }
         if (this.musicOnOffBtn.isClicked()) {
@@ -79,7 +87,6 @@ class MainMenu implements IScene {
         this.aboutBtn.draw();
         this.howToPlayBtn.draw();
         this.scoreBoardBtn.draw();
-        this.musicOnOffBtn.draw();
         this.musicOnOffBtn.draw();
         this.startGameBtn.draw();
     }

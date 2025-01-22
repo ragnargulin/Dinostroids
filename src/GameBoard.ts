@@ -1,6 +1,9 @@
 class GameBoard implements IScene {
+    private dinoStroids: IChangeableScene;
+    private memory: GameMemory;
 
-    private score: number = 999;
+    private localScore: number = 0;
+
     private lives: number = 5;
     private backgroundImage: p5.Image;
     private heartImage: p5.Image;
@@ -11,6 +14,7 @@ class GameBoard implements IScene {
 
     constructor(dinoStroids: IChangeableScene) {
         this.dinoStroids = dinoStroids;
+        this.memory = this.dinoStroids.getMemory();
 
         this.backgroundImage = imageAssets.background;
         this.heartImage = imageAssets.hearts;
@@ -21,14 +25,21 @@ class GameBoard implements IScene {
     }
 
     public update(): void {
+        this.localScore++;
+
+
         if (this.menuButton.isClicked()) {
             console.log("Menu button clicked. (Add code to open a menu/popup here.)");
+
+            this.memory.playerScore = this.localScore;
+
             this.dinoStroids.changeActiveScene(new InGameMenuPopup(this.dinoStroids));
         }
+
         for (const gameObject of this.moveableObject) {
             gameObject.update();
-          }
-      
+        }
+
 
     }
 
@@ -45,7 +56,7 @@ class GameBoard implements IScene {
         //KEVIN
         for (const gameObject of this.moveableObject) {
             gameObject.draw();
-          }
+        }
     }
 
     private drawPlayerInfo(): void {
@@ -58,7 +69,7 @@ class GameBoard implements IScene {
         const playerInfoX = width * 0.5;
         const playerInfoY = height * 0.03;
 
-        text(`Score: ${this.score}`, playerInfoX, playerInfoY);
+        text(`${this.memory.playerName} | Score: ${this.localScore}`, playerInfoX, playerInfoY);
         pop();
     }
 

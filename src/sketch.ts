@@ -7,8 +7,9 @@ let music: {
 let soundeffects: {
   laserSound: p5.SoundFile;
   buttonClick: p5.SoundFile;
+  powerupSound: p5.SoundFile;
 }
-let imageAssets: {  
+let imageAssets: {
   dino: p5.Image;
   background: p5.Image;
   gameTitle: p5.Image;
@@ -40,6 +41,7 @@ function preload() {
   soundeffects = {
     buttonClick: loadSound("../assets/soundeffects/buttonClick.mp3"),
     laserSound: loadSound("../assets/soundeffects/laserSound.mp3"),
+    powerupSound: loadSound("../assets/soundeffects/powerupSound.mp3"),
   }
   imageAssets = {
     dino: loadImage("../assets/images/dino.gif"),

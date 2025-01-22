@@ -16,6 +16,7 @@ class InGameMenuPopup implements IScene {
     private popupH: number;
 
     private pausedBoard: GameBoard;
+    private memory: GameMemory;
 
     constructor(dinoStroids: IChangeableScene, pausedBoard: GameBoard) {
 
@@ -23,6 +24,7 @@ class InGameMenuPopup implements IScene {
         this.backgroundMusic = music.mystery;
         this.dinoStroids = dinoStroids;
         this.pausedBoard = pausedBoard;
+        this.memory = this.dinoStroids.getMemory();
 
         this.quitBtn = new Button('QUIT', createVector(width * 0.5, height * 0.37));
         this.restartBtn = new Button('RESTART', createVector(width * 0.5, height * 0.48));
@@ -46,6 +48,8 @@ class InGameMenuPopup implements IScene {
     public update(): void {
         if (this.quitBtn.isClicked()) {
             soundeffects.buttonClick.play();
+
+            this.memory.addScore(this.memory.playerName, this.memory.playerScore);
             this.dinoStroids.changeActiveScene(new MainMenu(this.dinoStroids));
         }
         if (this.restartBtn.isClicked()) {

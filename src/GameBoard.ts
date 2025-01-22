@@ -1,5 +1,6 @@
 class GameBoard implements IScene {
 
+    private dinoStroids: IChangeableScene;
     private score: number = 999;
     private lives: number = 5;
     private backgroundImage: p5.Image;
@@ -27,9 +28,7 @@ class GameBoard implements IScene {
         }
         for (const gameObject of this.moveableObject) {
             gameObject.update();
-          }
-      
-
+        }
     }
 
     public draw(): void {
@@ -45,7 +44,7 @@ class GameBoard implements IScene {
         //KEVIN
         for (const gameObject of this.moveableObject) {
             gameObject.draw();
-          }
+        }
     }
 
     private drawPlayerInfo(): void {

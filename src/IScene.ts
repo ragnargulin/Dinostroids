@@ -4,6 +4,7 @@ interface IScene {
 
     mousePressed?(): void;
     keyPressed?(): void;
+    keyReleased?(): void;
     
 }
 

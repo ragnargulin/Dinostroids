@@ -1,4 +1,5 @@
 class GameBoard implements IScene {
+
     private dinoStroids: IChangeableScene;
     private memory: GameMemory;
 
@@ -7,12 +8,14 @@ class GameBoard implements IScene {
     private lives: number = 5;
     private backgroundImage: p5.Image;
     private heartImage: p5.Image;
-
+  
     private menuButton: Button;
-
-    private moveableObject: MoveableObject[];
-
+    private dinoStroids: IChangeableScene;
+  
+    private moveableObjects: MoveableObject[];
+  
     constructor(dinoStroids: IChangeableScene) {
+     
         this.dinoStroids = dinoStroids;
         this.memory = this.dinoStroids.getMemory();
 
@@ -21,10 +24,13 @@ class GameBoard implements IScene {
 
         this.menuButton = new Button("MENU", createVector(width * 0.1, height * 0.06), 100, 40, "maroon");
 
-        this.moveableObject = [new Player()];
-    }
+        //this.moveableObject = [new Player()];
+        this.moveableObjects = [new Player(this)];
 
+    }
+  
     public update(): void {
+
         this.localScore++;
 
 
@@ -39,11 +45,24 @@ class GameBoard implements IScene {
         for (const gameObject of this.moveableObject) {
             gameObject.update();
         }
-
+      
+      this.moveableObjects = this.moveableObjects.filter((gameObject) => {
+        if (gameObject.isOffCanvas()) {
+          return false; // Remove the object from the array
+        }
+        return true; // Keep the object in the array
+      });
+  
+      console.log(`Remaining moveable objects: ${this.moveableObjects.length}`);
+    }
+  
+    public addGameObject(SomeMoveableObjects: MoveableObject) {
+      this.moveableObjects.push(SomeMoveableObjects);
 
     }
-
+  
     public draw(): void {
+
         imageMode(CORNER);
         image(this.backgroundImage, 0, 0, width, height);
 
@@ -58,8 +77,9 @@ class GameBoard implements IScene {
             gameObject.draw();
         }
     }
-
+  
     private drawPlayerInfo(): void {
+
         push();
         fill("white");
         textAlign(CENTER, TOP);
@@ -72,23 +92,37 @@ class GameBoard implements IScene {
         text(`${this.memory.playerName} | Score: ${this.localScore}`, playerInfoX, playerInfoY);
         pop();
     }
-
+  
     private drawLives(): void {
-        push();
-        imageMode(CORNER);
-
-        const heartWidth = 35;
-        const heartHeight = 30;
-        const spacing = 5;
-
-        let heartPositionX = width * 0.9;
-        let heartPositionY = height * 0.02;
-
-        for (let i = 0; i < this.lives; i++) {
-            image(this.heartImage, heartPositionX - i * (heartWidth + spacing), heartPositionY, heartWidth, heartHeight);
-        }
-
-        pop();
+      push();
+      imageMode(CORNER);
+  
+      const heartWidth = 35;
+      const heartHeight = 30;
+      const spacing = 5;
+  
+      let heartPositionX = width * 0.9;
+      let heartPositionY = height * 0.02;
+  
+      for (let i = 0; i < this.lives; i++) {
+        image(
+          this.heartImage,
+          heartPositionX - i * (heartWidth + spacing),
+          heartPositionY,
+          heartWidth,
+          heartHeight
+        );
+      }
+  
+      pop();
     }
-
-}
+//keyPressed används för att beräkna laser-logik. Den behövs både här och i sketch.ts. Går nog att lösa på ett snyggare sätt
+    public keyPressed(): void {
+        for (const gameObject of this.moveableObjects) {
+          if (gameObject instanceof Player) {
+            gameObject.handleKeyPress();
+          }
+        }
+      }
+  }
+  

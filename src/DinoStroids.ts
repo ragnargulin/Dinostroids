@@ -3,6 +3,7 @@ class DinoStroids implements IChangeableScene {
     public memory: GameMemory;
 
     constructor() {
+
         this.activeScene = new MainMenu(this); //ändra scene här för att starta på den scenen. Bra om man ska jobba i specifik scen MainMenu är default
         
         this.memory = new GameMemory();

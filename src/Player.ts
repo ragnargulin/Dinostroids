@@ -29,6 +29,8 @@ class Player extends MoveableObject {
     this.position.x = constrain(this.position.x, 0, width - this.size.x);
   }
 
+public draw() {
+    push();
   
   private shootLaser() {
     soundeffects.laserSound.play();

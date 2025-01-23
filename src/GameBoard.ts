@@ -11,6 +11,8 @@ class GameBoard implements IScene {
 
     private menuButton: Button;
 
+    private powerSpawnTimer: number;
+  
     private moveableObjects: MoveableObject[];
 
     private astroSpawnTimer: number;
@@ -30,6 +32,7 @@ class GameBoard implements IScene {
 
         this.astroSpawnTimer = 0;
 
+        this.powerSpawnTimer = 0
     }
 
     public update(): void {
@@ -49,7 +52,21 @@ class GameBoard implements IScene {
             gameObject.update();
         }
 
-        this.spawnAstro();
+        this.PowerSpawnTimer();
+         this.spawnAstro();
+
+    }
+
+    private PowerSpawnTimer() {
+        if (this.powerSpawnTimer <= 0) {
+          const index = floor(random(1, 3));
+          const powerUps = [new Heart(), new Sheild(), new SuperLaser()]
+            this.moveableObject.push(powerUps[index]);
+          this.moveableObject.push(new Heart());
+          this.powerSpawnTimer = 400;
+        }
+    
+        this.powerSpawnTimer -= deltaTime;
 
         // this.moveableObjects = this.moveableObjects.filter((gameObject) => {
         //     if (gameObject.isOffCanvas()) {
@@ -96,7 +113,6 @@ class GameBoard implements IScene {
         this.drawPlayerInfo();
 
         this.drawLives();
-
     }
 
     private drawPlayerInfo(): void {

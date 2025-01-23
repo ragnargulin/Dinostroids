@@ -1,16 +1,16 @@
 class HowToPlayPopup implements IScene {
-    // Background & references
     private backgroundImage: p5.Image;
     private dinoStroids: IChangeableScene;
-
     private moveImage: p5.Image;
     private shootImage: p5.Image;
+    private powerupImage: p5.Image;
+    private asteroidtypeImage: p5.Image;
+    dino: p5.Image;
 
     // Multi-page instructions
     //private textParts: string[];
     private currentPage: number = 0;
 
-    // Buttons
     private closeButton: Button;
     private nextPageBtn: Button;
     private prevPageBtn: Button;
@@ -23,10 +23,12 @@ class HowToPlayPopup implements IScene {
 
     constructor(dinoStroids: IChangeableScene) {
         this.dinoStroids = dinoStroids;
-
         this.backgroundImage = imageAssets.background;
         this.moveImage = imageAssets.moveImage;
         this.shootImage = imageAssets.shootImage;
+        this.powerupImage = imageAssets.powerupImage;
+        this.asteroidtypeImage = imageAssets.asteroidtypeImage;
+        this.dino = imageAssets.dino;
 
         // popup box 
         this.popupX = width * 0.05;
@@ -40,7 +42,6 @@ class HowToPlayPopup implements IScene {
         //"Characters:\nDinosaur (player's character): If the dinosaur is hit by an object, it can take damage (if the object is an asteroid). The dinosaur can pick up power-ups (to increase its vitality).\n\nAsteroids (enemy): Fall from the sky. Their position on the x-axis is randomly generated. Depending on the asteroid type that hits the player, it causes varying amounts of damage.",
         //"Regular Asteroid: Disappears when hit by a laser shot. \n\n Big Asteroid: Breaks into two regular asteroids when hit by a laser shot or destroyed by a superlaser shot.\nSuper Asteroid: Requires five laser shots to be destroyed or one superlaser shot. Grants extra points."
         //];
-
 
         // Close (X) button
         const xButtonSize = 40;
@@ -60,7 +61,6 @@ class HowToPlayPopup implements IScene {
             soundeffects.buttonClick.play();
             this.dinoStroids.changeActiveScene(new MainMenu(this.dinoStroids));
         }
-
         if (this.nextPageBtn.isClicked()) {
             soundeffects.buttonClick.play();
 
@@ -74,7 +74,6 @@ class HowToPlayPopup implements IScene {
                 this.currentPage = 0;
             }
         }
-
     }
 
     public draw(): void {
@@ -122,14 +121,13 @@ class HowToPlayPopup implements IScene {
 
                 textSize(width * 0.02); //Brödtextens storlek
                 textStyle(NORMAL);
-                textAlign(LEFT, TOP);
+                textAlign(CENTER, TOP);
                 const page1Text =
                     "Arrow keys to move right and left. Space to shoot laser."
                 text(page1Text, textX, textY, textBlockWidth, textBlockHeight);
 
-                //Bilder på controls flyttade till den här sidan
                 imageMode(CENTER);
-                image(this.moveImage, width * 0.3, this.popupY + this.popupH * 0.5 + 20, width * 0.2, height * 0.2); //lAGT TILL + 20 för att kunna flytta ner bilderna 20px ner från deras tidigare position
+                image(this.moveImage, width * 0.3, this.popupY + this.popupH * 0.5 + 20, width * 0.2, height * 0.2); //Lagt till + 20 för att kunna flytta ner bilderna 20px ner från deras tidigare position
                 image(this.shootImage, width * 0.7, this.popupY + this.popupH * 0.5 + 20, width * 0.2, height * 0.2);
                 break;
 
@@ -139,12 +137,15 @@ class HowToPlayPopup implements IScene {
                 textAlign(CENTER);
                 text("Powerups", width * 0.5, this.popupY + 75);
 
-                textSize(width * 0.014);
+                textSize(width * 0.017);
                 textStyle(NORMAL);
                 textAlign(LEFT, TOP);
                 const page2Text =
-                    "Shield: A power-up that falls from the sky. The shield protects the player from an asteroid. If the shield is hit by an asteroid, it disappears, but the player remains unharmed. Only one shield can be carried at a time.\n\nSuperlaser: A power-up that falls from the sky.\n\nLives: Hearts in the form of lives fall from the sky. The full health is five hearts. When lives run out, the player dies."
+                    "Shield: Falls from the sky and protects the player from an asteroid. If the shield is hit by an asteroid, it disappears, but the player remains unharmed. Only one shield can be carried at a time.\n\nSuperlaser: Falls from the sky.\n\nHearts: Lives in the form of hearts fall from the sky.\nFull health is five hearts, when lives run out, the player dies."
                 text(page2Text, textX, textY, textBlockWidth, textBlockHeight);
+
+                imageMode(CENTER);
+                image(this.powerupImage, width * 0.3 + 410, this.popupY + this.popupH * 0.5 + 30, width * 0.2, height * 0.2); //Lagt till +410 för att flytta bilden mer åt höger
                 break;
 
             case 2: //Sida 3: Characters
@@ -153,12 +154,14 @@ class HowToPlayPopup implements IScene {
                 textAlign(CENTER);
                 text("Characters", width * 0.5, this.popupY + 75);
 
-                textSize(width * 0.014);
+                textSize(width * 0.017);
                 textStyle(NORMAL);
                 textAlign(LEFT, TOP);
                 const page3Text =
-                    "Dinosaur (player's character): If the dinosaur is hit by an object, it can take damage (if the object is an asteroid). The dinosaur can pick up power-ups (to increase its vitality).\n\nAsteroids (enemy): Fall from the sky. Their position on the x-axis is randomly generated. Depending on the asteroid type that hits the player, it causes varying amounts of damage."
+                    "Dino: The dinousaur, the player's character. When hit by an asteroid, Dino can take damage. Dino can pick up powerups to increase vitality.\n\nAsteroids: The enemy, falls from the sky and their position on the x-axis is randomly generated. Depending on the asteroid type that hits the player, it causes varying amounts of damage."
                 text(page3Text, textX, textY, textBlockWidth, textBlockHeight);
+                imageMode(CENTER);
+                image(this.dino, width * 0.3 + 200, this.popupY + this.popupH * 0.5 + 95, width * 0.2, height * 0.2);
                 break;
 
             case 3: //Sida 4: Asteroid Types
@@ -167,12 +170,15 @@ class HowToPlayPopup implements IScene {
                 textAlign(CENTER);
                 text("Asteroid Types", width * 0.5, this.popupY + 75);
 
-                textSize(width * 0.014);
+                textSize(width * 0.017);
                 textStyle(NORMAL);
                 textAlign(LEFT, TOP);
                 const page4Text =
-                    "Regular Asteroid: Disappears when hit by a laser shot. \n\n Big Asteroid: Breaks into two regular asteroids when hit by a laser shot or destroyed by a superlaser shot.\nSuper Asteroid: Requires five laser shots to be destroyed or one superlaser shot. Grants extra points."
+                    "Regular Asteroid: Disappears when hit by a laser shot. \n\n Big Asteroid: Breaks into two regular asteroids when hit\n by a laser shot or destroyed by a superlaser shot.\n\nSuper Asteroid: Requires five laser shots to be destroyed\n or one superlaser shot. Grants extra points."
                 text(page4Text, textX, textY, textBlockWidth, textBlockHeight);
+
+                imageMode(CENTER);
+                image(this.asteroidtypeImage, width * 0.3 + 410, this.popupY + this.popupH * 0.5, width * 0.2, height * 0.2);
                 break;
         }
         pop();

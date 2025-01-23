@@ -68,16 +68,17 @@ class GameBoard implements IScene {
         imageMode(CORNER);
         image(this.backgroundImage, 0, 0, width, height);
 
+        //KEVIN
+        for (const gameObject of this.moveableObjects) {
+            gameObject.draw();
+        }
+        
         this.menuButton.draw();
 
         this.drawPlayerInfo();
 
         this.drawLives();
 
-        //KEVIN
-        for (const gameObject of this.moveableObjects) {
-            gameObject.draw();
-        }
     }
 
     private drawPlayerInfo(): void {

@@ -29,16 +29,6 @@ class Player extends MoveableObject {
     this.position.x = constrain(this.position.x, 0, width - this.size.x);
   }
 
-  public draw() {
-    push();
-    if (keyIsDown(32) && !this.spaceKeyWasPressedInPrevFrame) {
-      this.shootLaser();
-    }
-
-    // Ensure the player stays within the canvas boundaries
-    this.position.x = constrain(this.position.x, 0, width - this.size.x);
-    this.spaceKeyWasPressedInPrevFrame = keyIsDown(32);
-  }
   
   private shootLaser() {
     soundeffects.laserSound.play();
@@ -55,6 +45,15 @@ class Player extends MoveableObject {
   }
 
   public draw() {
+    push();
+    if (keyIsDown(32) && !this.spaceKeyWasPressedInPrevFrame) {
+      this.shootLaser();
+    }
+
+    // Ensure the player stays within the canvas boundaries
+    this.position.x = constrain(this.position.x, 0, width - this.size.x);
+    this.spaceKeyWasPressedInPrevFrame = keyIsDown(32);
+
     push();  // Save the current transformation state
 
     if (!this.isFacingRight) {

@@ -75,7 +75,7 @@ function draw() {
   game.draw();
 }
 
-
+//keyPressed används för input och i spelbrädet. Flytta ner några nivåer
 function keyPressed() {
   if (game && typeof game.getActiveScene === "function") {
     const scene = game.getActiveScene();
@@ -84,7 +84,6 @@ function keyPressed() {
     }
   }
 }
-
 
 /**
  * FORWARD MOUSEPRESSED

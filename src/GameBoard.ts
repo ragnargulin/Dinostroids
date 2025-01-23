@@ -4,6 +4,7 @@ class GameBoard implements IScene {
     private memory: GameMemory;
 
     private localScore: number = 0;
+    private secondTicker: number = 0;
     private lives: number = 5;
 
     private backgroundImage: p5.Image;
@@ -26,12 +27,18 @@ class GameBoard implements IScene {
         //this.moveableObject = [new Player()];
         this.moveableObjects = [new Player(this)];
 
+
     }
 
     public update(): void {
 
-        this.localScore++;
-
+        this.secondTicker++; //variable needed to calc one second (because update is called 60 times per second)
+        
+        if (this.secondTicker >= 60) {
+            this.localScore++; //for each second, add one to the localScore
+            this.secondTicker = 0; // Reset the ticker
+        }
+      
 
         if (this.menuButton.isClicked()) {
             console.log("Menu button => pause game)");
@@ -118,12 +125,5 @@ class GameBoard implements IScene {
 
         pop();
     }
-    //keyPressed används för att beräkna laser-logik. Den behövs både här och i sketch.ts. Går nog att lösa på ett snyggare sätt
-    public keyPressed(): void {
-        for (const gameObject of this.moveableObjects) {
-            if (gameObject instanceof Player) {
-                gameObject.handleKeyPress();
-            }
-        }
-    }
+   
 }

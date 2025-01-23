@@ -1,11 +1,13 @@
 class Player extends MoveableObject {
   private isFacingRight: boolean;
   private gameBoard: GameBoard;
+  private spaceKeyWasPressedInPrevFrame: boolean;
 
   constructor(gameBoard: GameBoard) {
     super(width * 0.5 - 60, height - 120, 120, 120, 0, 0, imageAssets.dino);
     this.isFacingRight = true; // Initial facing direction
     this.gameBoard = gameBoard;
+    this.spaceKeyWasPressedInPrevFrame = keyIsDown(32);
   }
 
   public update() {
@@ -22,24 +24,17 @@ class Player extends MoveableObject {
       this.velocity.x = 0;
     }
 
+    if (keyIsDown(32) && !this.spaceKeyWasPressedInPrevFrame) {
+      this.shootLaser();
+    }
+
     // Ensure the player stays within the canvas boundaries
     this.position.x = constrain(this.position.x, 0, width - this.size.x);
+    this.spaceKeyWasPressedInPrevFrame = keyIsDown(32);
   }
-
-  /**
-   * Handle key presses specific to the Player.
-   * This method should be called when a key is pressed.
-   */
-  public handleKeyPress() {
-    if (keyCode === 32) {  // 32 is the key code for the space bar
-      console.log("Spacebar pressed");
-      this.shootLaser();
-      // Optionally, play laser sound
-      soundeffects.laserSound.play();
-    }
-  }
-
+  
   private shootLaser() {
+    soundeffects.laserSound.play();
     let laserStartX = this.position.x + this.size.x / 2 - 14 ;
 
     // Adjust laser position based on facing direction

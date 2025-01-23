@@ -70,7 +70,7 @@ class Button {
             mouseY > this.position.y - this.height / 2 &&
             mouseY < this.position.y + this.height / 2;
 
-        if (this.label === "START GAME" || this.label === "TRY AGAIN") {
+        if (this.label === "START GAME" || this.label === "TRY AGAIN" || this.label === "CONTINUE") {
             // Special styling for "START GAME" and "TRY AGAIN"
             fill("darkgreen");
             rect(this.position.x, this.position.y, this.width + 10, this.height - 10);

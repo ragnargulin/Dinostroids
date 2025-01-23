@@ -9,6 +9,8 @@ class GameBoard implements IScene {
     private menuButton: Button;
 
     private moveableObject: MoveableObject[];
+    private powerSpawnTimer: number;
+  
 
     constructor(dinoStroids: IChangeableScene) {
         this.dinoStroids = dinoStroids;
@@ -19,6 +21,7 @@ class GameBoard implements IScene {
         this.menuButton = new Button("MENU", createVector(width * 0.1, height * 0.06), 100, 40, "maroon");
 
         this.moveableObject = [new Player()];
+        this.powerSpawnTimer = 0
     }
 
     public update(): void {
@@ -29,12 +32,29 @@ class GameBoard implements IScene {
         for (const gameObject of this.moveableObject) {
             gameObject.update();
         }
+
+        this.PowerSpawnTimer();
     }
+
+    private PowerSpawnTimer() {
+        if (this.powerSpawnTimer <= 0) {
+          const index = floor(random(1, 3));
+          const powerUps = [new Heart(), new Sheild(), new SuperLaser()]
+            this.moveableObject.push(powerUps[index]);
+          this.moveableObject.push(new Heart());
+          this.powerSpawnTimer = 400;
+        }
+    
+        this.powerSpawnTimer -= deltaTime;
+      }
 
     public draw(): void {
         imageMode(CORNER);
         image(this.backgroundImage, 0, 0, width, height);
-
+        for (const gameObject of this.moveableObject) {
+            gameObject.draw();
+        }
+        
         this.menuButton.draw();
 
         this.drawPlayerInfo();
@@ -42,9 +62,6 @@ class GameBoard implements IScene {
         this.drawLives();
 
         //KEVIN
-        for (const gameObject of this.moveableObject) {
-            gameObject.draw();
-        }
     }
 
     private drawPlayerInfo(): void {

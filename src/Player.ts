@@ -26,7 +26,7 @@ class Player extends MoveableObject {
 
 
 public draw() {
-  
+    push();
     if (!this.isFacingRight) {
       // Flip the canvas horizontally for the player
       translate(this.position.x + this.size.x, this.position.y); // Adjust for flipping
@@ -38,5 +38,5 @@ public draw() {
   
     // Draw the image at the adjusted position
     image(this.image, 0, 0, this.size.x, this.size.y);
-  }
-}
+    pop();
+    }}

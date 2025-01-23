@@ -1,32 +1,37 @@
 class GameBoard implements IScene {
-  private dinoStroids: IChangeableScene;
-  private score: number = 999;
-  private lives: number = 5;
-  private backgroundImage: p5.Image;
-  private heartImage: p5.Image;
+    private dinoStroids: IChangeableScene;
+    private memory: GameMemory;
 
-  private menuButton: Button;
+    private localScore: number = 0;
+    private secondTicker: number = 0;
+    private lives: number = 5;
 
-  private moveableObject: MoveableObject[];
-  private astroSpawnTimer: number;
+    private backgroundImage: p5.Image;
+    private heartImage: p5.Image;
 
-  constructor(dinoStroids: IChangeableScene) {
-    this.dinoStroids = dinoStroids;
+    private menuButton: Button;
 
-    this.backgroundImage = imageAssets.background;
-    this.heartImage = imageAssets.hearts;
+    private moveableObjects: MoveableObject[];
 
-    this.menuButton = new Button(
-      "MENU",
-      createVector(width * 0.1, height * 0.06),
-      100,
-      40,
-      "maroon"
-    );
+    private astroSpawnTimer: number;
 
-    this.moveableObject = [new Player()];
-    this.astroSpawnTimer = 0;
+constructor(dinoStroids: IChangeableScene) {
+
+        this.dinoStroids = dinoStroids;
+        this.memory = this.dinoStroids.getMemory();
+
+        this.backgroundImage = imageAssets.background;
+        this.heartImage = imageAssets.hearts;
+
+        this.menuButton = new Button("| |", createVector(width * 0.1, height * 0.06), 40, 40, "maroon");
+
+        //this.moveableObject = [new Player()];
+        this.moveableObjects = [new Player(this)];
+  
+         this.astroSpawnTimer = 0;
   }
+
+
 
   public update(): void {
     if (this.menuButton.isClicked()) {
@@ -40,6 +45,47 @@ class GameBoard implements IScene {
     this.spawnAstro();
   }
 
+    }
+
+    public update(): void {
+
+        this.secondTicker++; //variable needed to calc one second (because update is called 60 times per second)
+        
+        if (this.secondTicker >= 60) {
+            this.localScore++; //for each second, add one to the localScore
+            this.secondTicker = 0; // Reset the ticker
+        }
+      
+
+        if (this.menuButton.isClicked()) {
+            console.log("Menu button => pause game)");
+
+            this.memory.playerScore = this.localScore;
+
+            this.dinoStroids.changeActiveScene(new InGameMenuPopup(this.dinoStroids, this));
+        }
+
+        for (const gameObject of this.moveableObjects) {
+            gameObject.update();
+        }
+
+        // this.moveableObjects = this.moveableObjects.filter((gameObject) => {
+        //     if (gameObject.isOffCanvas()) {
+        //         return false; // Remove the object from the array
+        //     }
+        //     return true; // Keep the object in the array
+        // });
+        this.moveableObjects = this.moveableObjects.filter((gameObject) => {
+            return !gameObject.isOffCanvas();
+        });
+
+        console.log(`Remaining moveable objects: ${this.moveableObjects.length}`);
+    }
+
+    public addGameObject(SomeMoveableObjects: MoveableObject) {
+        this.moveableObjects.push(SomeMoveableObjects);
+    }
+
   private spawnAstro() {
     if (this.astroSpawnTimer <= 0) {
       // const index = floor(random(0, 3));
@@ -52,13 +98,16 @@ class GameBoard implements IScene {
     this.astroSpawnTimer -= deltaTime;
   }
 
-  public draw(): void {
-    imageMode(CORNER);
-    image(this.backgroundImage, 0, 0, width, height);
+ 
+    public draw(): void {
 
-    for (const gameObject of this.moveableObject) {
-      gameObject.draw();
-    }
+        imageMode(CORNER);
+        image(this.backgroundImage, 0, 0, width, height);
+
+      //KEVIN
+        for (const gameObject of this.moveableObjects) {
+            gameObject.draw();
+        }
 
     this.menuButton.draw();
 
@@ -66,8 +115,10 @@ class GameBoard implements IScene {
 
     this.drawLives();
 
-    //KEVIN
   }
+       
+    }
+
 
   private drawPlayerInfo(): void {
     push();
@@ -78,10 +129,9 @@ class GameBoard implements IScene {
 
     const playerInfoX = width * 0.5;
     const playerInfoY = height * 0.03;
-
-    text(`Score: ${this.score}`, playerInfoX, playerInfoY);
-    pop();
-  }
+        text(`${this.memory.playerName} | Score: ${this.localScore}`, playerInfoX, playerInfoY);
+        pop();
+    }
 
   private drawLives(): void {
     push();
@@ -93,17 +143,15 @@ class GameBoard implements IScene {
 
     let heartPositionX = width * 0.9;
     let heartPositionY = height * 0.02;
-
-    for (let i = 0; i < this.lives; i++) {
-      image(
-        this.heartImage,
-        heartPositionX - i * (heartWidth + spacing),
-        heartPositionY,
-        heartWidth,
-        heartHeight
-      );
-    }
-
+        for (let i = 0; i < this.lives; i++) {
+            image(
+                this.heartImage,
+                heartPositionX - i * (heartWidth + spacing),
+                heartPositionY,
+                heartWidth,
+                heartHeight
+            );
+        }
     pop();
   }
 }

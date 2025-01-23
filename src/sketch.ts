@@ -18,18 +18,9 @@ let imageAssets: {
   astro: p5.Image;
   bigAstro: p5.Image;
   superAstro: p5.Image
+  laser: p5.Image;
 }
 
-// Placeholder Scoreboard array (global)
-let topScores: { name: string; score: number }[] = [
-  { name: "Ragnar", score: 5000 },
-  { name: "Ragnar", score: 3000 },
-  { name: "Ragnar", score: 7000 },
-  { name: "Catharina", score: 4500 },
-  { name: "CEO", score: 6000 }
-];
-
-let latestScore: number = 42;
 
 /**
  * Built in preload function in P5
@@ -54,6 +45,7 @@ function preload() {
     astro: loadImage("../assets/images/Astro.png"),
     bigAstro: loadImage("../assets/images/bigAstro.png"),
     superAstro: loadImage("../assets/images/superAstro.png"),
+    laser: loadImage("../assets/images/regularLaser.gif")
   };
 }
 
@@ -89,7 +81,7 @@ function draw() {
   game.draw();
 }
 
-
+//keyPressed används för input och i spelbrädet. Flytta ner några nivåer
 function keyPressed() {
   if (game && typeof game.getActiveScene === "function") {
     const scene = game.getActiveScene();
@@ -112,3 +104,12 @@ function mousePressed() {
   }
 }
 
+function keyReleased() {
+  if (game && typeof game.getActiveScene === "function") {
+    const scene = game.getActiveScene();
+    if (scene && typeof scene.keyReleased === "function") {
+      scene.keyReleased();
+    }
+  }
+}
+ 

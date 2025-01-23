@@ -1,6 +1,5 @@
 class InGameMenuPopup implements IScene {
-    private backgroundImage: p5.Image;
-    //private buttonClickedSound: p5.SoundFile;
+    
     private backgroundMusic: p5.SoundFile;
     private dinoStroids: IChangeableScene;
     private quitBtn: Button;
@@ -8,23 +7,26 @@ class InGameMenuPopup implements IScene {
     private continueBtn: Button;
     private musicOnOffBtn: Button;
     private isMusicPlaying: boolean;
-    private closeButton: Button;
+    // private closeButton: Button;
     // Popup coordinates
     private popupX: number;
     private popupY: number;
     private popupW: number;
     private popupH: number;
 
-    constructor(dinoStroids: IChangeableScene) {
+    private pausedBoard: GameBoard;
+    private memory: GameMemory;
 
-        this.backgroundImage = loadImage("../assets/images/background.png");
-        //this.buttonClickedSound = loadSound("../assets/soundeffects/buttonClick.mp3");
-        this.backgroundMusic = loadSound("../assets/music/backgroundMusic.mp3");
+    constructor(dinoStroids: IChangeableScene, pausedBoard: GameBoard) {
+
+        this.backgroundMusic = music.mystery;
         this.dinoStroids = dinoStroids;
+        this.pausedBoard = pausedBoard;
+        this.memory = this.dinoStroids.getMemory();
 
         this.quitBtn = new Button('QUIT', createVector(width * 0.5, height * 0.37));
         this.restartBtn = new Button('RESTART', createVector(width * 0.5, height * 0.48));
-        this.continueBtn = new Button('CONTINUE', createVector(width * 0.5, height * 0.59));
+        this.continueBtn = new Button('CONTINUE', createVector(width * 0.5, height * 0.59), 200, 40, 'green');
         this.musicOnOffBtn = new Button('MUSIC ON', createVector(width * 0.5, height * 0.70));
         this.isMusicPlaying = false;
 
@@ -34,39 +36,45 @@ class InGameMenuPopup implements IScene {
         this.popupW = width * 0.5;
         this.popupH = height * 0.6;
 
-        const xButtonSize = 40;
-        const xButtonCenterX = (this.popupX + this.popupW) - (xButtonSize / 2);
-        const xButtonCenterY = this.popupY + (xButtonSize / 2);
+        // const xButtonSize = 40;
+        // const xButtonCenterX = (this.popupX + this.popupW) - (xButtonSize / 2);
+        // const xButtonCenterY = this.popupY + (xButtonSize / 2);
 
-        this.closeButton = new Button("X", createVector(xButtonCenterX, xButtonCenterY), 40, 40);
+        // this.closeButton = new Button("X", createVector(xButtonCenterX, xButtonCenterY), 40, 40);
     }
 
     public update(): void {
         if (this.quitBtn.isClicked()) {
-            //this.buttonClickedSound.play();
             soundeffects.buttonClick.play();
+
+            this.memory.addScore(this.memory.playerName, this.memory.playerScore);
             this.dinoStroids.changeActiveScene(new MainMenu(this.dinoStroids));
         }
         if (this.restartBtn.isClicked()) {
             soundeffects.buttonClick.play();
-            this.dinoStroids.changeActiveScene(new MainMenu(this.dinoStroids));
+
+            this.dinoStroids.getMemory().playerScore = 0;
+            this.dinoStroids.changeActiveScene(new GameBoard(this.dinoStroids));
         }
         if (this.continueBtn.isClicked()) {
             soundeffects.buttonClick.play();
-            this.dinoStroids.changeActiveScene(new MainMenu(this.dinoStroids));
+            this.dinoStroids.changeActiveScene(this.pausedBoard);
         }
         if (this.musicOnOffBtn.isClicked()) {
             this.shiftMusicOnOff(); //Möjliggör att växla till MUSIC ON/OFF när man klickar
         }
-        if (this.closeButton.isClicked()) {
-            soundeffects.buttonClick.play();
-            this.dinoStroids.changeActiveScene(new MainMenu(this.dinoStroids));
-        }
+        // if (this.closeButton.isClicked()) {
+        //     soundeffects.buttonClick.play();
+        //     this.dinoStroids.changeActiveScene(new MainMenu(this.dinoStroids));
+        // }
     }
 
     public draw(): void {
-        imageMode(CORNER);
-        image(this.backgroundImage, 0, 0, width, height);
+        // imageMode(CORNER);
+        // image(this.backgroundImage, 0, 0, width, height);
+
+        this.pausedBoard.draw();
+        
         push();
         fill(0, 0, 0, 100);
         rect(0, 0, width, height);
@@ -84,7 +92,7 @@ class InGameMenuPopup implements IScene {
         this.musicOnOffBtn.draw();
         this.drawTextInsideBox();
 
-        this.closeButton.draw();
+        // this.closeButton.draw();
     }
 
     private drawTextInsideBox(): void {

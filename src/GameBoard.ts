@@ -56,6 +56,22 @@ class GameBoard implements IScene {
       gameObject.update();
     }
 
+    public draw(): void {
+
+        imageMode(CORNER);
+        image(this.backgroundImage, 0, 0, width, height);
+
+        //KEVIN
+        for (const gameObject of this.moveableObjects) {
+            gameObject.draw();
+        }
+        
+        this.menuButton.draw();
+
+        this.drawPlayerInfo();
+
+        this.drawLives();
+
     this.PowerSpawnTimer();
     this.spawnAstro();
   }
@@ -100,21 +116,7 @@ class GameBoard implements IScene {
     this.astroSpawnTimer -= deltaTime;
   }
 
-  public draw(): void {
-    imageMode(CORNER);
-    image(this.backgroundImage, 0, 0, width, height);
 
-    //KEVIN
-    for (const gameObject of this.moveableObjects) {
-      gameObject.draw();
-    }
-
-    this.menuButton.draw();
-
-    this.drawPlayerInfo();
-
-    this.drawLives();
-  }
 
   private drawPlayerInfo(): void {
     push();

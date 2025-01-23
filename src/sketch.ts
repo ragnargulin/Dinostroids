@@ -8,7 +8,7 @@ let soundeffects: {
   laserSound: p5.SoundFile;
   buttonClick: p5.SoundFile;
 }
-let imageAssets: {  
+let imageAssets: {
   dino: p5.Image;
   background: p5.Image;
   gameTitle: p5.Image;
@@ -16,6 +16,8 @@ let imageAssets: {
   shootImage: p5.Image;
   hearts: p5.Image;
   laser: p5.Image;
+  powerupImage: p5.Image;
+  asteroidtypeImage: p5.Image;
 }
 
 
@@ -39,7 +41,9 @@ function preload() {
     moveImage: loadImage("../assets/images/Frame-17.png"),
     shootImage: loadImage("../assets/images/Frame-19.png"),
     hearts: loadImage("../assets/images/heart.png"),
-    laser: loadImage("../assets/images/regularLaser.gif")
+    laser: loadImage("../assets/images/regularLaser.gif"),
+    powerupImage: loadImage("../assets/images/powerupsPrtSc.png"),
+    asteroidtypeImage: loadImage("../assets/images/asteroidtypesPrtSc.png"),
   };
 }
 
@@ -107,4 +111,3 @@ function keyReleased() {
     }
   }
 }
- 

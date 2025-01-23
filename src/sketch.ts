@@ -7,14 +7,20 @@ let music: {
 let soundeffects: {
   laserSound: p5.SoundFile;
   buttonClick: p5.SoundFile;
+  powerupSound: p5.SoundFile;
 }
-let imageAssets: {  
+let imageAssets: {
   dino: p5.Image;
   background: p5.Image;
   gameTitle: p5.Image;
   moveImage: p5.Image;
   shootImage: p5.Image;
   hearts: p5.Image;
+  sheild: p5.Image;
+  superLaser: p5.Image;
+  astro: p5.Image;
+  bigAstro: p5.Image;
+  superAstro: p5.Image
   laser: p5.Image;
 }
 
@@ -31,6 +37,7 @@ function preload() {
   soundeffects = {
     buttonClick: loadSound("../assets/soundeffects/buttonClick.mp3"),
     laserSound: loadSound("../assets/soundeffects/laserSound.mp3"),
+    powerupSound: loadSound("../assets/soundeffects/powerupSound.mp3"),
   }
   imageAssets = {
     dino: loadImage("../assets/images/dino.gif"),
@@ -39,6 +46,11 @@ function preload() {
     moveImage: loadImage("../assets/images/Frame-17.png"),
     shootImage: loadImage("../assets/images/Frame-19.png"),
     hearts: loadImage("../assets/images/heart.png"),
+    sheild: loadImage("../assets/images/Sheildpowerup.gif"),
+    superLaser: loadImage("../assets/images/superLaser.gif")
+    astro: loadImage("../assets/images/Astro.png"),
+    bigAstro: loadImage("../assets/images/bigAstro.png"),
+    superAstro: loadImage("../assets/images/superAstro.png"),
     laser: loadImage("../assets/images/regularLaser.gif")
   };
 }
@@ -75,7 +87,7 @@ function draw() {
   game.draw();
 }
 
-
+//keyPressed används för input och i spelbrädet. Flytta ner några nivåer
 function keyPressed() {
   if (game && typeof game.getActiveScene === "function") {
     const scene = game.getActiveScene();
@@ -84,7 +96,6 @@ function keyPressed() {
     }
   }
 }
-
 
 /**
  * FORWARD MOUSEPRESSED

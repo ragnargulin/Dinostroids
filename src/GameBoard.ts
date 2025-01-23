@@ -72,9 +72,10 @@ class GameBoard implements IScene {
 
         this.drawLives();
 
-    this.PowerSpawnTimer();
-    this.spawnAstro();
-  }
+      this.PowerSpawnTimer();
+      this.spawnAstro();
+      this.checkCollisions();
+    }
 
   private PowerSpawnTimer() {
     if (this.powerSpawnTimer <= 0) {
@@ -158,5 +159,46 @@ class GameBoard implements IScene {
     }
 
     pop();
+  }
+
+  private checkCollisions() {
+    // Check collisions between player and asteroids
+    const player = this.moveableObjects.find(obj => obj instanceof Player) as Player;
+    if (!player) return;
+
+    for (const obj of this.moveableObjects) {
+      if (obj instanceof RegularAsteroid) {
+        // Player collides with asteroids
+        if (player.collidesWith(obj)) {
+          console.log('Player collided with asteroid!');
+          // Handle player collision (e.g., decrease life, game over, etc.)
+        }
+        
+      }
+    }
+    for (const obj of this.moveableObjects) {
+      if (obj instanceof Laser) {
+        for (const asteroid of this.moveableObjects) {
+          if (asteroid instanceof RegularAsteroid) {
+            // Logga kollisionspositioner
+  
+            if (obj.collidesWith(asteroid)) {
+              console.log('Laser hit an asteroid!');
+              // Ta bort laser och asteroid från spelet
+              this.removeGameObject(obj);
+              this.removeGameObject(asteroid);
+              // Hantera poäng eller annan spel-logik här
+            }
+          }
+        }
+      }
+    }
+  }
+
+  private removeGameObject(moveableObjects: MoveableObject) {
+    const index = this.moveableObjects.indexOf(moveableObjects);
+    if (index !== -1) {
+      this.moveableObjects.splice(index, 1);
+    }
   }
 }

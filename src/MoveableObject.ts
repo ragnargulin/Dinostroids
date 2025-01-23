@@ -40,5 +40,23 @@ class MoveableObject  {
       );
       pop();
     }
+
+    public collidesWith(other: MoveableObject): boolean {
+      const left = this.position.x;
+      const right = this.position.x + this.size.x;
+      const top = this.position.y;
+      const bottom = this.position.y + this.size.y;
+  
+  
+      const otherLeft = other.position.x;
+      const otherRight = other.position.x + other.size.x;
+      const otherTop = other.position.y;
+      const otherBottom = other.position.y + other.size.y;
+  
+  
+      // Check if bounding boxes overlap
+      return !(right < otherLeft || left > otherRight || bottom < otherTop || top > otherBottom);
+    }
+    
   }
   

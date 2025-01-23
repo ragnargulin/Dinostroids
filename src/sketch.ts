@@ -15,6 +15,9 @@ let imageAssets: {
   moveImage: p5.Image;
   shootImage: p5.Image;
   hearts: p5.Image;
+  astro: p5.Image;
+  bigAstro: p5.Image;
+  superAstro: p5.Image
   laser: p5.Image;
 }
 
@@ -39,6 +42,9 @@ function preload() {
     moveImage: loadImage("../assets/images/Frame-17.png"),
     shootImage: loadImage("../assets/images/Frame-19.png"),
     hearts: loadImage("../assets/images/heart.png"),
+    astro: loadImage("../assets/images/Astro.png"),
+    bigAstro: loadImage("../assets/images/bigAstro.png"),
+    superAstro: loadImage("../assets/images/superAstro.png"),
     laser: loadImage("../assets/images/regularLaser.gif")
   };
 }

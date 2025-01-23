@@ -3,6 +3,7 @@ class Player extends MoveableObject {
   private gameBoard: GameBoard;
   private spaceKeyWasPressedInPrevFrame: boolean;
 
+
   constructor(gameBoard: GameBoard) {
     super(width * 0.5 - 60, height - 120, 120, 120, 0, 0, imageAssets.dino);
     this.isFacingRight = true; // Initial facing direction
@@ -24,6 +25,12 @@ class Player extends MoveableObject {
       this.velocity.x = 0;
     }
 
+    // Ensure the player stays within the canvas boundaries
+    this.position.x = constrain(this.position.x, 0, width - this.size.x);
+  }
+
+  public draw() {
+    push();
     if (keyIsDown(32) && !this.spaceKeyWasPressedInPrevFrame) {
       this.shootLaser();
     }
@@ -56,6 +63,7 @@ class Player extends MoveableObject {
     } else {
       translate(this.position.x, this.position.y);
     }
+
     image(this.image, 0, 0, this.size.x, this.size.y);
     pop(); 
   }

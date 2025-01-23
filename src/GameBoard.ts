@@ -1,5 +1,4 @@
 class GameBoard implements IScene {
-
     private dinoStroids: IChangeableScene;
     private memory: GameMemory;
 
@@ -14,7 +13,9 @@ class GameBoard implements IScene {
 
     private moveableObjects: MoveableObject[];
 
-    constructor(dinoStroids: IChangeableScene) {
+    private astroSpawnTimer: number;
+
+constructor(dinoStroids: IChangeableScene) {
 
         this.dinoStroids = dinoStroids;
         this.memory = this.dinoStroids.getMemory();
@@ -26,7 +27,23 @@ class GameBoard implements IScene {
 
         //this.moveableObject = [new Player()];
         this.moveableObjects = [new Player(this)];
+  
+         this.astroSpawnTimer = 0;
+  }
 
+
+
+  public update(): void {
+    if (this.menuButton.isClicked()) {
+      console.log("Menu button clicked. (Add code to open a menu/popup here.)");
+      this.dinoStroids.changeActiveScene(new InGameMenuPopup(this.dinoStroids));
+    }
+    for (const gameObject of this.moveableObject) {
+      gameObject.update();
+    }
+
+    this.spawnAstro();
+  }
 
     }
 
@@ -67,52 +84,65 @@ class GameBoard implements IScene {
 
     public addGameObject(SomeMoveableObjects: MoveableObject) {
         this.moveableObjects.push(SomeMoveableObjects);
-
     }
 
+  private spawnAstro() {
+    if (this.astroSpawnTimer <= 0) {
+      // const index = floor(random(0, 3));
+      // const asteroids = [new BigAsteroid(), new RegularAstoroid(), new SuperAsteroid()]
+      //   this.moveableObject.push(asteroids[index]);
+      this.moveableObject.push(new RegularAsteroid());
+      this.astroSpawnTimer = 400;
+    }
+
+    this.astroSpawnTimer -= deltaTime;
+  }
+
+ 
     public draw(): void {
 
         imageMode(CORNER);
         image(this.backgroundImage, 0, 0, width, height);
 
-        this.menuButton.draw();
-
-        this.drawPlayerInfo();
-
-        this.drawLives();
-
-        //KEVIN
+      //KEVIN
         for (const gameObject of this.moveableObjects) {
             gameObject.draw();
         }
+
+    this.menuButton.draw();
+
+    this.drawPlayerInfo();
+
+    this.drawLives();
+
+  }
+       
     }
 
-    private drawPlayerInfo(): void {
 
-        push();
-        fill("white");
-        textAlign(CENTER, TOP);
-        textFont("Pixelify Sans", 24);
-        textStyle(BOLD);
+  private drawPlayerInfo(): void {
+    push();
+    fill("white");
+    textAlign(CENTER, TOP);
+    textFont("Pixelify Sans", 24);
+    textStyle(BOLD);
 
-        const playerInfoX = width * 0.5;
-        const playerInfoY = height * 0.03;
-
+    const playerInfoX = width * 0.5;
+    const playerInfoY = height * 0.03;
         text(`${this.memory.playerName} | Score: ${this.localScore}`, playerInfoX, playerInfoY);
         pop();
     }
 
-    private drawLives(): void {
-        push();
-        imageMode(CORNER);
+  private drawLives(): void {
+    push();
+    imageMode(CORNER);
 
-        const heartWidth = 35;
-        const heartHeight = 30;
-        const spacing = 5;
+    const heartWidth = 35;
+    const heartHeight = 30;
+    const spacing = 5;
 
-        let heartPositionX = width * 0.9;
-        let heartPositionY = height * 0.02;
-
+    let heartPositionX = width * 0.9;
+    let heartPositionY = height * 0.02;
         for (let i = 0; i < this.lives; i++) {
             image(
                 this.heartImage,
@@ -122,8 +152,6 @@ class GameBoard implements IScene {
                 heartHeight
             );
         }
-
-        pop();
-    }
-   
+    pop();
+  }
 }

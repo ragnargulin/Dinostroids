@@ -7,7 +7,7 @@ class HowToPlayPopup implements IScene {
     private shootImage: p5.Image;
 
     // Multi-page instructions
-    private textParts: string[];
+    //private textParts: string[];
     private currentPage: number = 0;
 
     // Buttons
@@ -35,11 +35,11 @@ class HowToPlayPopup implements IScene {
         this.popupH = height * 0.60;
 
         // Create an array of multiple pages of text
-        this.textParts = [
-            "Controls:\nArrow keys to move right and left. Space to shoot laser.\n\nPowerups:\nShield: A power-up that falls from the sky. The shield protects the player from an asteroid. If the shield is hit by an asteroid, it disappears, but the player remains unharmed. Only one shield can be carried at a time.\n\nSuperlaser: A power-up that falls from the sky.\n\nLives: Hearts in the form of lives fall from the sky. The full health is five hearts. When lives run out, the player dies.",
-            "Characters:\nDinosaur (player's character): If the dinosaur is hit by an object, it can take damage (if the object is an asteroid). The dinosaur can pick up power-ups (to increase its vitality).\n\nAsteroids (enemy): Fall from the sky. Their position on the x-axis is randomly generated. Depending on the asteroid type that hits the player, it causes varying amounts of damage.",
-            "Regular Asteroid: Disappears when hit by a laser shot. \n\n Big Asteroid: Breaks into two regular asteroids when hit by a laser shot or destroyed by a superlaser shot.\nSuper Asteroid: Requires five laser shots to be destroyed or one superlaser shot. Grants extra points."
-        ];
+        //this.textParts = [
+        //"Controls:\nArrow keys to move right and left. Space to shoot laser.\n\nPowerups:\nShield: A power-up that falls from the sky. The shield protects the player from an asteroid. If the shield is hit by an asteroid, it disappears, but the player remains unharmed. Only one shield can be carried at a time.\n\nSuperlaser: A power-up that falls from the sky.\n\nLives: Hearts in the form of lives fall from the sky. The full health is five hearts. When lives run out, the player dies.",
+        //"Characters:\nDinosaur (player's character): If the dinosaur is hit by an object, it can take damage (if the object is an asteroid). The dinosaur can pick up power-ups (to increase its vitality).\n\nAsteroids (enemy): Fall from the sky. Their position on the x-axis is randomly generated. Depending on the asteroid type that hits the player, it causes varying amounts of damage.",
+        //"Regular Asteroid: Disappears when hit by a laser shot. \n\n Big Asteroid: Breaks into two regular asteroids when hit by a laser shot or destroyed by a superlaser shot.\nSuper Asteroid: Requires five laser shots to be destroyed or one superlaser shot. Grants extra points."
+        //];
 
 
         // Close (X) button
@@ -106,29 +106,62 @@ class HowToPlayPopup implements IScene {
         push();
         fill("black");
         textFont("Pixelify Sans");
-        textSize(width * 0.02); // scale text
-        textAlign(CENTER, TOP);
 
-        // Where we place text inside the popup
-        const textX = this.popupX + (this.popupW * 0.05);
-        const textY = this.popupY + (this.popupH * 0.05);
-        const boxW = this.popupW * 0.90;
-        const boxH = this.popupH * 0.90;
+        //Placering och mått för textblocken, nu samma som i AboutPopup
+        const textX = this.popupX + (this.popupW * 0.05); // Flytta texten lite från popup-kanten
+        const textY = this.popupY + (this.popupH * 0.30); // Skapa mellanrum under popup-rubrik
+        const textBlockWidth = this.popupW * 0.9;        // Textbredd justeras efter popup-bredd
+        const textBlockHeight = this.popupH * 0.7;       // Höjdbegränsning för text
 
-        if (this.currentPage < 3) {
-            textWrap(WORD);
-            text(this.textParts[this.currentPage], textX, textY, boxW, boxH);
-        } else {
-            this.drawImages();
+        switch (this.currentPage) {
+            case 0: //Sida 1: Controls & Powerups
+                textSize(width * 0.05); //Rubrikstorlek
+                textStyle(BOLD);
+                textAlign(CENTER);
+                text("Controls & Powerups", width * 0.5, this.popupY + 75); //+75 flyttar ner rubriken från popup-kanten
+
+                textSize(width * 0.014); //Brödtextens storlek
+                textStyle(NORMAL);
+                textAlign(LEFT, TOP);
+                const page1Text =
+                    "Controls:\nArrow keys to move left and right. Space to shoot laser.\n\n" +
+                    "Powerups:\nShield: Protects you from one asteroid.\nSuperlaser: Destroys multiple asteroids.\nLives: Gain extra hearts.";
+                text(page1Text, textX, textY, textBlockWidth, textBlockHeight);
+                break;
+
+            case 1: //Sida 2: Characters
+                textSize(width * 0.05);
+                textStyle(BOLD);
+                textAlign(CENTER);
+                text("Characters", width * 0.5, this.popupY + 75);
+
+                textSize(width * 0.014);
+                textStyle(NORMAL);
+                textAlign(LEFT, TOP);
+                const page2Text =
+                    "Dinosaur (Player): Can take damage from asteroids or pick up powerups.\n\n" +
+                    "Asteroids (Enemy): Fall from the sky, causing damage to the player.";
+                text(page2Text, textX, textY, textBlockWidth, textBlockHeight);
+                break;
+
+            case 2: //Sida 3: Asteroid Types
+                textSize(width * 0.05);
+                textStyle(BOLD);
+                textAlign(CENTER);
+                text("Asteroid Types", width * 0.5, this.popupY + 75);
+
+                textSize(width * 0.014);
+                textStyle(NORMAL);
+                textAlign(LEFT, TOP);
+                const page3Text =
+                    "Regular Asteroid: Disappears when hit by a laser.\n\n" +
+                    "Big Asteroid: Breaks into two smaller asteroids.\n\n" +
+                    "Super Asteroid: Requires five laser shots to destroy.";
+                text(page3Text, textX, textY, textBlockWidth, textBlockHeight);
+                break;
         }
         pop();
     }
-
-    private drawImages(): void {
-        imageMode(CENTER);
-
-        image(this.moveImage, width * 0.3, height * 0.45, width * 0.3, height * 0.25);
-
-        image(this.shootImage, width * 0.7, height * 0.45, width * 0.3, height * 0.25);
-    }
 }
+
+

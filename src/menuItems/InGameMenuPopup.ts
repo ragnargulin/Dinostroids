@@ -1,6 +1,5 @@
 class InGameMenuPopup implements IScene {
-    private backgroundImage: p5.Image;
-    //private buttonClickedSound: p5.SoundFile;
+    
     private backgroundMusic: p5.SoundFile;
     private dinoStroids: IChangeableScene;
     private quitBtn: Button;
@@ -20,7 +19,6 @@ class InGameMenuPopup implements IScene {
 
     constructor(dinoStroids: IChangeableScene, pausedBoard: GameBoard) {
 
-        this.backgroundImage = imageAssets.background;
         this.backgroundMusic = music.mystery;
         this.dinoStroids = dinoStroids;
         this.pausedBoard = pausedBoard;
@@ -72,8 +70,11 @@ class InGameMenuPopup implements IScene {
     }
 
     public draw(): void {
-        imageMode(CORNER);
-        image(this.backgroundImage, 0, 0, width, height);
+        // imageMode(CORNER);
+        // image(this.backgroundImage, 0, 0, width, height);
+
+        this.pausedBoard.draw();
+        
         push();
         fill(0, 0, 0, 100);
         rect(0, 0, width, height);

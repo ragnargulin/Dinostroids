@@ -22,6 +22,8 @@ let imageAssets: {
   bigAstro: p5.Image;
   superAstro: p5.Image
   laser: p5.Image;
+  powerupImage: p5.Image;
+  asteroidtypeImage: p5.Image;
 }
 
 
@@ -46,6 +48,9 @@ function preload() {
     moveImage: loadImage("../assets/images/Frame-17.png"),
     shootImage: loadImage("../assets/images/Frame-19.png"),
     hearts: loadImage("../assets/images/heart.png"),
+    laser: loadImage("../assets/images/regularLaser.gif"),
+    powerupImage: loadImage("../assets/images/powerupsPrtSc.png"),
+    asteroidtypeImage: loadImage("../assets/images/asteroidtypesPrtSc.png"),
     sheild: loadImage("../assets/images/Sheildpowerup.gif"),
     superLaser: loadImage("../assets/images/superLaser.gif")
     astro: loadImage("../assets/images/Astro.png"),
@@ -118,4 +123,3 @@ function keyReleased() {
     }
   }
 }
- 

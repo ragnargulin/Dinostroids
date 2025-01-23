@@ -1,16 +1,13 @@
 class HowToPlayPopup implements IScene {
-    // Background & references
     private backgroundImage: p5.Image;
     private dinoStroids: IChangeableScene;
-
     private moveImage: p5.Image;
     private shootImage: p5.Image;
+    private powerupImage: p5.Image;
+    private asteroidtypeImage: p5.Image;
+    private dino: p5.Image;
 
-    // Multi-page instructions
-    private textParts: string[];
     private currentPage: number = 0;
-
-    // Buttons
     private closeButton: Button;
     private nextPageBtn: Button;
     private prevPageBtn: Button;
@@ -23,112 +20,155 @@ class HowToPlayPopup implements IScene {
 
     constructor(dinoStroids: IChangeableScene) {
         this.dinoStroids = dinoStroids;
-
         this.backgroundImage = imageAssets.background;
         this.moveImage = imageAssets.moveImage;
         this.shootImage = imageAssets.shootImage;
+        this.powerupImage = imageAssets.powerupImage;
+        this.asteroidtypeImage = imageAssets.asteroidtypeImage;
+        this.dino = imageAssets.dino;
 
-        // popup box 
+        //Popup box 
         this.popupX = width * 0.05;
         this.popupY = height * 0.20;
         this.popupW = width * 0.90;
         this.popupH = height * 0.60;
 
-        // Create an array of multiple pages of text
-        this.textParts = [
-            "Controls:\nArrow keys to move right and left. Space to shoot laser.\n\nPowerups:\nShield: A power-up that falls from the sky. The shield protects the player from an asteroid. If the shield is hit by an asteroid, it disappears, but the player remains unharmed. Only one shield can be carried at a time.\n\nSuperlaser: A power-up that falls from the sky.\n\nLives: Hearts in the form of lives fall from the sky. The full health is five hearts. When lives run out, the player dies.",
-            "Characters:\nDinosaur (player's character): If the dinosaur is hit by an object, it can take damage (if the object is an asteroid). The dinosaur can pick up power-ups (to increase its vitality).\n\nAsteroids (enemy): Fall from the sky. Their position on the x-axis is randomly generated. Depending on the asteroid type that hits the player, it causes varying amounts of damage.",
-            "Regular Asteroid: Disappears when hit by a laser shot. \n\n Big Asteroid: Breaks into two regular asteroids when hit by a laser shot or destroyed by a superlaser shot.\nSuper Asteroid: Requires five laser shots to be destroyed or one superlaser shot. Grants extra points."
-        ];
-
-
-        // Close (X) button
+        //Close (X) button
         const xButtonSize = 40;
         const closeButtonX = (this.popupX + this.popupW) - (xButtonSize / 2);
         const closeButtonY = this.popupY + (xButtonSize / 2);
         this.closeButton = new Button("X", createVector(closeButtonX, closeButtonY), xButtonSize, xButtonSize);
-
-        // Next button
+        //Next button
         this.nextPageBtn = new Button("Next", createVector(width * 0.8, height * 0.7));
-        // Prev button
+        //Prev button
         this.prevPageBtn = new Button("Prev", createVector(width * 0.2, height * 0.7));
     }
 
     public update(): void {
-        // Close button
         if (this.closeButton.isClicked()) {
             soundeffects.buttonClick.play();
             this.dinoStroids.changeActiveScene(new MainMenu(this.dinoStroids));
         }
-
         if (this.nextPageBtn.isClicked()) {
             soundeffects.buttonClick.play();
-
             this.currentPage = (this.currentPage + 1) % 4;
         }
-        if (this.prevPageBtn.isClicked()) {
+        if (this.currentPage > 0 && this.prevPageBtn.isClicked()) { //Här kontrolleras att currentPage inte är 0 och om Prev-btn blivit klickad. Villkoret bara sant om båda är sanna samtidigt &&. currentPage--, innebär att värdet minskas med 1, så om vi är på sida två och klickar på Prev, minskar this.currentPage till 1. 
             soundeffects.buttonClick.play();
-
             this.currentPage--;
-            if (this.currentPage < 0) {
-                this.currentPage = 0;
-            }
         }
-
     }
 
     public draw(): void {
         imageMode(CORNER);
         image(this.backgroundImage, 0, 0, width, height);
-
-        // Dim the background with a transparent overlay
+        //Dim the background with a transparent overlay
         push();
         fill(0, 0, 0, 100);
         rect(0, 0, width, height);
         pop();
 
-        // popup box
+        //Popup box
         push();
         fill("lightgrey");
         rect(this.popupX, this.popupY, this.popupW, this.popupH);
         pop();
 
-        // Draw the current page (either text or images)
+        //Draw the current page (either text or images)
         this.drawCurrentPage();
 
-        // Draw buttons
+        //Draw buttons
         this.closeButton.draw();
         this.nextPageBtn.draw();
-        this.prevPageBtn.draw();
+
+        if (this.currentPage > 0) { //Ritar bara ut Prev-btn när currentPage inte är 0
+            this.prevPageBtn.draw();
+        }
     }
 
     private drawCurrentPage(): void {
         push();
         fill("black");
         textFont("Pixelify Sans");
-        textSize(width * 0.02); // scale text
-        textAlign(CENTER, TOP);
 
-        // Where we place text inside the popup
-        const textX = this.popupX + (this.popupW * 0.05);
-        const textY = this.popupY + (this.popupH * 0.05);
-        const boxW = this.popupW * 0.90;
-        const boxH = this.popupH * 0.90;
+        //Placering och mått för textblocken, nu samma som i AboutPopup
+        const textX = this.popupX + (this.popupW * 0.05); // Flytta texten lite från popup-kanten
+        const textY = this.popupY + (this.popupH * 0.27); // Skapa mellanrum under popup-rubrik
+        const textBlockWidth = this.popupW * 0.9;        // Textbredd justeras efter popup-bredd
+        const textBlockHeight = this.popupH * 0.7;       // Höjdbegränsning för text
 
-        if (this.currentPage < 3) {
-            textWrap(WORD);
-            text(this.textParts[this.currentPage], textX, textY, boxW, boxH);
-        } else {
-            this.drawImages();
+        switch (this.currentPage) {
+            case 0: //Sida 1: Controls
+                textSize(width * 0.05); //Rubrikstorlek
+                textStyle(BOLD);
+                textAlign(CENTER);
+                text("Controls", width * 0.5, this.popupY + 75); //+75 flyttar ner rubriken från popup-kanten
+
+                textSize(width * 0.02); //Brödtextens storlek
+                textStyle(NORMAL);
+                textAlign(CENTER);
+                const page1Text =
+                    "\n\n \n\n \n\nArrow keys to move right and left. Space to shoot laser."
+                text(page1Text, textX, textY, textBlockWidth, textBlockHeight);
+
+                imageMode(CENTER);
+                image(this.moveImage, width * 0.3, this.popupY + this.popupH * 0.5 - 40, width * 0.2, height * 0.2); //Lagt till + 20 för att kunna flytta ner bilderna 20px ner från deras tidigare position
+                image(this.shootImage, width * 0.7, this.popupY + this.popupH * 0.5 - 40, width * 0.2, height * 0.2);
+                break;
+
+            case 1: //Sida 2: Powerups
+                textSize(width * 0.05);
+                textStyle(BOLD);
+                textAlign(CENTER);
+                text("Powerups", width * 0.5, this.popupY + 75);
+
+                textSize(width * 0.017);
+                textStyle(NORMAL);
+                textAlign(LEFT, TOP);
+                const page2Text =
+                    "Shield: Falls from the sky and protects the player from an asteroid. If the shield is hit by an asteroid, it disappears, but the player remains unharmed. Only one shield can be carried at a time.\n\nSuperlaser: Falls from the sky, one shot with the superlaser\n can destroy the Superasteroid.\n\nHearts: Lives in the form of hearts fall from the sky.\nFull health is five hearts, when lives run out, the player dies."
+                text(page2Text, textX, textY, textBlockWidth, textBlockHeight);
+
+                imageMode(CENTER);
+                image(this.powerupImage, width * 0.3 + 410, this.popupY + this.popupH * 0.5 + 30, width * 0.2, height * 0.2); //Lagt till +410 för att flytta bilden mer åt höger
+                break;
+
+            case 2: //Sida 3: Characters
+                textSize(width * 0.05);
+                textStyle(BOLD);
+                textAlign(CENTER);
+                text("Characters", width * 0.5, this.popupY + 75);
+
+                textSize(width * 0.017);
+                textStyle(NORMAL);
+                textAlign(LEFT, TOP);
+                const page3Text =
+                    "Dino: The dinousaur, the player's character. When hit by an asteroid, Dino can take damage. Dino can pick up powerups to increase vitality.\n\nAsteroids: The enemy, falls from the sky and their position on the x-axis is randomly generated. Depending on the asteroid type that hits the player, it causes varying amounts of damage."
+                text(page3Text, textX, textY, textBlockWidth, textBlockHeight);
+
+                imageMode(CENTER);
+                image(this.dino, width * 0.3 + 200, this.popupY + this.popupH * 0.5 + 95, width * 0.2, height * 0.2);
+                break;
+
+            case 3: //Sida 4: Asteroid Types
+                textSize(width * 0.05);
+                textStyle(BOLD);
+                textAlign(CENTER);
+                text("Asteroid Types", width * 0.5, this.popupY + 75);
+
+                textSize(width * 0.017);
+                textStyle(NORMAL);
+                textAlign(LEFT, TOP);
+                const page4Text =
+                    "Regular Asteroid: Disappears when hit by a laser shot. \n\n Big Asteroid: Breaks into two regular asteroids when hit\n by a laser shot or destroyed by a superlaser shot.\n\nSuper Asteroid: Requires five laser shots to be destroyed\n or one superlaser shot. Grants extra points."
+                text(page4Text, textX, textY, textBlockWidth, textBlockHeight);
+
+                imageMode(CENTER);
+                image(this.asteroidtypeImage, width * 0.3 + 410, this.popupY + this.popupH * 0.5, width * 0.2, height * 0.2);
+                break;
         }
         pop();
     }
-
-    private drawImages(): void {
-        imageMode(CENTER);
-
-        image(this.moveImage, width * 0.3, height * 0.45, width * 0.3, height * 0.25);
-
-        image(this.shootImage, width * 0.7, height * 0.45, width * 0.3, height * 0.25);
-    }
 }
+
+

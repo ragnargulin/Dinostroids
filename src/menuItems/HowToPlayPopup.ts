@@ -124,8 +124,7 @@ class HowToPlayPopup implements IScene {
                 textStyle(NORMAL);
                 textAlign(LEFT, TOP);
                 const page1Text =
-                    "Controls:\nArrow keys to move left and right. Space to shoot laser.\n\n" +
-                    "Powerups:\nShield: Protects you from one asteroid.\nSuperlaser: Destroys multiple asteroids.\nLives: Gain extra hearts.";
+                    "Controls: Arrow keys to move right and left. Space to shoot laser.\n\nPowerups:\nShield: A power-up that falls from the sky. The shield protects the player from an asteroid. If the shield is hit by an asteroid, it disappears, but the player remains unharmed. Only one shield can be carried at a time.\n\nSuperlaser: A power-up that falls from the sky.\n\nLives: Hearts in the form of lives fall from the sky. The full health is five hearts. When lives run out, the player dies."
                 text(page1Text, textX, textY, textBlockWidth, textBlockHeight);
                 break;
 
@@ -139,8 +138,8 @@ class HowToPlayPopup implements IScene {
                 textStyle(NORMAL);
                 textAlign(LEFT, TOP);
                 const page2Text =
-                    "Dinosaur (Player): Can take damage from asteroids or pick up powerups.\n\n" +
-                    "Asteroids (Enemy): Fall from the sky, causing damage to the player.";
+                    "Dinosaur (player's character): If the dinosaur is hit by an object, it can take damage (if the object is an asteroid). The dinosaur can pick up power-ups (to increase its vitality).\n\nAsteroids (enemy): Fall from the sky. Their position on the x-axis is randomly generated. Depending on the asteroid type that hits the player, it causes varying amounts of damage."
+
                 text(page2Text, textX, textY, textBlockWidth, textBlockHeight);
                 break;
 
@@ -154,9 +153,9 @@ class HowToPlayPopup implements IScene {
                 textStyle(NORMAL);
                 textAlign(LEFT, TOP);
                 const page3Text =
-                    "Regular Asteroid: Disappears when hit by a laser.\n\n" +
-                    "Big Asteroid: Breaks into two smaller asteroids.\n\n" +
-                    "Super Asteroid: Requires five laser shots to destroy.";
+                    "Regular Asteroid: Disappears when hit by a laser shot. \n\n Big Asteroid: Breaks into two regular asteroids when hit by a laser shot or destroyed by a superlaser shot.\nSuper Asteroid: Requires five laser shots to be destroyed or one superlaser shot. Grants extra points."
+
+
                 text(page3Text, textX, textY, textBlockWidth, textBlockHeight);
                 break;
         }

@@ -114,21 +114,40 @@ class HowToPlayPopup implements IScene {
         const textBlockHeight = this.popupH * 0.7;       // Höjdbegränsning för text
 
         switch (this.currentPage) {
-            case 0: //Sida 1: Controls & Powerups
+            case 0: //Sida 1: Controls
                 textSize(width * 0.05); //Rubrikstorlek
                 textStyle(BOLD);
                 textAlign(CENTER);
-                text("Controls & Powerups", width * 0.5, this.popupY + 75); //+75 flyttar ner rubriken från popup-kanten
+                text("Controls", width * 0.5, this.popupY + 75); //+75 flyttar ner rubriken från popup-kanten
 
-                textSize(width * 0.014); //Brödtextens storlek
+                textSize(width * 0.02); //Brödtextens storlek
                 textStyle(NORMAL);
                 textAlign(LEFT, TOP);
                 const page1Text =
-                    "Controls: Arrow keys to move right and left. Space to shoot laser.\n\nPowerups:\nShield: A power-up that falls from the sky. The shield protects the player from an asteroid. If the shield is hit by an asteroid, it disappears, but the player remains unharmed. Only one shield can be carried at a time.\n\nSuperlaser: A power-up that falls from the sky.\n\nLives: Hearts in the form of lives fall from the sky. The full health is five hearts. When lives run out, the player dies."
+                    "Arrow keys to move right and left. Space to shoot laser."
                 text(page1Text, textX, textY, textBlockWidth, textBlockHeight);
+
+                //Bilder på controls flyttade till den här sidan
+                imageMode(CENTER);
+                image(this.moveImage, width * 0.3, this.popupY + this.popupH * 0.5 + 20, width * 0.2, height * 0.2); //lAGT TILL + 20 för att kunna flytta ner bilderna 20px ner från deras tidigare position
+                image(this.shootImage, width * 0.7, this.popupY + this.popupH * 0.5 + 20, width * 0.2, height * 0.2);
                 break;
 
-            case 1: //Sida 2: Characters
+            case 1: //Sida 2: Powerups
+                textSize(width * 0.05);
+                textStyle(BOLD);
+                textAlign(CENTER);
+                text("Powerups", width * 0.5, this.popupY + 75);
+
+                textSize(width * 0.014);
+                textStyle(NORMAL);
+                textAlign(LEFT, TOP);
+                const page2Text =
+                    "Shield: A power-up that falls from the sky. The shield protects the player from an asteroid. If the shield is hit by an asteroid, it disappears, but the player remains unharmed. Only one shield can be carried at a time.\n\nSuperlaser: A power-up that falls from the sky.\n\nLives: Hearts in the form of lives fall from the sky. The full health is five hearts. When lives run out, the player dies."
+                text(page2Text, textX, textY, textBlockWidth, textBlockHeight);
+                break;
+
+            case 2: //Sida 3: Characters
                 textSize(width * 0.05);
                 textStyle(BOLD);
                 textAlign(CENTER);
@@ -137,13 +156,12 @@ class HowToPlayPopup implements IScene {
                 textSize(width * 0.014);
                 textStyle(NORMAL);
                 textAlign(LEFT, TOP);
-                const page2Text =
+                const page3Text =
                     "Dinosaur (player's character): If the dinosaur is hit by an object, it can take damage (if the object is an asteroid). The dinosaur can pick up power-ups (to increase its vitality).\n\nAsteroids (enemy): Fall from the sky. Their position on the x-axis is randomly generated. Depending on the asteroid type that hits the player, it causes varying amounts of damage."
-
-                text(page2Text, textX, textY, textBlockWidth, textBlockHeight);
+                text(page3Text, textX, textY, textBlockWidth, textBlockHeight);
                 break;
 
-            case 2: //Sida 3: Asteroid Types
+            case 3: //Sida 4: Asteroid Types
                 textSize(width * 0.05);
                 textStyle(BOLD);
                 textAlign(CENTER);
@@ -152,11 +170,9 @@ class HowToPlayPopup implements IScene {
                 textSize(width * 0.014);
                 textStyle(NORMAL);
                 textAlign(LEFT, TOP);
-                const page3Text =
+                const page4Text =
                     "Regular Asteroid: Disappears when hit by a laser shot. \n\n Big Asteroid: Breaks into two regular asteroids when hit by a laser shot or destroyed by a superlaser shot.\nSuper Asteroid: Requires five laser shots to be destroyed or one superlaser shot. Grants extra points."
-
-
-                text(page3Text, textX, textY, textBlockWidth, textBlockHeight);
+                text(page4Text, textX, textY, textBlockWidth, textBlockHeight);
                 break;
         }
         pop();

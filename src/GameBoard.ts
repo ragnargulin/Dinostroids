@@ -166,6 +166,10 @@ class GameBoard implements IScene {
           console.log("Player collided with asteroid!");
           this.removeGameObject(obj);
           this.lives -= 1;
+          if (this.lives == 0) {
+            this.memory.addScore(this.memory.playerName, this.memory.playerScore);
+            this.dinoStroids.changeActiveScene(new GameOverPopup(this.dinoStroids));
+          }
           soundeffects.playerHit.play();
 
         }
@@ -177,7 +181,9 @@ class GameBoard implements IScene {
         if (player.collidesWith(obj)) {
           console.log("Player picked up a heart");
           this.removeGameObject(obj);
-          this.lives += 1;
+          if (this.lives < 5) {
+            this.lives += 1;  // Increase the player's lives
+          }
         }
       }
     }

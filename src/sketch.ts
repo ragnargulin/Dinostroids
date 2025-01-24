@@ -1,4 +1,3 @@
-//---- GLOBAL VARIABLES ----//
 let game: DinoStroids;
 let cnv: any;
 
@@ -8,25 +7,26 @@ let music: {
 let soundeffects: {
   laserSound: p5.SoundFile;
   buttonClick: p5.SoundFile;
+  powerupSound: p5.SoundFile;
 }
-let imageAssets: {  
+let imageAssets: {
   dino: p5.Image;
   background: p5.Image;
   gameTitle: p5.Image;
   moveImage: p5.Image;
   shootImage: p5.Image;
+  hearts: p5.Image;
+  sheild: p5.Image;
+  superLaser: p5.Image;
+  astro: p5.Image;
+  bigAstro: p5.Image;
+  superAstro: p5.Image
+  laser: p5.Image;
+  powerupImage: p5.Image;
+  asteroidtypeImage: p5.Image;
+  explosion: p5.Image;
 }
 
-// Placeholder Scoreboard array (global)
-let topScores: { name: string; score: number }[] = [
-  { name: "Ragnar", score: 5000 },
-  { name: "Ragnar", score: 3000 },
-  { name: "Ragnar", score: 7000 },
-  { name: "Catharina", score: 4500 },
-  { name: "Lil' Creep", score: 2000 }
-];
-
-let latestScore: number = 42;
 
 /**
  * Built in preload function in P5
@@ -40,13 +40,24 @@ function preload() {
   soundeffects = {
     buttonClick: loadSound("../assets/soundeffects/buttonClick.mp3"),
     laserSound: loadSound("../assets/soundeffects/laserSound.mp3"),
+    powerupSound: loadSound("../assets/soundeffects/powerupSound.mp3"),
   }
   imageAssets = {
     dino: loadImage("../assets/images/dino.gif"),
     background: loadImage("../assets/images/background.png"),
     gameTitle: loadImage("../assets/images/gameTitle.png"),
     moveImage: loadImage("../assets/images/Frame-17.png"),
-    shootImage: loadImage("../assets/images/Frame-19.png")
+    shootImage: loadImage("../assets/images/Frame-19.png"),
+    hearts: loadImage("../assets/images/heart.png"),
+    laser: loadImage("../assets/images/regularLaser.gif"),
+    powerupImage: loadImage("../assets/images/powerupsPrtSc.png"),
+    asteroidtypeImage: loadImage("../assets/images/asteroidtypesPrtSc.png"),
+    sheild: loadImage("../assets/images/SheildPowerupC.gif"),
+    superLaser: loadImage("../assets/images/superLaser.gif"),
+    astro: loadImage("../assets/images/RegularAstroids.gif"),
+    bigAstro: loadImage("../assets/images/bigAstro.png"),
+    superAstro: loadImage("../assets/images/superAstro.png"),
+    explosion: loadImage("../assets/images/Pixelexplotion.gif")
   };
 }
 
@@ -82,4 +93,34 @@ function draw() {
   game.draw();
 }
 
+//keyPressed används för input och i spelbrädet. Flytta ner några nivåer
+function keyPressed() {
+  if (game && typeof game.getActiveScene === "function") {
+    const scene = game.getActiveScene();
+    if (scene && typeof scene.keyPressed === "function") {
+      scene.keyPressed();
+    }
+  }
+}
 
+/**
+ * FORWARD MOUSEPRESSED
+ * So your custom scenes can detect clicks (e.g. focusing a text box).
+ */
+function mousePressed() {
+  if (game && typeof game.getActiveScene === "function") {
+    const scene = game.getActiveScene();
+    if (scene && typeof scene.mousePressed === "function") {
+      scene.mousePressed();
+    }
+  }
+}
+
+function keyReleased() {
+  if (game && typeof game.getActiveScene === "function") {
+    const scene = game.getActiveScene();
+    if (scene && typeof scene.keyReleased === "function") {
+      scene.keyReleased();
+    }
+  }
+}

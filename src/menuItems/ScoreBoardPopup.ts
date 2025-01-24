@@ -1,6 +1,7 @@
 class ScoreBoardPopup implements IScene {
   private backgroundImage: p5.Image;
   private dinoStroids: IChangeableScene;
+  private memory: GameMemory;
 
   // Popup box coordinates
   private popupX: number;
@@ -13,8 +14,8 @@ class ScoreBoardPopup implements IScene {
 
   constructor(dinoStroids: IChangeableScene) {
     this.dinoStroids = dinoStroids;
-    // Same background as the main menu
-    this.backgroundImage = loadImage("../assets/images/background.png");
+    this.memory = this.dinoStroids.getMemory();
+    this.backgroundImage = imageAssets.background;
 
     // Popup box dimensions (similar to HowToPlayPopup)
     this.popupX = width * 0.25;
@@ -62,14 +63,6 @@ class ScoreBoardPopup implements IScene {
   }
 
   /**
-   * Helper: get top 10 scores sorted descending
-   * (Assumes you have a global topScores array)
-   */
-  private getTopScores(): { name: string; score: number }[] {
-    return topScores.sort((a, b) => b.score - a.score).slice(0, 10);
-  }
-
-  /**
    * Draw the scoreboard content (title, top scores, latest score).
    */
   private drawScoreBoardContent(): void {
@@ -81,12 +74,18 @@ class ScoreBoardPopup implements IScene {
     textAlign(CENTER, CENTER);
 
     const titleX = this.popupX + (this.popupW / 2);
-    const titleY = this.popupY + (this.popupH * 0.1);
+    const titleY = this.popupY + (this.popupH * 0.15);
     text("SCOREBOARD", titleX, titleY);
     pop();
 
     // 2) Draw the top scores
-    const topScoresList = this.getTopScores();
+    const topScoresList = this.memory.topScores.sort(
+      (a, b) => b.score - a.score
+    ).slice(
+      0,
+      5
+    )
+
     if (topScoresList.length === 0) {
       // Show "No scores available"
       push();
@@ -107,14 +106,15 @@ class ScoreBoardPopup implements IScene {
         textFont("Pixelify Sans", width * 0.035);
         textAlign(LEFT, TOP);
 
-        const scoreX = this.popupX + this.popupW * 0.3;
-        const scoreY = this.popupY + this.popupH * 0.45 + (index * 30);
+        const scoreX = this.popupX + this.popupW * 0.2;
+        const scoreY = this.popupY + this.popupH * 0.3 + (index * 30);
         text(`${index + 1}. ${entry.name}: ${entry.score}`, scoreX, scoreY);
         pop();
       });
     }
 
     // 3) Display the "Latest score" near the bottom of the box
+    const latestScore = this.memory.playerScore;
     push();
     fill("black");
     textFont("Pixelify Sans", width * 0.04);

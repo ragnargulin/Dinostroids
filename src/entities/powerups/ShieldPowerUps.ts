@@ -1,6 +1,6 @@
 class Sheild extends MoveableObject {
     constructor() {
-      super(random(width), -50, 50, 50, 0, 3, imageAssets.sheild);
+      super(random(width), -50, 30, 55, 0, 3, imageAssets.sheild);
     }
   
     public isOffCanvas(): boolean {

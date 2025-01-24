@@ -55,45 +55,36 @@ class GameBoard implements IScene {
     for (const gameObject of this.moveableObjects) {
       gameObject.update();
     }
+  }
+  public draw(): void {
+    imageMode(CORNER);
+    image(this.backgroundImage, 0, 0, width, height);
 
-    public draw(): void {
-
-        imageMode(CORNER);
-        image(this.backgroundImage, 0, 0, width, height);
-
-        //KEVIN
-        for (const gameObject of this.moveableObjects) {
-            gameObject.draw();
-        }
-        
-        this.menuButton.draw();
-
-        this.drawPlayerInfo();
-
-        this.drawLives();
-
-      this.PowerSpawnTimer();
-      this.spawnAstro();
-      this.checkCollisions();
+    for (const gameObject of this.moveableObjects) {
+      gameObject.draw();
     }
+
+    this.menuButton.draw();
+
+    this.drawPlayerInfo();
+
+    this.drawLives();
+
+    this.PowerSpawnTimer();
+    this.spawnAstro();
+    this.checkCollisions();
+  }
 
   private PowerSpawnTimer() {
     if (this.powerSpawnTimer <= 0) {
-      const index = floor(random(1, 3));
+      const index = floor(random(0, 3));
       const powerUps = [new Heart(), new Sheild(), new SuperLaser()];
       this.moveableObjects.push(powerUps[index]);
-      this.moveableObjects.push(new Heart());
-      this.powerSpawnTimer = 400;
+      this.powerSpawnTimer = 10000;
     }
 
     this.powerSpawnTimer -= deltaTime;
 
-    // this.moveableObjects = this.moveableObjects.filter((gameObject) => {
-    //     if (gameObject.isOffCanvas()) {
-    //         return false; // Remove the object from the array
-    //     }
-    //     return true; // Keep the object in the array
-    // });
     this.moveableObjects = this.moveableObjects.filter((gameObject) => {
       return !gameObject.isOffCanvas();
     });
@@ -116,8 +107,6 @@ class GameBoard implements IScene {
 
     this.astroSpawnTimer -= deltaTime;
   }
-
-
 
   private drawPlayerInfo(): void {
     push();
@@ -163,17 +152,25 @@ class GameBoard implements IScene {
 
   private checkCollisions() {
     // Check collisions between player and asteroids
-    const player = this.moveableObjects.find(obj => obj instanceof Player) as Player;
+    const player = this.moveableObjects.find(
+      (obj) => obj instanceof Player
+    ) as Player;
     if (!player) return;
 
     for (const obj of this.moveableObjects) {
       if (obj instanceof RegularAsteroid) {
         // Player collides with asteroids
         if (player.collidesWith(obj)) {
-          console.log('Player collided with asteroid!');
-          // Handle player collision (e.g., decrease life, game over, etc.)
+          console.log("Player collided with asteroid!");
         }
-        
+      }
+    }
+    for (const obj of this.moveableObjects) {
+      if (obj instanceof Heart || obj instanceof Sheild) {
+        // Player collides with heart
+        if (player.collidesWith(obj)) {
+          console.log("Player picked up a heart");
+        }
       }
     }
     for (const obj of this.moveableObjects) {
@@ -181,9 +178,9 @@ class GameBoard implements IScene {
         for (const asteroid of this.moveableObjects) {
           if (asteroid instanceof RegularAsteroid) {
             // Logga kollisionspositioner
-  
+
             if (obj.collidesWith(asteroid)) {
-              console.log('Laser hit an asteroid!');
+              console.log("Laser hit an asteroid!");
               // Ta bort laser och asteroid från spelet
               this.removeGameObject(obj);
               this.removeGameObject(asteroid);

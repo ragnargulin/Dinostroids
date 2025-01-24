@@ -51,9 +51,9 @@ function preload() {
     laser: loadImage("../assets/images/regularLaser.gif"),
     powerupImage: loadImage("../assets/images/powerupsPrtSc.png"),
     asteroidtypeImage: loadImage("../assets/images/asteroidtypesPrtSc.png"),
-    sheild: loadImage("../assets/images/Sheildpowerup.gif"),
-    superLaser: loadImage("../assets/images/superLaser.gif")
-    astro: loadImage("../assets/images/Astro.png"),
+    sheild: loadImage("../assets/images/SheildPowerupC.gif"),
+    superLaser: loadImage("../assets/images/superLaser.gif"),
+    astro: loadImage("../assets/images/RegularAstroids.gif"),
     bigAstro: loadImage("../assets/images/bigAstro.png"),
     superAstro: loadImage("../assets/images/superAstro.png"),
     laser: loadImage("../assets/images/regularLaser.gif")

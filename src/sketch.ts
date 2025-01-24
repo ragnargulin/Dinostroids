@@ -8,7 +8,7 @@ let soundeffects: {
   laserSound: p5.SoundFile;
   buttonClick: p5.SoundFile;
   powerupSound: p5.SoundFile;
-}
+};
 let imageAssets: {
   dino: p5.Image;
   background: p5.Image;
@@ -20,12 +20,11 @@ let imageAssets: {
   superLaser: p5.Image;
   astro: p5.Image;
   bigAstro: p5.Image;
-  superAstro: p5.Image
+  superAstro: p5.Image;
   laser: p5.Image;
   powerupImage: p5.Image;
   asteroidtypeImage: p5.Image;
-}
-
+};
 
 /**
  * Built in preload function in P5
@@ -40,7 +39,7 @@ function preload() {
     buttonClick: loadSound("../assets/soundeffects/buttonClick.mp3"),
     laserSound: loadSound("../assets/soundeffects/laserSound.mp3"),
     powerupSound: loadSound("../assets/soundeffects/powerupSound.mp3"),
-  }
+  };
   imageAssets = {
     dino: loadImage("../assets/images/dino.gif"),
     background: loadImage("../assets/images/background.png"),
@@ -52,11 +51,10 @@ function preload() {
     powerupImage: loadImage("../assets/images/powerupsPrtSc.png"),
     asteroidtypeImage: loadImage("../assets/images/asteroidtypesPrtSc.png"),
     sheild: loadImage("../assets/images/Sheildpowerup.gif"),
-    superLaser: loadImage("../assets/images/superLaser.gif")
+    superLaser: loadImage("../assets/images/superLaser.gif"),
     astro: loadImage("../assets/images/Astro.png"),
     bigAstro: loadImage("../assets/images/bigAstro.png"),
     superAstro: loadImage("../assets/images/superAstro.png"),
-    laser: loadImage("../assets/images/regularLaser.gif")
   };
 }
 

@@ -1,6 +1,3 @@
-//=================================
-// FILE: GameBoard.ts
-//=================================
 class GameBoard implements IScene {
 
     private dinoStroids: IChangeableScene;
@@ -29,12 +26,10 @@ class GameBoard implements IScene {
 
         this.menuButton = new Button("| |", createVector(width * 0.1, height * 0.06), 40, 40, "maroon");
 
-        // Initialize with a Player instance
         this.moveableObjects = [new Player(this)];
 
-        // Initialize spawn timers (in milliseconds)
-        this.astroSpawnTimer = 300;  // Time until next asteroid spawn
-        this.powerSpawnTimer = 400;  // Time until next power-up spawn
+        this.astroSpawnTimer = 300;
+        this.powerSpawnTimer = 400;
     }
 
     public update(): void {
@@ -45,11 +40,10 @@ class GameBoard implements IScene {
             console.log("Menu button => pause game)");
             this.memory.playerScore = this.localScore;
             this.dinoStroids.changeActiveScene(new InGameMenuPopup(this.dinoStroids, this));
-            return; // Exit early to prevent further updates in this frame
+            return;
         }
 
-        // Cap deltaTime to prevent large decrements
-        const maxDeltaTime = 100; // Maximum deltaTime in milliseconds
+        const maxDeltaTime = 100;
         const effectiveDeltaTime = Math.min(deltaTime, maxDeltaTime);
 
         // Decrement spawn timers
@@ -59,13 +53,13 @@ class GameBoard implements IScene {
         // Handle Power-Up Spawning
         if (this.powerSpawnTimer <= 0) {
             this.spawnPowerUp();
-            this.powerSpawnTimer += 400; // Reset timer
+            this.powerSpawnTimer += 400;
         }
 
         // Handle Asteroid Spawning
         if (this.astroSpawnTimer <= 0) {
             this.spawnAsteroid();
-            this.astroSpawnTimer += 300; // Reset timer
+            this.astroSpawnTimer += 300;
         }
 
         // Update all moveable objects
@@ -73,34 +67,25 @@ class GameBoard implements IScene {
             gameObject.update();
         }
 
-        // Remove off-canvas objects
         this.moveableObjects = this.moveableObjects.filter((obj) => !obj.isOffCanvas());
 
         console.log(`Remaining moveable objects: ${this.moveableObjects.length}`);
     }
 
-    /**
-     * Spawns a random power-up.
-     */
+
     private spawnPowerUp(): void {
-        const index = floor(random(0, 3)); // Assuming 3 types of power-ups
+        const index = floor(random(0, 3));
         const powerUps = [new Heart(), new Sheild(), new SuperLaser()];
         this.moveableObjects.push(powerUps[index]);
         console.log("Spawned a Power-Up:", powerUps[index]);
     }
 
-    /**
-     * Spawns an asteroid.
-     */
+
     private spawnAsteroid(): void {
         this.moveableObjects.push(new RegularAsteroid());
         console.log("Spawned an Asteroid");
     }
 
-    /**
-     * Adds a new moveable object to the game.
-     * @param obj The moveable object to add.
-     */
     public addGameObject(obj: MoveableObject): void {
         this.moveableObjects.push(obj);
     }
@@ -115,7 +100,6 @@ class GameBoard implements IScene {
             gameObject.draw();
         }
 
-        // Draw the pause button, player info, and lives
         this.menuButton.draw();
         this.drawPlayerInfo();
         this.drawLives();
@@ -156,7 +140,6 @@ class GameBoard implements IScene {
                 heartHeight
             );
         }
-
         pop();
     }
 }

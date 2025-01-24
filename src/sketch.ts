@@ -24,6 +24,7 @@ let imageAssets: {
   laser: p5.Image;
   powerupImage: p5.Image;
   asteroidtypeImage: p5.Image;
+  explosion: p5.Image;
 }
 
 
@@ -56,7 +57,7 @@ function preload() {
     astro: loadImage("../assets/images/RegularAstroids.gif"),
     bigAstro: loadImage("../assets/images/bigAstro.png"),
     superAstro: loadImage("../assets/images/superAstro.png"),
-    laser: loadImage("../assets/images/regularLaser.gif")
+    explosion: loadImage("../assets/images/Pixelexplotion.gif")
   };
 }
 

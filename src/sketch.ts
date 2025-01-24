@@ -43,7 +43,7 @@ function preload() {
     powerupSound: loadSound("../assets/soundeffects/powerupSound.mp3"),
   }
   imageAssets = {
-    dino: loadImage("../assets/images/dino.gif"),
+    dino: loadImage("../assets/images/dino (2).gif"),
     background: loadImage("../assets/images/background.png"),
     gameTitle: loadImage("../assets/images/gameTitle.png"),
     moveImage: loadImage("../assets/images/Frame-17.png"),

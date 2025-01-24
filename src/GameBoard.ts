@@ -162,6 +162,8 @@ class GameBoard implements IScene {
         
         if (player.collidesWith(obj)) {
           console.log("Player collided with asteroid!");
+          this.removeGameObject(obj);
+          this.lives -= 1;
         }
       }
     }
@@ -170,6 +172,8 @@ class GameBoard implements IScene {
         // Player collides with heart
         if (player.collidesWith(obj)) {
           console.log("Player picked up a heart");
+          this.removeGameObject(obj);
+          this.lives += 1;
         }
       }
     }

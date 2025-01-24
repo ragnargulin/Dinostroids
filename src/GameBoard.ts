@@ -40,6 +40,7 @@ class GameBoard implements IScene {
   }
 
   public update(): void {
+    
     this.localScore++;
 
     if (this.menuButton.isClicked()) {
@@ -161,9 +162,12 @@ class GameBoard implements IScene {
       if (obj instanceof RegularAsteroid) {
         
         if (player.collidesWith(obj)) {
+          this.removeGameObject(obj);
           console.log("Player collided with asteroid!");
           this.removeGameObject(obj);
           this.lives -= 1;
+          soundeffects.playerHit.play();
+
         }
       }
     }
@@ -186,8 +190,11 @@ class GameBoard implements IScene {
             if (obj.collidesWith(asteroid)) {
               console.log("Laser hit an asteroid!");
               // Ta bort laser och asteroid från spelet
+
               this.removeGameObject(obj);
               this.removeGameObject(asteroid);
+              soundeffects.explosion.play();
+
               // Hantera poäng eller annan spel-logik här
             }
           }

@@ -159,7 +159,7 @@ class GameBoard implements IScene {
 
     for (const obj of this.moveableObjects) {
       if (obj instanceof RegularAsteroid) {
-        // Player collides with asteroids
+        
         if (player.collidesWith(obj)) {
           console.log("Player collided with asteroid!");
         }
@@ -176,7 +176,7 @@ class GameBoard implements IScene {
     for (const obj of this.moveableObjects) {
       if (obj instanceof Laser) {
         for (const asteroid of this.moveableObjects) {
-          if (asteroid instanceof RegularAsteroid) {
+          if (asteroid instanceof RegularAsteroid ) {
             // Logga kollisionspositioner
 
             if (obj.collidesWith(asteroid)) {

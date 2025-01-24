@@ -49,7 +49,7 @@ function preload() {
     moveImage: loadImage("../assets/images/Frame-17.png"),
     shootImage: loadImage("../assets/images/Frame-19.png"),
     hearts: loadImage("../assets/images/heart.png"),
-    laser: loadImage("../assets/images/regularLaser.gif"),
+    laser: loadImage("../assets/images/NormalLaser.gif"),
     powerupImage: loadImage("../assets/images/powerupsPrtSc.png"),
     asteroidtypeImage: loadImage("../assets/images/asteroidtypesPrtSc.png"),
     sheild: loadImage("../assets/images/SheildPowerupC.gif"),

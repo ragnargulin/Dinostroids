@@ -13,7 +13,20 @@ let imageAssets: {
   dino: p5.Image;
   background: p5.Image;
   gameTitle: p5.Image;
+  moveImage: p5.Image;
+  shootImage: p5.Image;
 }
+
+// Placeholder Scoreboard array (global)
+let topScores: { name: string; score: number }[] = [
+  { name: "Ragnar", score: 5000 },
+  { name: "Ragnar", score: 3000 },
+  { name: "Ragnar", score: 7000 },
+  { name: "Catharina", score: 4500 },
+  { name: "Lil' Creep", score: 2000 }
+];
+
+let latestScore: number = 42;
 
 /**
  * Built in preload function in P5
@@ -32,6 +45,8 @@ function preload() {
     dino: loadImage("../assets/images/dino.gif"),
     background: loadImage("../assets/images/background.png"),
     gameTitle: loadImage("../assets/images/gameTitle.png"),
+    moveImage: loadImage("../assets/images/Frame-17.png"),
+    shootImage: loadImage("../assets/images/Frame-19.png")
   };
 }
 
@@ -67,10 +82,4 @@ function draw() {
   game.draw();
 }
 
-function keyPressed() {
-  if (key === ' ') {
-    console.log('Spacebar pressed');
-    soundeffects.laserSound.play();
-  }
-}
 

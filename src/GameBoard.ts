@@ -107,18 +107,14 @@ class GameBoard implements IScene {
 
   private spawnAstro() {
     if (this.astroSpawnTimer <= 0) {
-      // const index = floor(random(0, 3));
-      // const asteroids = [new BigAsteroid(), new RegularAstoroid(), new SuperAsteroid()]
-      //   this.moveableObject.push(asteroids[index]);
-      this.moveableObjects.push(new RegularAsteroid());
+      const index = floor(random(0, 2));
+      if (index === 0) {
+        this.moveableObjects.push(new RegularAsteroid());
+        this.astroSpawnTimer = 400;
+      } else {
+        this.moveableObjects.push(new BigAsteroid());
+      }
       this.astroSpawnTimer = 4000;
-    }
-
-    this.astroSpawnTimer -= deltaTime;
-
-    if (this.astroSpawnTimer <= 0) {
-      this.moveableObjects.push(new BigAsteroid());
-      this.astroSpawnTimer = 200;
     }
 
     this.astroSpawnTimer -= deltaTime;
@@ -167,35 +163,40 @@ class GameBoard implements IScene {
   }
 
   private checkCollisions() {
-    // Check collisions between player and asteroids
     const player = this.moveableObjects.find(
       (obj) => obj instanceof Player
     ) as Player;
+
     if (!player) return;
 
     for (const obj of this.moveableObjects) {
-      if (obj instanceof RegularAsteroid || BigAsteroid) {
+      if (obj instanceof RegularAsteroid || obj instanceof BigAsteroid) {
         // Player collides with asteroids
         if (player.collidesWith(obj)) {
           console.log("Player collided with asteroid!");
-          // Handle player collision (e.g., decrease life, game over, etc.)
+          // Hantera spelarens kollision (minska liv, etc.)
         }
       }
     }
-    for (const obj of this.moveableObjects) {
-      if (obj instanceof Laser) {
+
+    for (const laser of this.moveableObjects) {
+      if (laser instanceof Laser) {
         for (const asteroid of this.moveableObjects) {
           if (
             asteroid instanceof RegularAsteroid ||
             asteroid instanceof BigAsteroid
           ) {
-            // Kontrollera om lasern träffar asteroiden
-            if (obj.collidesWith(asteroid)) {
+            if (laser.collidesWith(asteroid)) {
               console.log("Laser hit an asteroid!");
-              // Ta bort lasern och asteroiden från spelet
-              this.removeGameObject(obj);
+              this.removeGameObject(laser);
+
+              if (asteroid instanceof BigAsteroid) {
+                // Dela upp BigAsteroid
+                const newAsteroids = asteroid.split();
+                this.moveableObjects.push(...newAsteroids);
+              }
+
               this.removeGameObject(asteroid);
-              // Hantera poäng eller annan spel-logik här
             }
           }
         }

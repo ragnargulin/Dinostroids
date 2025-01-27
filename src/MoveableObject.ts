@@ -3,6 +3,9 @@ class MoveableObject {
   protected size: p5.Vector;
   protected image: p5.Image;
   protected velocity: p5.Vector;
+  public setVelocity(x: number, y: number) {
+    this.velocity = createVector(x, y);
+}
   public isOffCanvas(): boolean {
     return this.position.y < -100 || this.position.y > height;
   }
@@ -25,8 +28,6 @@ class MoveableObject {
   public update() {
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
-
-    // this.position.add(this.velocity);
   }
 
   public draw() {

@@ -63,7 +63,7 @@ function preload() {
     sheild: loadImage("../assets/images/SheildPowerupC.gif"),
     superLaser: loadImage("../assets/images/superLaser.gif"),
     astro: loadImage("../assets/images/RegularAstroids.gif"),
-    bigAstro: loadImage("../assets/images/BigAstro.gif"),
+    bigAstro: loadImage("../assets/images/BigAstroid.gif"),
     superAstro: loadImage("../assets/images/superAstro.gif"),
     explosion: loadImage("../assets/images/Pixelexplotion.gif"),
     dinoWithSheild: loadImage("../assets/images/dinoWithShield.gif"),

@@ -2,7 +2,7 @@ class BigAsteroid extends MoveableObject {
   private spawnTimer: number;
 
   constructor() {
-    super(random(width), -75, 75, 100, 0, 3, imageAssets.bigAstro);
+    super(random(width), -75, 75, 115, 0, 3, imageAssets.bigAstro);
     this.spawnTimer = random(3000, 7000);
   }
 

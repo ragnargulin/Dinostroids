@@ -224,8 +224,10 @@ class GameBoard implements IScene {
           if (this.lives < 5) {
             this.lives += 1;  // Increase the player's lives
           }
+          else if (this.lives == 5) {
+            this.localScore += 10;
+          }
         }
-
       }
     }
 
@@ -240,11 +242,16 @@ class GameBoard implements IScene {
             if (laser.collidesWith(asteroid)) {
               console.log("Laser hit an asteroid!");
               this.removeGameObject(laser);
+              this.localScore += 5;
 
               if (asteroid instanceof BigAsteroid) {
                 // Dela upp BigAsteroid
+                this.localScore += 10;
                 const newAsteroids = asteroid.split();
                 this.moveableObjects.push(...newAsteroids);
+              }
+              if(asteroid instanceof SuperAsteroid) {
+                this.localScore += 20;
               }
 
               this.removeGameObject(asteroid);

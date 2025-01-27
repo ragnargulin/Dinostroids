@@ -3,6 +3,7 @@ class GameBoard implements IScene {
   private memory: GameMemory;
 
   private localScore: number = 0;
+  private secondTicker: number = 0;
   private lives: number = 5;
 
   private backgroundImage: p5.Image;
@@ -42,8 +43,14 @@ class GameBoard implements IScene {
 
   public update(): void {
     
-    this.localScore++;
     this.spawnAstro();
+
+    this.secondTicker++;
+        
+    if (this.secondTicker >= 60) {
+        this.localScore++;
+        this.secondTicker = 0; // Reset the ticker
+    }
 
     if (this.menuButton.isClicked()) {
       console.log("Menu button => pause game)");

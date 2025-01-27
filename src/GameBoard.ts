@@ -93,9 +93,7 @@ class GameBoard implements IScene {
     console.log(`Remaining moveable objects: ${this.moveableObjects.length}`);
   }
 
-  public addGameObject(SomeMoveableObjects: MoveableObject) {
-    this.moveableObjects.push(SomeMoveableObjects);
-  }
+  
 
   private spawnAstro() {
     if (this.astroSpawnTimer <= 0) {
@@ -106,7 +104,17 @@ class GameBoard implements IScene {
       this.astroSpawnTimer = 400;
     }
 
+    
+    if (this.astroSpawnTimer <= 0) {
+      this.moveableObjects.push(new SuperAsteroid());
+      this.astroSpawnTimer = 1000;
+    }
+
     this.astroSpawnTimer -= deltaTime;
+  }
+
+  public addGameObject(SomeMoveableObjects: MoveableObject) {
+    this.moveableObjects.push(SomeMoveableObjects);
   }
 
   private drawPlayerInfo(): void {
@@ -166,6 +174,24 @@ class GameBoard implements IScene {
           console.log("Player collided with asteroid!");
           this.removeGameObject(obj);
           this.lives -= 1;
+          if (this.lives == 0) {
+            this.memory.addScore(this.memory.playerName, this.memory.playerScore);
+            this.dinoStroids.changeActiveScene(new GameOverPopup(this.dinoStroids));
+          }
+          soundeffects.playerHit.play();
+
+        }
+      }
+    }
+
+    for (const obj of this.moveableObjects) {
+      if (obj instanceof SuperAsteroid) {
+        
+        if (player.collidesWith(obj)) {
+          this.removeGameObject(obj);
+          console.log("Player collided with asteroid!");
+          this.removeGameObject(obj);
+          this.lives -= 4;
           if (this.lives == 0) {
             this.memory.addScore(this.memory.playerName, this.memory.playerScore);
             this.dinoStroids.changeActiveScene(new GameOverPopup(this.dinoStroids));

@@ -3,7 +3,7 @@ class Player extends MoveableObject {
   private gameBoard: GameBoard;
   private spaceKeyWasPressedInPrevFrame: boolean;
 
-  private isShieldActive: boolean;
+  public isShieldActive: boolean;
   private shieldTimer: number;
   private powerupSound: p5.SoundFile;
 

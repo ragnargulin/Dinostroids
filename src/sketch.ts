@@ -8,9 +8,12 @@ let soundeffects: {
   laserSound: p5.SoundFile;
   buttonClick: p5.SoundFile;
   powerupSound: p5.SoundFile;
-};
+  explosion: p5.SoundFile;
+  playerHit: p5.SoundFile;
+}
 let imageAssets: {
   dino: p5.Image;
+  dinoWithSheild: p5.Image;
   background: p5.Image;
   gameTitle: p5.Image;
   moveImage: p5.Image;
@@ -24,7 +27,11 @@ let imageAssets: {
   laser: p5.Image;
   powerupImage: p5.Image;
   asteroidtypeImage: p5.Image;
-};
+  explosion: p5.Image;
+  logoSign: p5.Image;
+  logoDino: p5.Image;
+}
+
 
 /**
  * Built in preload function in P5
@@ -39,22 +46,30 @@ function preload() {
     buttonClick: loadSound("../assets/soundeffects/buttonClick.mp3"),
     laserSound: loadSound("../assets/soundeffects/laserSound.mp3"),
     powerupSound: loadSound("../assets/soundeffects/powerupSound.mp3"),
-  };
+    explosion: loadSound("../assets/soundeffects/explosion.mp3"),
+    playerHit: loadSound("../assets/soundeffects/playerHit.mp3")
+  }
   imageAssets = {
-    dino: loadImage("../assets/images/dino.gif"),
+    dino: loadImage("../assets/images/dino (2).gif"),
     background: loadImage("../assets/images/background.png"),
     gameTitle: loadImage("../assets/images/gameTitle.png"),
     moveImage: loadImage("../assets/images/Frame-17.png"),
     shootImage: loadImage("../assets/images/Frame-19.png"),
     hearts: loadImage("../assets/images/heart.png"),
-    laser: loadImage("../assets/images/regularLaser.gif"),
+    laser: loadImage("../assets/images/NormalLaser.gif"),
     powerupImage: loadImage("../assets/images/powerupsPrtSc.png"),
     asteroidtypeImage: loadImage("../assets/images/asteroidtypesPrtSc.png"),
-    sheild: loadImage("../assets/images/Sheildpowerup.gif"),
+
+    sheild: loadImage("../assets/images/SheildPowerupC.gif"),
     superLaser: loadImage("../assets/images/superLaser.gif"),
-    astro: loadImage("../assets/images/Astro.png"),
+    astro: loadImage("../assets/images/RegularAstroids.gif"),
     bigAstro: loadImage("../assets/images/bigAstro.png"),
-    superAstro: loadImage("../assets/images/superAstro.png"),
+    superAstro: loadImage("../assets/images/superAstro.gif"),
+    explosion: loadImage("../assets/images/Pixelexplotion.gif"),
+    dinoWithSheild: loadImage("../assets/images/dinoWithShield.gif"),
+    logoSign: loadImage("../assets/images/logoSign.png"),
+    logoDino: loadImage("../assets/images/logoDino.gif"),
+
   };
 }
 

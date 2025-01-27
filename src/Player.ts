@@ -32,11 +32,11 @@ class Player extends MoveableObject {
   
   private shootLaser() {
     soundeffects.laserSound.play();
-    let laserStartX = this.position.x + this.size.x / 2 - 14 ;
+    let laserStartX = this.position.x + this.size.x / 2 + 25 ;
 
     // Adjust laser position based on facing direction
     if (!this.isFacingRight) {
-      laserStartX = this.position.x - this.size.x / 2 +36;  // Adjust for left-facing Dino
+      laserStartX = this.position.x - this.size.x / 2 + 74;  // Adjust for left-facing Dino
     }
 
     // Create a laser at the player's current position

@@ -8,6 +8,8 @@ class GameBoard implements IScene {
 
   private backgroundImage: p5.Image;
   private heartImage: p5.Image;
+  private explosionImage: p5.Image;
+  private explosions: { position: p5.Vector, frameCount: number }[] = [];
 
   private menuButton: Button;
 
@@ -23,6 +25,7 @@ class GameBoard implements IScene {
 
     this.backgroundImage = imageAssets.background;
     this.heartImage = imageAssets.hearts;
+    this.explosionImage = imageAssets.explosion;
 
     this.menuButton = new Button(
       "| |",
@@ -32,11 +35,9 @@ class GameBoard implements IScene {
       "maroon"
     );
 
-    //this.moveableObject = [new Player()];
     this.moveableObjects = [new Player(this)];
-
+    this.explosions = [];
     this.astroSpawnTimer = 0;
-
     this.powerSpawnTimer = 0;
   }
 
@@ -46,15 +47,14 @@ class GameBoard implements IScene {
     this.secondTicker++;
 
     if (this.secondTicker >= 60) {
-      this.localScore++;
-      this.secondTicker = 0; // Reset the ticker
+
+        this.localScore++;
+        this.secondTicker = 0;
     }
 
     if (this.menuButton.isClicked()) {
       console.log("Menu button => pause game)");
-
       this.memory.playerScore = this.localScore;
-
       this.dinoStroids.changeActiveScene(
         new InGameMenuPopup(this.dinoStroids, this)
       );
@@ -63,6 +63,12 @@ class GameBoard implements IScene {
     for (const gameObject of this.moveableObjects) {
       gameObject.update();
     }
+
+    // Update explosions and remove finished ones
+    this.explosions = this.explosions.filter(explosion => {
+      explosion.frameCount++;
+      return explosion.frameCount < 30; // Adjust based on your gif length
+    });
   }
 
   public draw(): void {
@@ -73,12 +79,20 @@ class GameBoard implements IScene {
       gameObject.draw();
     }
 
+    // Draw explosions
+    for (const explosion of this.explosions) {
+      image(
+        this.explosionImage,
+        explosion.position.x - 50, // Center the explosion
+        explosion.position.y - 50,
+        100, // width of explosion
+        100  // height of explosion
+      );
+    }
+
     this.menuButton.draw();
-
     this.drawPlayerInfo();
-
     this.drawLives();
-
     this.PowerSpawnTimer();
     this.spawnAstro();
     this.checkCollisions();
@@ -97,8 +111,6 @@ class GameBoard implements IScene {
     this.moveableObjects = this.moveableObjects.filter((gameObject) => {
       return !gameObject.isOffCanvas();
     });
-
-    console.log(`Remaining moveable objects: ${this.moveableObjects.length}`);
   }
 
   private spawnAstro() {
@@ -111,7 +123,6 @@ class GameBoard implements IScene {
       } else {
         this.moveableObjects.push(new SuperAstro()); // Lägg till SuperAstro
       }
-
       this.astroSpawnTimer = random(2000, 5000);
     }
 
@@ -160,12 +171,11 @@ class GameBoard implements IScene {
         heartHeight
       );
     }
-
     pop();
   }
 
   private checkCollisions() {
-    // Check collisions between player and asteroids
+
     const player = this.moveableObjects.find(
       (obj) => obj instanceof Player
     ) as Player;
@@ -192,13 +202,30 @@ class GameBoard implements IScene {
     }
 
     for (const obj of this.moveableObjects) {
+      if (obj instanceof SuperAsteroid) {
+        if (player.collidesWith(obj)) {
+          console.log("Player collided with asteroid!");
+          this.removeGameObject(obj);
+          this.lives -= 4;
+          if (this.lives == 0) {
+            this.memory.addScore(this.memory.playerName, this.memory.playerScore);
+            this.dinoStroids.changeActiveScene(new GameOverPopup(this.dinoStroids));
+          }
+          soundeffects.playerHit.play();
+        }
+      }
+    }
+
+    for (const obj of this.moveableObjects) {
       if (obj instanceof Heart || obj instanceof Sheild) {
-        // Player collides with heart
         if (player.collidesWith(obj)) {
           console.log("Player picked up a heart");
           this.removeGameObject(obj);
           if (this.lives < 5) {
-            this.lives += 1; // Increase the player's lives
+            this.lives += 1;
+          }
+          else if (this.lives == 5) {
+            this.localScore += 10;
           }
         }
       }
@@ -232,6 +259,22 @@ class GameBoard implements IScene {
               } else {
                 this.removeGameObject(asteroid);
               }
+              this.localScore += 5;
+              soundeffects.explosion?.play();
+              this.removeGameObject(asteroid);
+              if (asteroid instanceof BigAsteroid) {
+                this.localScore += 10;
+                const newAsteroids = asteroid.split();
+                this.moveableObjects.push(...newAsteroids);
+                
+              }
+              if(asteroid instanceof SuperAsteroid) {
+                this.localScore += 20;
+              }
+              this.explosions.push({
+                position: createVector(asteroid.position.x, asteroid.position.y),
+                frameCount: 0
+              });      
             }
           }
         }

@@ -3,16 +3,24 @@ class Player extends MoveableObject {
   private gameBoard: GameBoard;
   private spaceKeyWasPressedInPrevFrame: boolean;
 
+  private isShieldActive: boolean;
+  private shieldTimer: number;
+
 
   constructor(gameBoard: GameBoard) {
     super(width * 0.5 - 60, height - 120, 120, 120, 0, 0, imageAssets.dino);
     this.isFacingRight = true; // Initial facing direction
     this.gameBoard = gameBoard;
     this.spaceKeyWasPressedInPrevFrame = keyIsDown(32);
+
+    this.isShieldActive = false;
+    this.shieldTimer = 0;
   }
 
   public update() {
     super.update();
+
+
 
     // Update velocity and facing direction
     if (keyIsDown(LEFT_ARROW)) {
@@ -29,10 +37,9 @@ class Player extends MoveableObject {
     this.position.x = constrain(this.position.x, 0, width - this.size.x);
   }
 
-  
   private shootLaser() {
     soundeffects.laserSound.play();
-    let laserStartX = this.position.x + this.size.x / 2 + 25 ;
+    let laserStartX = this.position.x + this.size.x / 2 + 25;
 
     // Adjust laser position based on facing direction
     if (!this.isFacingRight) {
@@ -42,6 +49,21 @@ class Player extends MoveableObject {
     // Create a laser at the player's current position
     const laser = new Laser(laserStartX, this.position.y - 50, imageAssets.laser);
     this.gameBoard.addGameObject(laser);  // Add laser to the game through GameBoard reference
+  }
+
+  public activateShield(duration: number, dinowithshield2: p5.Image) {
+    this.isShieldActive = true; //Om sköld aktiv är sant ska Dino byta till sköldbilden
+    this.image = dinowithshield2;
+    this.shieldTimer = millis() + duration; //Tid för hur länge skölden ska vara aktiv. Beräknar tiden då skölden ska inaktiveras genom att lägga till duration till den aktuella tiden (i millisekunder).
+
+    setTimeout(() => {
+      this.deactivateShield();
+    }, duration)
+  }
+
+  private deactivateShield(): void { //Om sköld aktiv är falskt ska Dino byta till gamla bilden
+    this.isShieldActive = false;
+    this.image = imageAssets.dino;
   }
 
   public draw() {
@@ -64,6 +86,6 @@ class Player extends MoveableObject {
     }
 
     image(this.image, 0, 0, this.size.x, this.size.y);
-    pop(); 
+    pop();
   }
 }

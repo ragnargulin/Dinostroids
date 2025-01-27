@@ -1,10 +1,19 @@
 class BigAsteroid extends MoveableObject {
+  private spawnTimer: number;
+
   constructor() {
     super(random(width), -75, 75, 75, 0, 3, imageAssets.bigAstro);
+    this.spawnTimer = random(3000, 7000);
   }
 
-  public isOffCanvas(): boolean {
-    return this.position.y < -100 || this.position.y > height;
+  public updateSpawnTimer(deltaTime: number): boolean {
+    this.spawnTimer -= deltaTime;
+    if (this.spawnTimer <= 0) {
+      this.spawnTimer = random(3000, 7000);
+
+      return true;
+    }
+    return false;
   }
 
   public split(): RegularAsteroid[] {

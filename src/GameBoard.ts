@@ -41,6 +41,7 @@ class GameBoard implements IScene {
 
   public update(): void {
     this.localScore++;
+    this.spawnAstro();
 
     if (this.menuButton.isClicked()) {
       console.log("Menu button => pause game)");
@@ -110,11 +111,11 @@ class GameBoard implements IScene {
       const index = floor(random(0, 2));
       if (index === 0) {
         this.moveableObjects.push(new RegularAsteroid());
-        this.astroSpawnTimer = 400;
       } else {
         this.moveableObjects.push(new BigAsteroid());
       }
-      this.astroSpawnTimer = 4000;
+
+      this.astroSpawnTimer = random(2000, 5000);
     }
 
     this.astroSpawnTimer -= deltaTime;

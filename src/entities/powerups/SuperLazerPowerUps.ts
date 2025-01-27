@@ -1,6 +1,6 @@
 class SuperLaser extends MoveableObject {
     constructor() {
-      super(random(width), -50, 50, 50, 0, 3, imageAssets.superLaser);
+      super(random(width), -80, 40, 80, 0, 3, imageAssets.superLaser);
     }
   
     public isOffCanvas(): boolean {

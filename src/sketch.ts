@@ -13,6 +13,7 @@ let soundeffects: {
 }
 let imageAssets: {
   dino: p5.Image;
+  dinoWithSheild: p5.Image;
   background: p5.Image;
   gameTitle: p5.Image;
   moveImage: p5.Image;
@@ -61,7 +62,8 @@ function preload() {
     astro: loadImage("../assets/images/RegularAstroids.gif"),
     bigAstro: loadImage("../assets/images/bigAstro.png"),
     superAstro: loadImage("../assets/images/superAstro.png"),
-    explosion: loadImage("../assets/images/Pixelexplotion.gif")
+    explosion: loadImage("../assets/images/Pixelexplotion.gif"),
+    dinoWithSheild: loadImage("../assets/images/dinoWithShield.gif")
   };
 }
 

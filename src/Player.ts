@@ -22,8 +22,6 @@ class Player extends MoveableObject {
   public update() {
     super.update();
 
-
-
     // Update velocity and facing direction
     if (keyIsDown(LEFT_ARROW)) {
       this.velocity.x = -5;
@@ -53,10 +51,10 @@ class Player extends MoveableObject {
     this.gameBoard.addGameObject(laser);  // Add laser to the game through GameBoard reference
   }
 
-  public activateShield(duration: number, dinowithshield2: p5.Image, powerupSound: p5.SoundFile) {
+  public activateShield(duration: number, dinowithshield2: p5.Image) {
     this.isShieldActive = true; //Om sköld aktiv är sant ska Dino byta till sköldbilden
     this.image = dinowithshield2;
-    this.powerupSound = powerupSound;
+    //this.powerupSound = powerupSound;
     this.shieldTimer = millis() + duration; //Tid för hur länge skölden ska vara aktiv. Beräknar tiden då skölden ska inaktiveras genom att lägga till duration till den aktuella tiden (i millisekunder).
 
     setTimeout(() => {

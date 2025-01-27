@@ -12,7 +12,7 @@ class GameBoard implements IScene {
   private menuButton: Button;
 
   private powerSpawnTimer: number;
-  
+
   private astroSpawnTimer: number;
 
   private moveableObjects: MoveableObject[];
@@ -42,14 +42,14 @@ class GameBoard implements IScene {
   }
 
   public update(): void {
-    
+
     this.spawnAstro();
 
     this.secondTicker++;
-        
+
     if (this.secondTicker >= 60) {
-        this.localScore++;
-        this.secondTicker = 0; // Reset the ticker
+      this.localScore++;
+      this.secondTicker = 0; // Reset the ticker
     }
 
     if (this.menuButton.isClicked()) {
@@ -103,7 +103,7 @@ class GameBoard implements IScene {
     console.log(`Remaining moveable objects: ${this.moveableObjects.length}`);
   }
 
-  
+
 
   private spawnAstro() {
     if (this.astroSpawnTimer <= 0) {
@@ -118,7 +118,7 @@ class GameBoard implements IScene {
     }
 
     this.astroSpawnTimer -= deltaTime;
-    
+
     if (this.astroSpawnTimer <= 0) {
       this.moveableObjects.push(new SuperAsteroid());
       this.astroSpawnTimer = 200;
@@ -182,9 +182,8 @@ class GameBoard implements IScene {
 
     for (const obj of this.moveableObjects) {
       if (obj instanceof RegularAsteroid || obj instanceof BigAsteroid) {
-        
+
         if (player.collidesWith(obj)) {
-          
           console.log("Player collided with asteroid!");
           this.removeGameObject(obj);
           this.lives -= 1;
@@ -200,9 +199,9 @@ class GameBoard implements IScene {
 
     for (const obj of this.moveableObjects) {
       if (obj instanceof SuperAsteroid) {
-        
+
         if (player.collidesWith(obj)) {
-          
+
           console.log("Player collided with asteroid!");
           this.removeGameObject(obj);
           this.lives -= 4;
@@ -217,15 +216,23 @@ class GameBoard implements IScene {
     }
     for (const obj of this.moveableObjects) {
       if (obj instanceof Heart || obj instanceof Sheild) {
-        // Player collides with heart
-        if (player.collidesWith(obj)) {
-          console.log("Player picked up a heart");
-          this.removeGameObject(obj);
-          if (this.lives < 5) {
-            this.lives += 1;  // Increase the player's lives
-          }
-        }
 
+        if (player.collidesWith(obj)) {
+          if (obj instanceof Sheild) {
+            console.log("Dino picked up shield");
+            player.activateShield(5000, imageAssets.dinoWithSheild);
+            soundeffects.powerupSound.play();
+          }
+          // Player collides with heart
+          else if (obj instanceof Heart) {
+            console.log("Player picked up a heart");
+
+            if (this.lives < 5) {
+              this.lives += 1;  // Increase the player's lives
+            }
+          }
+          this.removeGameObject(obj);
+        }
       }
     }
 
@@ -250,7 +257,7 @@ class GameBoard implements IScene {
               this.removeGameObject(asteroid);
 
             }
-         }
+          }
         }
       }
     }

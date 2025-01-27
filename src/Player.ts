@@ -5,7 +5,7 @@ class Player extends MoveableObject {
 
   private isShieldActive: boolean;
   private shieldTimer: number;
-
+  private powerupSound: p5.SoundFile;
 
   constructor(gameBoard: GameBoard) {
     super(width * 0.5 - 60, height - 120, 120, 120, 0, 0, imageAssets.dino);
@@ -15,6 +15,8 @@ class Player extends MoveableObject {
 
     this.isShieldActive = false;
     this.shieldTimer = 0;
+    this.powerupSound = soundeffects.powerupSound;
+
   }
 
   public update() {
@@ -51,9 +53,10 @@ class Player extends MoveableObject {
     this.gameBoard.addGameObject(laser);  // Add laser to the game through GameBoard reference
   }
 
-  public activateShield(duration: number, dinowithshield2: p5.Image) {
+  public activateShield(duration: number, dinowithshield2: p5.Image, powerupSound: p5.SoundFile) {
     this.isShieldActive = true; //Om sköld aktiv är sant ska Dino byta till sköldbilden
     this.image = dinowithshield2;
+    this.powerupSound = powerupSound;
     this.shieldTimer = millis() + duration; //Tid för hur länge skölden ska vara aktiv. Beräknar tiden då skölden ska inaktiveras genom att lägga till duration till den aktuella tiden (i millisekunder).
 
     setTimeout(() => {

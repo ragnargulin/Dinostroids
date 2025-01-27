@@ -28,6 +28,8 @@ let imageAssets: {
   powerupImage: p5.Image;
   asteroidtypeImage: p5.Image;
   explosion: p5.Image;
+  logoSign: p5.Image;
+  logoDino: p5.Image;
 }
 
 
@@ -63,7 +65,9 @@ function preload() {
     bigAstro: loadImage("../assets/images/bigAstro.png"),
     superAstro: loadImage("../assets/images/superAstro.gif"),
     explosion: loadImage("../assets/images/Pixelexplotion.gif"),
-    dinoWithSheild: loadImage("../assets/images/dinoWithShield.gif")
+    dinoWithSheild: loadImage("../assets/images/dinoWithShield.gif"),
+    logoSign: loadImage("../assets/images/logoSign.png"),
+    logoDino: loadImage("../assets/images/logoDino.gif"),
   };
 }
 

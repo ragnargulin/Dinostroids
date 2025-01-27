@@ -17,7 +17,6 @@ class GameBoard implements IScene {
 
   private moveableObjects: MoveableObject[];
 
-
   constructor(dinoStroids: IChangeableScene) {
     this.dinoStroids = dinoStroids;
     this.memory = this.dinoStroids.getMemory();
@@ -103,8 +102,6 @@ class GameBoard implements IScene {
     console.log(`Remaining moveable objects: ${this.moveableObjects.length}`);
   }
 
-
-
   private spawnAstro() {
     if (this.astroSpawnTimer <= 0) {
       const index = floor(random(0, 2));
@@ -182,9 +179,15 @@ class GameBoard implements IScene {
 
     for (const obj of this.moveableObjects) {
       if (obj instanceof RegularAsteroid || obj instanceof BigAsteroid) {
-
         if (player.collidesWith(obj)) {
           console.log("Player collided with asteroid!");
+
+          if (player.isShieldActive) {
+            this.removeGameObject(obj);
+            console.log("Shield took the damage!");
+            continue;
+          }
+
           this.removeGameObject(obj);
           this.lives -= 1;
           if (this.lives == 0) {
@@ -201,8 +204,13 @@ class GameBoard implements IScene {
       if (obj instanceof SuperAsteroid) {
 
         if (player.collidesWith(obj)) {
-
           console.log("Player collided with asteroid!");
+
+          if (player.isShieldActive) {
+            this.removeGameObject(obj);
+            console.log("Shield took the damage!");
+            continue;
+          }
           this.removeGameObject(obj);
           this.lives -= 4;
           if (this.lives == 0) {

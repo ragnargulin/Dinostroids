@@ -242,25 +242,8 @@ class GameBoard implements IScene {
 
               this.removeGameObject(asteroid);
 
-          if (asteroid instanceof RegularAsteroid || asteroid instanceof SuperAsteroid ||
-            asteroid instanceof BigAsteroid) {
-            // Logga kollisionspositioner
-
-            if (obj.collidesWith(asteroid)) {
-              console.log("Laser hit an asteroid!");
-              // Ta bort laser och asteroid från spelet
-
-              this.removeGameObject(obj);
-              if (asteroid instanceof BigAsteroid) {
-                // Dela upp BigAsteroid
-                const newAsteroids = asteroid.split();
-                this.moveableObjects.push(...newAsteroids);
-              }
-
-              this.removeGameObject(asteroid);
-              // Hantera poäng eller annan spel-logik här
             }
-          }
+         }
         }
       }
     }

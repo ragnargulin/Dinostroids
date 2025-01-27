@@ -59,6 +59,7 @@ function preload() {
     laser: loadImage("../assets/images/NormalLaser.gif"),
     powerupImage: loadImage("../assets/images/powerupsPrtSc.png"),
     asteroidtypeImage: loadImage("../assets/images/asteroidtypesPrtSc.png"),
+
     sheild: loadImage("../assets/images/SheildPowerupC.gif"),
     superLaser: loadImage("../assets/images/superLaser.gif"),
     astro: loadImage("../assets/images/RegularAstroids.gif"),
@@ -68,6 +69,7 @@ function preload() {
     dinoWithSheild: loadImage("../assets/images/dinoWithShield.gif"),
     logoSign: loadImage("../assets/images/logoSign.png"),
     logoDino: loadImage("../assets/images/logoDino.gif"),
+
   };
 }
 

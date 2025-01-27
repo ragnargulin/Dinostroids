@@ -14,6 +14,7 @@ class GameBoard implements IScene {
   private menuButton: Button;
 
   private powerSpawnTimer: number;
+
   private astroSpawnTimer: number;
 
   private moveableObjects: MoveableObject[];
@@ -44,8 +45,9 @@ class GameBoard implements IScene {
     this.spawnAstro();
 
     this.secondTicker++;
-        
+
     if (this.secondTicker >= 60) {
+
         this.localScore++;
         this.secondTicker = 0;
     }
@@ -113,21 +115,17 @@ class GameBoard implements IScene {
 
   private spawnAstro() {
     if (this.astroSpawnTimer <= 0) {
-      const index = floor(random(0, 2));
+      const index = floor(random(0, 3)); // Uppdaterat för 3 alternativ
       if (index === 0) {
         this.moveableObjects.push(new RegularAsteroid());
-      } else {
+      } else if (index === 1) {
         this.moveableObjects.push(new BigAsteroid());
+      } else {
+        this.moveableObjects.push(new SuperAstro()); // Lägg till SuperAstro
       }
       this.astroSpawnTimer = random(2000, 5000);
     }
 
-    this.astroSpawnTimer -= deltaTime;
-    
-    if (this.astroSpawnTimer <= 0) {
-      this.moveableObjects.push(new SuperAsteroid());
-      this.astroSpawnTimer = 200;
-    }
     this.astroSpawnTimer -= deltaTime;
   }
 
@@ -177,6 +175,7 @@ class GameBoard implements IScene {
   }
 
   private checkCollisions() {
+
     const player = this.moveableObjects.find(
       (obj) => obj instanceof Player
     ) as Player;
@@ -189,8 +188,13 @@ class GameBoard implements IScene {
           this.removeGameObject(obj);
           this.lives -= 1;
           if (this.lives == 0) {
-            this.memory.addScore(this.memory.playerName, this.memory.playerScore);
-            this.dinoStroids.changeActiveScene(new GameOverPopup(this.dinoStroids));
+            this.memory.addScore(
+              this.memory.playerName,
+              this.memory.playerScore
+            );
+            this.dinoStroids.changeActiveScene(
+              new GameOverPopup(this.dinoStroids)
+            );
           }
           soundeffects.playerHit.play();
         }
@@ -232,11 +236,29 @@ class GameBoard implements IScene {
         for (const asteroid of this.moveableObjects) {
           if (
             asteroid instanceof RegularAsteroid ||
-            asteroid instanceof BigAsteroid
+            asteroid instanceof BigAsteroid ||
+            asteroid instanceof SuperAstro
           ) {
             if (laser.collidesWith(asteroid)) {
               console.log("Laser hit an asteroid!");
               this.removeGameObject(laser);
+
+              if (asteroid instanceof SuperAstro) {
+                if (asteroid.takeDamage()) {
+                  console.log("SuperAstro destroyed!");
+                  this.removeGameObject(asteroid);
+                } else {
+                  console.log(
+                    `SuperAstro hit! Hits left: ${asteroid.hitsLeft}`
+                  );
+                }
+              } else if (asteroid instanceof BigAsteroid) {
+                const newAsteroids = asteroid.split();
+                this.moveableObjects.push(...newAsteroids);
+                this.removeGameObject(asteroid);
+              } else {
+                this.removeGameObject(asteroid);
+              }
               this.localScore += 5;
               soundeffects.explosion?.play();
               this.removeGameObject(asteroid);
@@ -252,8 +274,7 @@ class GameBoard implements IScene {
               this.explosions.push({
                 position: createVector(asteroid.position.x, asteroid.position.y),
                 frameCount: 0
-              });
-             
+              });      
             }
           }
         }

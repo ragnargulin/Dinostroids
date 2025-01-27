@@ -11,10 +11,11 @@ class GameBoard implements IScene {
   private menuButton: Button;
 
   private powerSpawnTimer: number;
+  
+  private astroSpawnTimer: number;
 
   private moveableObjects: MoveableObject[];
 
-  private astroSpawnTimer: number;
 
   constructor(dinoStroids: IChangeableScene) {
     this.dinoStroids = dinoStroids;
@@ -104,10 +105,11 @@ class GameBoard implements IScene {
       this.astroSpawnTimer = 400;
     }
 
+    this.astroSpawnTimer -= deltaTime;
     
     if (this.astroSpawnTimer <= 0) {
       this.moveableObjects.push(new SuperAsteroid());
-      this.astroSpawnTimer = 1000;
+      this.astroSpawnTimer = 200;
     }
 
     this.astroSpawnTimer -= deltaTime;
@@ -170,7 +172,7 @@ class GameBoard implements IScene {
       if (obj instanceof RegularAsteroid) {
         
         if (player.collidesWith(obj)) {
-          this.removeGameObject(obj);
+          
           console.log("Player collided with asteroid!");
           this.removeGameObject(obj);
           this.lives -= 1;
@@ -188,7 +190,7 @@ class GameBoard implements IScene {
       if (obj instanceof SuperAsteroid) {
         
         if (player.collidesWith(obj)) {
-          this.removeGameObject(obj);
+          
           console.log("Player collided with asteroid!");
           this.removeGameObject(obj);
           this.lives -= 4;
@@ -216,7 +218,7 @@ class GameBoard implements IScene {
     for (const obj of this.moveableObjects) {
       if (obj instanceof Laser) {
         for (const asteroid of this.moveableObjects) {
-          if (asteroid instanceof RegularAsteroid ) {
+          if (asteroid instanceof RegularAsteroid || asteroid instanceof SuperAsteroid) {
             // Logga kollisionspositioner
 
             if (obj.collidesWith(asteroid)) {

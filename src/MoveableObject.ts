@@ -1,7 +1,13 @@
+interface Hitbox {
+  position: p5.Vector;
+  size: p5.Vector;
+}
+
 class MoveableObject {
   public position: p5.Vector;
   protected size: p5.Vector;
   protected image: p5.Image;
+  private hitbox: Hitbox;
   protected velocity: p5.Vector;
   public setVelocity(x: number, y: number) {
     this.velocity = createVector(x, y);
@@ -17,13 +23,19 @@ class MoveableObject {
     height: number,
     velocityX: number,
     velocityY: number,
-    image: p5.Image
+    image: p5.Image,
+    hitbox?: Hitbox
   ) {
     this.position = createVector(x, y);
     this.size = createVector(width, height);
     this.velocity = createVector(velocityX, velocityY);
     this.image = image;
+    this.hitbox = hitbox || {
+      position: createVector(0,0),
+      size: this.size
+    }
   }
+
 
   public update() {
     this.position.x += this.velocity.x;
@@ -40,18 +52,28 @@ class MoveableObject {
       this.size.y
     );
     pop();
+
+    // for development
+    push()
+    const pos = p5.Vector.add(this.position, this.hitbox.position)
+    noFill();
+    stroke("red")
+    rect(pos.x, pos.y, this.hitbox.size.x, this.hitbox.size.y)
+    pop()
   }
 
   public collidesWith(other: MoveableObject): boolean {
-    const left = this.position.x;
-    const right = this.position.x + this.size.x;
-    const top = this.position.y;
-    const bottom = this.position.y + this.size.y;
+    const pos = p5.Vector.add(this.position, this.hitbox.position)
+    const otherPos = p5.Vector.add(other.position, other.hitbox.position)
+    const left = pos.x;
+    const right = pos.x + this.hitbox.size.x;
+    const top = pos.y;
+    const bottom = pos.y + this.hitbox.size.y;
 
-    const otherLeft = other.position.x;
-    const otherRight = other.position.x + other.size.x;
-    const otherTop = other.position.y;
-    const otherBottom = other.position.y + other.size.y;
+    const otherLeft = otherPos.x;
+    const otherRight = otherPos.x + other.hitbox.size.x;
+    const otherTop = otherPos.y;
+    const otherBottom = otherPos.y + other.hitbox.size.y;
 
     // Check if bounding boxes overlap
     return !(

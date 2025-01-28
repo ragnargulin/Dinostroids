@@ -4,7 +4,10 @@ class BigAsteroid extends MoveableObject {
 
   constructor() {
       const speed = random(2, 3); // Random speed for big asteroid
-      super(random(width), -75, 75, 150, 0, speed, imageAssets.bigAstro);
+      super(random(width), -75, 75, 150, 0, speed, imageAssets.bigAstro, {
+        position: createVector(5,70),
+        size: createVector(65,75)
+      });
       this.spawnTimer = random(3000, 7000);
       this.speed = speed; // Store the speed for inheritance to small asteroids
   }

@@ -3,7 +3,10 @@ class RegularAsteroid extends MoveableObject {
 
   constructor(inheritedSpeed?: number) {
     const speed = inheritedSpeed ?? random(2, 4);
-    super(random(width), -50, 50, 90, 0, speed, imageAssets.astro);
+    super(random(width), -50, 50, 90, 0, speed, imageAssets.astro, {
+      position: createVector(5,42),
+      size: createVector(40,45)
+    });
     this.spawnTimer = random(2000, 5000);
 }
 

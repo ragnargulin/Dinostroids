@@ -3,6 +3,7 @@ let cnv: any;
 
 let music: {
   mystery: p5.SoundFile;
+  menuMusic: p5.SoundFile;
 };
 let soundeffects: {
   laserSound: p5.SoundFile;
@@ -10,6 +11,7 @@ let soundeffects: {
   powerupSound: p5.SoundFile;
   explosion: p5.SoundFile;
   playerHit: p5.SoundFile;
+  shieldSound: p5.SoundFile;
 };
 let imageAssets: {
   dino: p5.Image;
@@ -39,14 +41,17 @@ let imageAssets: {
  */
 function preload() {
   music = {
-    mystery: loadSound("../assets/music/backgroundMusic.mp3"),
+    mystery: loadSound("../assets/music/fullDinoThemeMusic.mp3"),
+    menuMusic: loadSound("../assets/music/popupMenuMusic.mp3"),
   };
   soundeffects = {
     buttonClick: loadSound("../assets/soundeffects/buttonClick.mp3"),
     laserSound: loadSound("../assets/soundeffects/laserSound.mp3"),
     powerupSound: loadSound("../assets/soundeffects/powerupSound.mp3"),
     explosion: loadSound("../assets/soundeffects/explosion.mp3"),
-    playerHit: loadSound("../assets/soundeffects/playerHit.mp3"),
+    playerHit: loadSound("../assets/soundeffects/failSound.mp3"),
+    shieldSound: loadSound("../assets/soundeffects/shieldMusic.mp3"),
+
   };
   imageAssets = {
     dino: loadImage("../assets/images/dino (2).gif"),

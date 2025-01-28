@@ -256,6 +256,9 @@ class GameBoard implements IScene {
                     this.removeGameObject(obj);
                 }
             }
+            soundeffects.powerupSound.play();
+          }
+          this.removeGameObject(obj);
         }
 
         for (const laser of this.moveableObjects) {

@@ -33,16 +33,13 @@ class GameOverPopup implements IScene {
       // Add button click logic
       if (this.tryAgainBtn.isClicked()) {
         soundeffects.buttonClick.play();
-
-        // this.memory.addScore(this.memory.playerName, this.memory.playerScore);
+        this.dinoStroids.getMemory().playerScore = 0;
         // Restart the game 
         this.dinoStroids.changeActiveScene(new GameBoard(this.dinoStroids));
       }
   
       if (this.homeBtn.isClicked()) {
         soundeffects.buttonClick.play();
-
-        // this.memory.addScore(this.memory.playerName, this.memory.playerScore);
         // Go back to the main menu
         this.dinoStroids.changeActiveScene(new MainMenu(this.dinoStroids));
       }

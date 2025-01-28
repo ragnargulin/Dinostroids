@@ -48,6 +48,7 @@ class InGameMenuPopup implements IScene {
         }
         if (this.continueBtn.isClicked()) {
             soundeffects.buttonClick.play();
+            this.pausedBoard.resumeGame();
             this.dinoStroids.changeActiveScene(this.pausedBoard);
         }
         if (this.musicOnOffBtn.isClicked()) {

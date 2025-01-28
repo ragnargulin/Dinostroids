@@ -83,8 +83,8 @@ class GameBoard implements IScene {
         for (const explosion of this.explosions) {
             image(
                 this.explosionImage,
-                explosion.position.x - 20, // Center the explosion
-                explosion.position.y - 30,
+                explosion.position.x - 15, // Center the explosion
+                explosion.position.y + 30,
                 100, // width of explosion
                 100  // height of explosion
             );

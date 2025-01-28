@@ -34,7 +34,7 @@ class GameOverPopup implements IScene {
       if (this.tryAgainBtn.isClicked()) {
         soundeffects.buttonClick.play();
 
-        this.memory.addScore(this.memory.playerName, this.memory.playerScore);
+        // this.memory.addScore(this.memory.playerName, this.memory.playerScore);
         // Restart the game 
         this.dinoStroids.changeActiveScene(new GameBoard(this.dinoStroids));
       }
@@ -42,7 +42,7 @@ class GameOverPopup implements IScene {
       if (this.homeBtn.isClicked()) {
         soundeffects.buttonClick.play();
 
-        this.memory.addScore(this.memory.playerName, this.memory.playerScore);
+        // this.memory.addScore(this.memory.playerName, this.memory.playerScore);
         // Go back to the main menu
         this.dinoStroids.changeActiveScene(new MainMenu(this.dinoStroids));
       }

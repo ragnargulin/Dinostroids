@@ -22,6 +22,7 @@ class GameBoard implements IScene {
     constructor(dinoStroids: IChangeableScene) {
         this.dinoStroids = dinoStroids;
         this.memory = this.dinoStroids.getMemory();
+        this.localScore = this.memory.playerScore;
 
         this.backgroundImage = imageAssets.background;
         this.heartImage = imageAssets.hearts;
@@ -187,7 +188,9 @@ class GameBoard implements IScene {
                     console.log("Player collided with asteroid!");
                     this.removeGameObject(obj);
                     this.lives -= 1;
-                    if (this.lives == 0) {
+                    if (this.lives === 0) {
+
+                        this.memory.playerScore = this.localScore;
                         this.memory.addScore(
                             this.memory.playerName,
                             this.memory.playerScore
@@ -208,6 +211,8 @@ class GameBoard implements IScene {
                     this.removeGameObject(obj);
                     this.lives -= 4;
                     if (this.lives <= 0) {
+
+                        this.memory.playerScore = this.localScore;
                         this.memory.addScore(this.memory.playerName, this.memory.playerScore);
                         this.dinoStroids.changeActiveScene(new GameOverPopup(this.dinoStroids));
                     }

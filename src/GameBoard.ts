@@ -15,13 +15,16 @@ class GameBoard implements IScene {
 
     private powerSpawnTimer: number;
 
+
     private astroSpawnTimer: number;
+
 
     private moveableObjects: MoveableObject[];
 
     constructor(dinoStroids: IChangeableScene) {
         this.dinoStroids = dinoStroids;
         this.memory = this.dinoStroids.getMemory();
+
 
         this.backgroundImage = imageAssets.background;
         this.heartImage = imageAssets.hearts;
@@ -39,6 +42,7 @@ class GameBoard implements IScene {
         this.explosions = [];
         this.astroSpawnTimer = 0;
         this.powerSpawnTimer = 0;
+
     }
 
     public update(): void {
@@ -108,6 +112,7 @@ class GameBoard implements IScene {
 
         this.powerSpawnTimer -= deltaTime;
 
+
         this.moveableObjects = this.moveableObjects.filter((gameObject) => {
             return !gameObject.isOffCanvas();
         });
@@ -128,6 +133,7 @@ class GameBoard implements IScene {
 
         this.astroSpawnTimer -= deltaTime;
     }
+
 
     public addGameObject(SomeMoveableObjects: MoveableObject) {
         this.moveableObjects.push(SomeMoveableObjects);
@@ -185,6 +191,11 @@ class GameBoard implements IScene {
             if (obj instanceof RegularAsteroid || obj instanceof BigAsteroid) {
                 if (player.collidesWith(obj)) {
                     console.log("Player collided with asteroid!");
+                    if (player.isShieldActive) {
+                    this.removeGameObject(obj);
+                    console.log("Shield took the damage!");
+                    continue;
+                    }
                     this.removeGameObject(obj);
                     this.lives -= 1;
                     if (this.lives == 0) {
@@ -205,6 +216,11 @@ class GameBoard implements IScene {
             if (obj instanceof SuperAstro) {
                 if (player.collidesWith(obj)) {
                     console.log("Player collided with asteroid!");
+                    if (player.isShieldActive) {
+                    this.removeGameObject(obj);
+                    console.log("Shield took the damage!");
+                    continue;
+                    }
                     this.removeGameObject(obj);
                     this.lives -= 4;
                     if (this.lives <= 0) {
@@ -217,19 +233,25 @@ class GameBoard implements IScene {
         }
 
         for (const obj of this.moveableObjects) {
-            if (obj instanceof Heart || obj instanceof Sheild) {
-                if (player.collidesWith(obj)) {
-                    console.log("Player picked up a heart");
-                    this.removeGameObject(obj);
-                    if (this.lives < 5) {
-                        this.lives += 1;
-                    }
-                    else if (this.lives == 5) {
-                        this.localScore += 10;
-                    }
-                }
+      if (obj instanceof Heart || obj instanceof Sheild) {
+
+        if (player.collidesWith(obj)) {
+          if (obj instanceof Sheild) {
+            console.log("Dino picked up shield");
+            player.activateShield(5000, imageAssets.dinoWithSheild);
+            soundeffects.powerupSound.play();
+          }
+          // Player collides with heart
+          else if (obj instanceof Heart) {
+            console.log("Player picked up a heart");
+
+            if (this.lives < 5) {
+              this.lives += 1;  // Increase the player's lives
             }
+          }
+          this.removeGameObject(obj);
         }
+      }
 
         for (const laser of this.moveableObjects) {
             if (laser instanceof Laser) {
@@ -279,6 +301,7 @@ class GameBoard implements IScene {
                     }
                 }
             }
+
         }
     }
 

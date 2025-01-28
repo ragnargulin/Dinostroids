@@ -14,7 +14,6 @@ class GameBoard implements IScene {
   private menuButton: Button;
 
   private powerSpawnTimer: number;
-
   private astroSpawnTimer: number;
 
   private moveableObjects: MoveableObject[];
@@ -22,6 +21,7 @@ class GameBoard implements IScene {
   constructor(dinoStroids: IChangeableScene) {
     this.dinoStroids = dinoStroids;
     this.memory = this.dinoStroids.getMemory();
+    this.localScore = this.memory.playerScore;
 
     this.backgroundImage = imageAssets.background;
     this.heartImage = imageAssets.hearts;
@@ -114,13 +114,13 @@ class GameBoard implements IScene {
 
   private spawnAstro() {
     if (this.astroSpawnTimer <= 0) {
-      const index = floor(random(0, 3)); // Uppdaterat för 3 alternativ
+      const index = floor(random(0, 3));
       if (index === 0) {
         this.moveableObjects.push(new RegularAsteroid());
       } else if (index === 1) {
         this.moveableObjects.push(new BigAsteroid());
       } else {
-        this.moveableObjects.push(new SuperAstro()); // Lägg till SuperAstro
+        this.moveableObjects.push(new SuperAstro());
       }
       this.astroSpawnTimer = random(2000, 5000);
     }
@@ -190,7 +190,8 @@ class GameBoard implements IScene {
           }
           this.removeGameObject(obj);
           this.lives -= 1;
-          if (this.lives == 0) {
+          if (this.lives === 0) {
+            this.memory.playerScore = this.localScore;
             this.memory.addScore(
               this.memory.playerName,
               this.memory.playerScore
@@ -202,12 +203,10 @@ class GameBoard implements IScene {
           soundeffects.playerHit.play();
         }
       }
-    }
 
-    for (const obj of this.moveableObjects) {
       if (obj instanceof SuperAstro) {
         if (player.collidesWith(obj)) {
-          console.log("Player collided with asteroid!");
+          console.log("Player collided with SuperAstro!");
           if (player.isShieldActive) {
             this.removeGameObject(obj);
             console.log("Shield took the damage!");
@@ -216,6 +215,7 @@ class GameBoard implements IScene {
           this.removeGameObject(obj);
           this.lives -= 4;
           if (this.lives <= 0) {
+            this.memory.playerScore = this.localScore;
             this.memory.addScore(
               this.memory.playerName,
               this.memory.playerScore
@@ -227,81 +227,74 @@ class GameBoard implements IScene {
           soundeffects.playerHit.play();
         }
       }
-    }
 
-    for (const obj of this.moveableObjects) {
       if (obj instanceof Heart || obj instanceof Sheild) {
         if (player.collidesWith(obj)) {
           if (obj instanceof Sheild) {
             console.log("Dino picked up shield");
             player.activateShield(5000, imageAssets.dinoWithSheild);
             soundeffects.powerupSound.play();
-          }
-          // Player collides with heart
-          else if (obj instanceof Heart) {
+          } else if (obj instanceof Heart) {
             console.log("Player picked up a heart");
-
             if (this.lives < 5) {
-              this.lives += 1; // Increase the player's lives
+              this.lives += 1;
             }
           }
           this.removeGameObject(obj);
         }
       }
+    }
 
-      for (const laser of this.moveableObjects) {
-        if (laser instanceof Laser) {
-          for (const asteroid of this.moveableObjects) {
-            if (
-              asteroid instanceof RegularAsteroid ||
-              asteroid instanceof BigAsteroid ||
-              asteroid instanceof SuperAstro
-            ) {
-              if (laser.collidesWith(asteroid)) {
-                console.log("Laser hit an asteroid!");
-                this.removeGameObject(laser);
+    for (const laser of this.moveableObjects) {
+      if (laser instanceof Laser) {
+        for (const asteroid of this.moveableObjects) {
+          if (
+            asteroid instanceof RegularAsteroid ||
+            asteroid instanceof BigAsteroid ||
+            asteroid instanceof SuperAstro
+          ) {
+            if (laser.collidesWith(asteroid)) {
+              console.log("Laser hit an asteroid!");
+              this.removeGameObject(laser);
 
-                if (asteroid instanceof SuperAstro) {
-                  if (asteroid.takeDamage()) {
-                    console.log("SuperAstro destroyed!");
-                    this.removeGameObject(asteroid);
-                  } else {
-                    console.log(
-                      `SuperAstro hit! Hits left: ${asteroid.hitsLeft}`
-                    );
-                  }
-                } else if (asteroid instanceof BigAsteroid) {
-                  const newAsteroids = asteroid.split();
-                  this.moveableObjects.push(...newAsteroids);
+              if (asteroid instanceof SuperAstro) {
+                if (asteroid.takeDamage()) {
+                  console.log("SuperAstro destroyed!");
                   this.removeGameObject(asteroid);
                 } else {
-                  this.removeGameObject(asteroid);
+                  console.log(
+                    `SuperAstro hit! Hits left: ${asteroid.hitsLeft}`
+                  );
                 }
-                this.localScore += 5;
-                soundeffects.explosion?.play();
-
-                if (asteroid instanceof BigAsteroid) {
-                  this.localScore += 10;
-                  const newAsteroids = asteroid.split();
-                  this.moveableObjects.push(...newAsteroids);
-                }
-                if (asteroid instanceof SuperAstro) {
-                  this.localScore += 20;
-                }
-                this.explosions.push({
-                  position: createVector(
-                    asteroid.position.x,
-                    asteroid.position.y
-                  ),
-                  frameCount: 0,
-                });
+              } else if (asteroid instanceof BigAsteroid) {
+                const newAsteroids = asteroid.split();
+                this.moveableObjects.push(...newAsteroids);
+                this.removeGameObject(asteroid);
+              } else {
+                this.removeGameObject(asteroid);
               }
+              this.localScore += 5;
+              soundeffects.explosion?.play();
+
+              if (asteroid instanceof BigAsteroid) {
+                this.localScore += 10;
+                const newAsteroids = asteroid.split();
+                this.moveableObjects.push(...newAsteroids);
+              }
+              if (asteroid instanceof SuperAstro) {
+                this.localScore += 20;
+              }
+              this.explosions.push({
+                position: createVector(asteroid.position.x, asteroid.position.y),
+                frameCount: 0,
+              });
             }
           }
         }
       }
     }
   }
+
   private removeGameObject(moveableObjects: MoveableObject) {
     const index = this.moveableObjects.indexOf(moveableObjects);
     if (index !== -1) {

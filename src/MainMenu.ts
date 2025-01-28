@@ -11,7 +11,6 @@ class MainMenu implements IScene {
   private startGameBtn: Button;
   private musicOnOffBtn: Button;
   private isMusicPlaying: boolean;
-  private memory: GameMemory;
 
   private buttonClickedSound: p5.SoundFile;
 
@@ -22,7 +21,6 @@ class MainMenu implements IScene {
     this.logoDino = imageAssets.logoDino;
     this.buttonClickedSound = soundeffects.buttonClick;
     this.backgroundMusic = music.mystery;
-    this.memory = this.dinoStroids.getMemory();
 
 
     this.dinoStroids = dinoStroids;
@@ -61,6 +59,7 @@ class MainMenu implements IScene {
       this.dinoStroids.changeActiveScene(new HowToPlayPopup(this.dinoStroids));
     }
     if (this.scoreBoardBtn.isClicked()) {
+      this.buttonClickedSound.play();
       this.dinoStroids.changeActiveScene(new ScoreBoardPopup(this.dinoStroids));
     }
     if (this.startGameBtn.isClicked()) {
@@ -103,10 +102,10 @@ class MainMenu implements IScene {
   private shiftMusicOnOff(): void {
     if (this.isMusicPlaying) {
       this.backgroundMusic.loop();
-      this.musicOnOffBtn.setLabel("MUSIC OFF"); //Uppdatera knappens text
+      this.musicOnOffBtn.setLabel("MUSIC OFF");
     } else {
-      this.backgroundMusic.pause(); //Loopa musiken
-      this.musicOnOffBtn.setLabel("MUSIC ON"); //Uppdatera knappens text
+      this.backgroundMusic.pause();
+      this.musicOnOffBtn.setLabel("MUSIC ON");
     }
 
     //Växlar musiken

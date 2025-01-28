@@ -7,7 +7,6 @@ class InGameMenuPopup implements IScene {
     private continueBtn: Button;
     private musicOnOffBtn: Button;
     private isMusicPlaying: boolean;
-    // private closeButton: Button;
     // Popup coordinates
     private popupX: number;
     private popupY: number;
@@ -15,14 +14,12 @@ class InGameMenuPopup implements IScene {
     private popupH: number;
 
     private pausedBoard: GameBoard;
-    private memory: GameMemory;
 
     constructor(dinoStroids: IChangeableScene, pausedBoard: GameBoard) {
 
         this.backgroundMusic = music.mystery;
         this.dinoStroids = dinoStroids;
         this.pausedBoard = pausedBoard;
-        this.memory = this.dinoStroids.getMemory();
 
         this.quitBtn = new Button('QUIT', createVector(width * 0.5, height * 0.37));
         this.restartBtn = new Button('RESTART', createVector(width * 0.5, height * 0.48));
@@ -35,19 +32,12 @@ class InGameMenuPopup implements IScene {
         this.popupY = height * 0.20;
         this.popupW = width * 0.5;
         this.popupH = height * 0.6;
-
-        // const xButtonSize = 40;
-        // const xButtonCenterX = (this.popupX + this.popupW) - (xButtonSize / 2);
-        // const xButtonCenterY = this.popupY + (xButtonSize / 2);
-
-        // this.closeButton = new Button("X", createVector(xButtonCenterX, xButtonCenterY), 40, 40);
     }
 
     public update(): void {
         if (this.quitBtn.isClicked()) {
             soundeffects.buttonClick.play();
 
-            this.memory.addScore(this.memory.playerName, this.memory.playerScore);
             this.dinoStroids.changeActiveScene(new MainMenu(this.dinoStroids));
         }
         if (this.restartBtn.isClicked()) {
@@ -63,16 +53,10 @@ class InGameMenuPopup implements IScene {
         if (this.musicOnOffBtn.isClicked()) {
             this.shiftMusicOnOff(); //Möjliggör att växla till MUSIC ON/OFF när man klickar
         }
-        // if (this.closeButton.isClicked()) {
-        //     soundeffects.buttonClick.play();
-        //     this.dinoStroids.changeActiveScene(new MainMenu(this.dinoStroids));
-        // }
     }
 
     public draw(): void {
-        // imageMode(CORNER);
-        // image(this.backgroundImage, 0, 0, width, height);
-
+        
         this.pausedBoard.draw();
         
         push();
@@ -109,10 +93,10 @@ class InGameMenuPopup implements IScene {
     private shiftMusicOnOff(): void {
         if (this.isMusicPlaying) {
             this.backgroundMusic.loop();
-            this.musicOnOffBtn.setLabel("MUSIC OFF"); //Uppdatera knappens text
+            this.musicOnOffBtn.setLabel("MUSIC OFF");
         } else {
-            this.backgroundMusic.pause(); //Loopa musiken
-            this.musicOnOffBtn.setLabel("MUSIC ON"); //Uppdatera knappens text
+            this.backgroundMusic.pause();
+            this.musicOnOffBtn.setLabel("MUSIC ON"); 
         }
 
         //Växlar musiken

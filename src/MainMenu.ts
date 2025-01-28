@@ -61,6 +61,7 @@ class MainMenu implements IScene {
       this.dinoStroids.changeActiveScene(new HowToPlayPopup(this.dinoStroids));
     }
     if (this.scoreBoardBtn.isClicked()) {
+      this.buttonClickedSound.play();
       this.dinoStroids.changeActiveScene(new ScoreBoardPopup(this.dinoStroids));
     }
     if (this.startGameBtn.isClicked()) {

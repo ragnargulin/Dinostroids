@@ -93,10 +93,10 @@ class InGameMenuPopup implements IScene {
     private shiftMusicOnOff(): void {
         if (this.isMusicPlaying) {
             this.backgroundMusic.loop();
-            this.musicOnOffBtn.setLabel("MUSIC OFF"); //Uppdatera knappens text
+            this.musicOnOffBtn.setLabel("MUSIC OFF");
         } else {
-            this.backgroundMusic.pause(); //Loopa musiken
-            this.musicOnOffBtn.setLabel("MUSIC ON"); //Uppdatera knappens text
+            this.backgroundMusic.pause();
+            this.musicOnOffBtn.setLabel("MUSIC ON"); 
         }
 
         //Växlar musiken

@@ -83,8 +83,8 @@ class GameBoard implements IScene {
         for (const explosion of this.explosions) {
             image(
                 this.explosionImage,
-                explosion.position.x - 50, // Center the explosion
-                explosion.position.y - 50,
+                explosion.position.x - 20, // Center the explosion
+                explosion.position.y - 30,
                 100, // width of explosion
                 100  // height of explosion
             );
@@ -207,7 +207,7 @@ class GameBoard implements IScene {
                     console.log("Player collided with asteroid!");
                     this.removeGameObject(obj);
                     this.lives -= 4;
-                    if (this.lives == 0) {
+                    if (this.lives <= 0) {
                         this.memory.addScore(this.memory.playerName, this.memory.playerScore);
                         this.dinoStroids.changeActiveScene(new GameOverPopup(this.dinoStroids));
                     }

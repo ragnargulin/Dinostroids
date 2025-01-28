@@ -4,8 +4,8 @@ class SuperAstro extends MoveableObject {
 
   constructor() {
     super(random(width), -100, 100, 200, 0, 3, imageAssets.superAstro, {
-      position: createVector(0,100),
-      size: createVector(100,100)
+      position: createVector(10,90),
+      size: createVector(80,100)
     });
     this.spawnTimer = random(5000, 10000); // Spawn-intervall
     this.hitsLeft = 5;

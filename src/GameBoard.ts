@@ -261,7 +261,7 @@ class GameBoard implements IScene {
                             }
                             this.localScore += 5;
                             soundeffects.explosion?.play();
-                            this.removeGameObject(asteroid);
+            
                             if (asteroid instanceof BigAsteroid) {
                                 this.localScore += 10;
                                 const newAsteroids = asteroid.split();

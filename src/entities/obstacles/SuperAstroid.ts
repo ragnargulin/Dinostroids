@@ -1,6 +1,6 @@
 class SuperAstro extends MoveableObject {
   private spawnTimer: number;
-  public hitsLeft: number;
+  public hitsLeft: number = 5;
 
   constructor() {
     super(random(width), -100, 100, 200, 0, 3, imageAssets.superAstro);

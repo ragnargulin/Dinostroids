@@ -239,6 +239,7 @@ class GameBoard implements IScene {
             if (this.lives < 5) {
               this.lives += 1;
             }
+            soundeffects.powerupSound.play();
           }
           this.removeGameObject(obj);
         }

@@ -11,6 +11,7 @@ let soundeffects: {
   powerupSound: p5.SoundFile;
   explosion: p5.SoundFile;
   playerHit: p5.SoundFile;
+  shieldSound: p5.SoundFile;
 };
 let imageAssets: {
   dino: p5.Image;
@@ -49,6 +50,7 @@ function preload() {
     powerupSound: loadSound("../assets/soundeffects/powerupSound.mp3"),
     explosion: loadSound("../assets/soundeffects/explosion.mp3"),
     playerHit: loadSound("../assets/soundeffects/failSound.mp3"),
+    shieldSound: loadSound("../assets/soundeffects/shieldMusic.mp3"),
 
   };
   imageAssets = {

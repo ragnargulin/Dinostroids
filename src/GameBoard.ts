@@ -116,15 +116,19 @@ class GameBoard implements IScene {
     if (this.astroSpawnTimer <= 0) {
       const index = floor(random(0, 3));
       if (index === 0) {
-        this.moveableObjects.push(new RegularAsteroid());
+        this.moveableObjects.push(new RegularAsteroid(this.localScore)); //skickar med localScore till RegularAsteroid
       } else if (index === 1) {
-        this.moveableObjects.push(new BigAsteroid());
+        this.moveableObjects.push(new BigAsteroid(this.localScore));
       } else {
-        this.moveableObjects.push(new SuperAstro());
+        this.moveableObjects.push(new SuperAstro(this.localScore));
       }
-      this.astroSpawnTimer = random(2000, 5000);
+      
+      // Adjust spawn timer based on score
+      const baseSpawnTime = random(2000, 5000);
+      const spawnTimeReduction = Math.floor(this.localScore / 200) * 300;
+      this.astroSpawnTimer = Math.max(baseSpawnTime - spawnTimeReduction, 1000);
     }
-
+  
     this.astroSpawnTimer -= deltaTime;
   }
 

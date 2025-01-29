@@ -57,7 +57,7 @@ class AboutPopup implements IScene {
         textAlign("center");
         textFont("Pixelify Sans");
         textSize(width * 0.05);
-        text("About", width * 0.5, height * 0.3);
+        text("About", width * 0.5, this.popupY + 50);
 
         //Brödtexten
         textSize(width * 0.014);

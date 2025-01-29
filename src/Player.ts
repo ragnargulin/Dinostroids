@@ -4,88 +4,119 @@ class Player extends MoveableObject {
   private spaceKeyWasPressedInPrevFrame: boolean;
 
   public isShieldActive: boolean;
-  private shieldTimer: number;
-  private powerupSound: p5.SoundFile;
-
-  private shieldSound: p5.SoundFile;
+  private shieldTimer: number;         // Now used to track shield expiration
+  private powerupSound: p5.SoundFile;  // Now played when shield activates
+  private shieldSound: p5.SoundFile;   // Loops while shield is active
 
   constructor(gameBoard: GameBoard) {
     super(width * 0.5 - 60, height - 120, 120, 120, 0, 0, imageAssets.dino);
-    this.isFacingRight = true; // Initial facing direction
+
+    this.isFacingRight = true;
     this.gameBoard = gameBoard;
+    // Check if space is pressed at start
     this.spaceKeyWasPressedInPrevFrame = keyIsDown(32);
 
     this.isShieldActive = false;
     this.shieldTimer = 0;
     this.powerupSound = soundeffects.powerupSound;
     this.shieldSound = soundeffects.shieldSound;
-
   }
 
   public update() {
     super.update();
 
-    // Update velocity and facing direction
+    // --------------------------
+    // 1) Shield Timer Check
+    // --------------------------
+    // If shield is active and enough time has passed, turn it off
+    if (this.isShieldActive) {
+      if (millis() > this.shieldTimer) {
+        this.deactivateShield();
+      }
+    }
+
+    // --------------------------
+    // 2) Movement Logic
+    // --------------------------
     if (keyIsDown(LEFT_ARROW)) {
       this.velocity.x = -5;
-      this.isFacingRight = false; // Facing left
+      this.isFacingRight = false;
     } else if (keyIsDown(RIGHT_ARROW)) {
       this.velocity.x = 5;
-      this.isFacingRight = true; // Facing right
+      this.isFacingRight = true;
     } else {
       this.velocity.x = 0;
     }
 
-    // Ensure the player stays within the canvas boundaries
+    // Ensure player stays within canvas boundaries
     this.position.x = constrain(this.position.x, 0, width - this.size.x);
   }
 
   private shootLaser() {
     soundeffects.laserSound.play();
-    let laserStartX = this.position.x + this.size.x / 2 + 25;
 
-    // Adjust laser position based on facing direction
+    // Adjust X based on facing direction
+    let laserStartX = this.position.x + this.size.x / 2 + 25;
     if (!this.isFacingRight) {
-      laserStartX = this.position.x - this.size.x / 2 + 74;  // Adjust for left-facing Dino
+      // Shift a bit more to the left for left-facing Dino
+      laserStartX = this.position.x - this.size.x / 2 + 74;
     }
 
-    // Create a laser at the player's current position
+    // Create a laser slightly above the player's position
     const laser = new Laser(laserStartX, this.position.y - 50, imageAssets.laser);
-    this.gameBoard.addGameObject(laser);  // Add laser to the game through GameBoard reference
+    this.gameBoard.addGameObject(laser);
   }
 
+  /**
+   * Activates the shield for "duration" ms, switching to a shield image,
+   * playing a one-time power-up sound, and looping shield sound while active.
+   *
+   * We store the "end time" in shieldTimer, then check in update() if
+   * we've exceeded that time (millis() > shieldTimer).
+   */
   public activateShield(duration: number, dinowithshield2: p5.Image) {
-    this.isShieldActive = true; //Om sköld aktiv är sant ska Dino byta till sköldbilden
+    this.isShieldActive = true;
     this.image = dinowithshield2;
-    //this.powerupSound = powerupSound;
-    this.shieldTimer = millis() + duration; //Tid för hur länge skölden ska vara aktiv. Beräknar tiden då skölden ska inaktiveras genom att lägga till duration till den aktuella tiden (i millisekunder).
+
+    // We'll end the shield after "duration" ms from now
+    this.shieldTimer = millis() + duration;
+
+    // Play a quick "power-up" sound once
+    this.powerupSound.play();
+
+    // Loop a shield hum or effect while active
     this.shieldSound.loop();
-    setTimeout(() => {
-      this.deactivateShield();
-    }, duration)
   }
 
-  private deactivateShield(): void { //Om sköld aktiv är falskt ska Dino byta till gamla bilden
+  /**
+   * Called automatically once shieldTimer is reached, or if something else
+   * needs to end the shield early.
+   */
+  private deactivateShield(): void {
     this.isShieldActive = false;
     this.image = imageAssets.dino;
     this.shieldSound.stop();
   }
 
   public draw() {
-    push();
+    // --------------------------
+    // 1) Shooting Logic
+    // --------------------------
     if (keyIsDown(32) && !this.spaceKeyWasPressedInPrevFrame) {
       this.shootLaser();
     }
-
-    // Ensure the player stays within the canvas boundaries
-    this.position.x = constrain(this.position.x, 0, width - this.size.x);
     this.spaceKeyWasPressedInPrevFrame = keyIsDown(32);
 
-    push();  // Save the current transformation state
+    // Just to double-check boundary in draw (slightly redundant but harmless)
+    this.position.x = constrain(this.position.x, 0, width - this.size.x);
 
+    // --------------------------
+    // 2) Draw Player (flip if left)
+    // --------------------------
+    push();
     if (!this.isFacingRight) {
-      translate(this.position.x + this.size.x, this.position.y); // Adjust position for flipping
-      scale(-1, 1); // Flip horizontally
+      translate(this.position.x + this.size.x, this.position.y);
+      scale(-1, 1);
     } else {
       translate(this.position.x, this.position.y);
     }

@@ -7,7 +7,10 @@ class RegularAsteroid extends MoveableObject {
     const speedIncrease = localScore * 0.004; // Här justeras hur mkt hastigheten ökas i relation till score
     const finalSpeed = baseSpeed + speedIncrease;
     
-    super(random(width), -50, 50, 90, 0, finalSpeed, imageAssets.astro);
+    super(random(width), -50, 50, 90, 0, finalSpeed, imageAssets.astro, {
+      position: createVector(5,42),
+      size: createVector(40,45)
+    });
     
     const baseSpawnTime = random(3000, 7000);
     const spawnTimeReduction = localScore * 4000; // Justera spawn time baserat på score

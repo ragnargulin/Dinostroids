@@ -50,19 +50,19 @@ function preload() {
     powerupSound: loadSound("../assets/soundeffects/powerupSound.mp3"),
     explosion: loadSound("../assets/soundeffects/explosion.mp3"),
     playerHit: loadSound("../assets/soundeffects/failSound.mp3"),
-    shieldSound: loadSound("../assets/soundeffects/shieldMusic.mp3"),
+    shieldSound: loadSound("../assets/soundeffects/powerupSound.mp3"),
 
   };
   imageAssets = {
     dino: loadImage("../assets/images/dino (2).gif"),
     background: loadImage("../assets/images/background.png"),
     gameTitle: loadImage("../assets/images/gameTitle.png"),
-    moveImage: loadImage("../assets/images/Frame-17.png"),
-    shootImage: loadImage("../assets/images/Frame-19.png"),
+    moveImage: loadImage("../assets/images/Frame1.png"),
+    shootImage: loadImage("../assets/images/Frame2.png"),
     hearts: loadImage("../assets/images/heart.png"),
     laser: loadImage("../assets/images/NormalLaser.gif"),
-    powerupImage: loadImage("../assets/images/powerupsPrtSc.png"),
-    asteroidtypeImage: loadImage("../assets/images/asteroidtypesPrtSc.png"),
+    powerupImage: loadImage("../assets/images/powerupsPrtSc2.png"),
+    asteroidtypeImage: loadImage("../assets/images/asteroidtypesPrtSc2.png"),
 
     sheild: loadImage("../assets/images/SheildPowerupC.gif"),
     superLaser: loadImage("../assets/images/superLaser.gif"),

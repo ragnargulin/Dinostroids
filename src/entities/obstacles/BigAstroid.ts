@@ -7,7 +7,10 @@ class BigAsteroid extends MoveableObject {
       const speedIncrease = localScore * 0.002; // Här justeras hur mkt hastigheten ökas i relation till score
       const finalSpeed = baseSpeed + speedIncrease;
       
-      super(random(width), -75, 75, 150, 0, finalSpeed, imageAssets.bigAstro,);
+      super(random(width), -75, 75, 150, 0, finalSpeed, imageAssets.bigAstro,{
+        position: createVector(5,70),
+        size: createVector(65,75)
+      });
       
       // Decrease spawn time based on localScore
       const baseSpawnTime = random(3000, 7000);

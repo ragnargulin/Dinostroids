@@ -6,7 +6,10 @@ class SuperAstro extends MoveableObject {
     const baseSpeed = 3;
     const speedIncrease = localScore * 0.001;  // Här justeras hur mkt hastigheten ökas i relation till score
     const finalSpeed = baseSpeed + speedIncrease;
-    super(random(width), -100, 100, 200, 0, finalSpeed, imageAssets.superAstro);
+    super(random(width), -100, 100, 200, 0, finalSpeed, imageAssets.superAstro, {
+      position: createVector(10,90),
+      size: createVector(80,100)
+    });
 
     this.hitsLeft = 5;
 

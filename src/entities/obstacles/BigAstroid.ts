@@ -7,7 +7,7 @@ class BigAsteroid extends MoveableObject {
       const speedIncrease = localScore * 0.002; // Här justeras hur mkt hastigheten ökas i relation till score
       const finalSpeed = baseSpeed + speedIncrease;
       
-      super(random(width), -75, 75, 150, 0, finalSpeed, imageAssets.bigAstro);
+      super(random(width), -75, 75, 150, 0, finalSpeed, imageAssets.bigAstro,);
       
       // Decrease spawn time based on localScore
       const baseSpawnTime = random(3000, 7000);
@@ -30,8 +30,8 @@ class BigAsteroid extends MoveableObject {
   
     public split(): RegularAsteroid[] {
       // Pass the current speed to the small asteroids
-      const asteroid1 = new RegularAsteroid(0, this.speed); 
-      const asteroid2 = new RegularAsteroid(0, this.speed);
+      const asteroid1 = new RegularAsteroid(this.speed); 
+      const asteroid2 = new RegularAsteroid(this.speed);
   
       // Set positions
       asteroid1.position = createVector(this.position.x - 10, this.position.y);

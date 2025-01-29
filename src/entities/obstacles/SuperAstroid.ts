@@ -4,16 +4,15 @@ class SuperAstro extends MoveableObject {
 
   constructor(localScore: number = 0) {
     const baseSpeed = 3;
-    const speedIncrease = localScore * 0.001;  
+    const speedIncrease = localScore * 0.001;  // Här justeras hur mkt hastigheten ökas i relation till score
     const finalSpeed = baseSpeed + speedIncrease;
     super(random(width), -100, 100, 200, 0, finalSpeed, imageAssets.superAstro);
     this.hitsLeft = 5;
 
     
-    // Decrease spawn time based on localScore
-    const baseSpawnTime = random(5000, 10000);
-    const spawnTimeReduction = Math.floor(localScore / 300) * 500; // Reduce spawn time every 300 points
-    this.spawnTimer = Math.max(baseSpawnTime - spawnTimeReduction, 3000); // Minimum spawn time of 3000
+    const baseSpawnTime = random(3000, 7000);
+    const spawnTimeReduction = localScore * 4000; // Justera spawn time baserat på score
+    this.spawnTimer = baseSpawnTime - spawnTimeReduction; // Justera spawntime baserat på score
     
   }
 

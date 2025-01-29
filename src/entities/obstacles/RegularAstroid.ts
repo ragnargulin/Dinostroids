@@ -4,15 +4,14 @@ class RegularAsteroid extends MoveableObject {
   constructor(localScore: number = 0) {
     // Calculate speed based on localScore
     const baseSpeed = random(2, 4);
-    const speedIncrease = localScore * 0.002; 
+    const speedIncrease = localScore * 0.004; // Här justeras hur mkt hastigheten ökas i relation till score
     const finalSpeed = baseSpeed + speedIncrease;
     
     super(random(width), -50, 50, 90, 0, finalSpeed, imageAssets.astro);
     
-    // Decrease spawn time based on localScore
-    const baseSpawnTime = random(2000, 5000);
-    const spawnTimeReduction = Math.floor(localScore / 200) * 300; // Reduce spawn time every 200 points
-    this.spawnTimer = Math.max(baseSpawnTime - spawnTimeReduction, 1000); // Minimum spawn time of 1000
+    const baseSpawnTime = random(3000, 7000);
+    const spawnTimeReduction = localScore * 4000; // Justera spawn time baserat på score
+    this.spawnTimer = baseSpawnTime - spawnTimeReduction; // Justera spawntime baserat på score
   }
 
 

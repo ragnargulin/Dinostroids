@@ -4,17 +4,16 @@ class BigAsteroid extends MoveableObject {
   
     constructor(localScore: number = 0) {
       const baseSpeed = random(2, 3);
-      const speedIncrease = localScore * 0.1; // Här justeras hur mkt hastigheten ökas i relation till score
+      const speedIncrease = localScore * 0.002; // Här justeras hur mkt hastigheten ökas i relation till score
       const finalSpeed = baseSpeed + speedIncrease;
       
       super(random(width), -75, 75, 150, 0, finalSpeed, imageAssets.bigAstro);
       
       // Decrease spawn time based on localScore
       const baseSpawnTime = random(3000, 7000);
-      const spawnTimeReduction = Math.floor(localScore / 250) * 400; // Reduce spawn time every 250 points
-      this.spawnTimer = Math.max(baseSpawnTime - spawnTimeReduction, 2000); // Minimum spawn time of 2000
+      const spawnTimeReduction = localScore * 4000; // Justera spawn time baserat på score
+      this.spawnTimer = baseSpawnTime - spawnTimeReduction; // Justera spawntime baserat på score
       
-      // Store the speed for inheritance to small asteroids
       this.speed = finalSpeed;
     }
   
@@ -39,7 +38,6 @@ class BigAsteroid extends MoveableObject {
   
       const horizontalSpread = 2;
       
-      // Use setVelocity instead of direct velocity assignment
       asteroid1.setVelocity(-horizontalSpread, this.speed);
       asteroid2.setVelocity(horizontalSpread, this.speed);
   

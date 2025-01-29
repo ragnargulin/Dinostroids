@@ -32,6 +32,7 @@ let imageAssets: {
   explosion: p5.Image;
   logoSign: p5.Image;
   logoDino: p5.Image;
+  superLaserBeam: p5.Image;
 };
 
 /**
@@ -73,6 +74,7 @@ function preload() {
     dinoWithSheild: loadImage("../assets/images/dinowithshield2.gif"),
     logoSign: loadImage("../assets/images/logoSign.png"),
     logoDino: loadImage("../assets/images/logoDino.gif"),
+    superLaserBeam: loadImage("../assets/images/superLaserBeam.gif"),
   };
 }
 

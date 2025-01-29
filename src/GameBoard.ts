@@ -85,11 +85,14 @@ class GameBoard implements IScene {
         this.moveableObjects,
         {
           removeObject: (obj) => this.removeGameObject(obj),
+          addObject: (obj) => this.addGameObject(obj),
           decreaseLives: (amount) => {
             this.lives -= amount;
             if (this.lives <= 0) {
               this.handleGameOver();
             }
+            // Keep lives at max 5
+            if (this.lives > 5) this.lives = 5;
           },
           increaseScore: (amount) => this.localScore += amount,
           addExplosion: (position) => this.explosions.push({

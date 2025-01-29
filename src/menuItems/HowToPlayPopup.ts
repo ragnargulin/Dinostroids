@@ -102,25 +102,25 @@ class HowToPlayPopup implements IScene {
                 textSize(width * 0.05); //Rubrikstorlek
                 textStyle(BOLD);
                 textAlign(CENTER);
-                text("Controls", width * 0.5, this.popupY + 75); //+75 flyttar ner rubriken från popup-kanten
+                text("Controls", width * 0.5, this.popupY + 65); //+75 flyttar ner rubriken från popup-kanten
 
                 textSize(width * 0.02); //Brödtextens storlek
                 textStyle(NORMAL);
                 textAlign(CENTER);
                 const page1Text =
-                    "\n\n \n\n \n\nArrow keys to move right and left. Space to shoot laser."
+                    "\n\n\nArrow keys to move right and left. Space to shoot laser."
                 text(page1Text, textX, textY, textBlockWidth, textBlockHeight);
 
                 imageMode(CENTER);
-                image(this.moveImage, width * 0.3, this.popupY + this.popupH * 0.5 - 40, width * 0.2, height * 0.2); //Lagt till + 20 för att kunna flytta ner bilderna 20px ner från deras tidigare position
-                image(this.shootImage, width * 0.7, this.popupY + this.popupH * 0.5 - 40, width * 0.2, height * 0.2);
+                image(this.moveImage, width * 0.3, this.popupY + this.popupH * 0.5 - 20, width * 0.2, height * 0.2); //Lagt till - 20 för att kunna flytta ner bilderna 20px ner från deras tidigare position
+                image(this.shootImage, width * 0.7, this.popupY + this.popupH * 0.5 - 20, width * 0.2, height * 0.2);
                 break;
 
             case 1: //Sida 2: Powerups
                 textSize(width * 0.05);
                 textStyle(BOLD);
                 textAlign(CENTER);
-                text("Powerups", width * 0.5, this.popupY + 75);
+                text("Powerups", width * 0.5, this.popupY + 65);
 
                 textSize(width * 0.017);
                 textStyle(NORMAL);
@@ -137,7 +137,7 @@ class HowToPlayPopup implements IScene {
                 textSize(width * 0.05);
                 textStyle(BOLD);
                 textAlign(CENTER);
-                text("Characters", width * 0.5, this.popupY + 75);
+                text("Characters", width * 0.5, this.popupY + 65);
 
                 textSize(width * 0.017);
                 textStyle(NORMAL);
@@ -154,7 +154,7 @@ class HowToPlayPopup implements IScene {
                 textSize(width * 0.05);
                 textStyle(BOLD);
                 textAlign(CENTER);
-                text("Asteroid Types", width * 0.5, this.popupY + 75);
+                text("Asteroid Types", width * 0.5, this.popupY + 65);
 
                 textSize(width * 0.017);
                 textStyle(NORMAL);

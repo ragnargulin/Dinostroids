@@ -50,7 +50,7 @@ function preload() {
     powerupSound: loadSound("../assets/soundeffects/powerupSound.mp3"),
     explosion: loadSound("../assets/soundeffects/explosion.mp3"),
     playerHit: loadSound("../assets/soundeffects/failSound.mp3"),
-    shieldSound: loadSound("../assets/soundeffects/shieldMusic.mp3"),
+    shieldSound: loadSound("../assets/soundeffects/powerupSound.mp3"),
 
   };
   imageAssets = {

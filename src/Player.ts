@@ -7,6 +7,8 @@ class Player extends MoveableObject {
   private shieldTimer: number;
   private powerupSound: p5.SoundFile;
 
+  private shieldSound: p5.SoundFile;
+
   constructor(gameBoard: GameBoard) {
     super(width * 0.5 - 60, height - 120, 120, 120, 0, 0, imageAssets.dino);
     this.isFacingRight = true; // Initial facing direction
@@ -16,6 +18,7 @@ class Player extends MoveableObject {
     this.isShieldActive = false;
     this.shieldTimer = 0;
     this.powerupSound = soundeffects.powerupSound;
+    this.shieldSound = soundeffects.shieldSound;
 
   }
 
@@ -56,7 +59,7 @@ class Player extends MoveableObject {
     this.image = dinowithshield2;
     //this.powerupSound = powerupSound;
     this.shieldTimer = millis() + duration; //Tid för hur länge skölden ska vara aktiv. Beräknar tiden då skölden ska inaktiveras genom att lägga till duration till den aktuella tiden (i millisekunder).
-
+    this.shieldSound.loop();
     setTimeout(() => {
       this.deactivateShield();
     }, duration)
@@ -65,6 +68,7 @@ class Player extends MoveableObject {
   private deactivateShield(): void { //Om sköld aktiv är falskt ska Dino byta till gamla bilden
     this.isShieldActive = false;
     this.image = imageAssets.dino;
+    this.shieldSound.stop();
   }
 
   public draw() {

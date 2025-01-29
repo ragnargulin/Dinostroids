@@ -18,6 +18,7 @@ class BigAsteroid extends MoveableObject {
     }
   
     public updateSpawnTimer(deltaTime: number): boolean {
+
       this.spawnTimer -= deltaTime;
       if (this.spawnTimer <= 0) {
         const baseSpawnTime = random(3000, 7000);

@@ -15,7 +15,6 @@ class RegularAsteroid extends MoveableObject {
   }
 
 
-
   public updateSpawnTimer(deltaTime: number): boolean {
       this.spawnTimer -= deltaTime;
       if (this.spawnTimer <= 0) {

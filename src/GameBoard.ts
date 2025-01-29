@@ -18,6 +18,8 @@ class GameBoard implements IScene {
 
   private moveableObjects: MoveableObject[];
 
+  private paused: boolean = false;
+
   constructor(dinoStroids: IChangeableScene) {
     this.dinoStroids = dinoStroids;
     this.memory = this.dinoStroids.getMemory();
@@ -42,6 +44,8 @@ class GameBoard implements IScene {
   }
 
   public update(): void {
+    if (this.paused) return;
+
     this.spawnAstro();
 
     this.secondTicker++;
@@ -54,6 +58,7 @@ class GameBoard implements IScene {
     if (this.menuButton.isClicked()) {
       console.log("Menu button => pause game)");
       this.memory.playerScore = this.localScore;
+      this.paused = true;
       this.dinoStroids.changeActiveScene(
         new InGameMenuPopup(this.dinoStroids, this)
       );
@@ -97,7 +102,13 @@ class GameBoard implements IScene {
     this.checkCollisions();
   }
 
+  public resumeGame(): void {
+    this.paused = false;
+  }
+
   private PowerSpawnTimer() {
+    if (this.paused) return;
+
     if (this.powerSpawnTimer <= 0) {
       const index = floor(random(0, 3));
       const powerUps = [new Heart(), new Sheild(), new SuperLaser()];
@@ -113,6 +124,8 @@ class GameBoard implements IScene {
   }
 
   private spawnAstro() {
+    if (this.paused) return;
+
     if (this.astroSpawnTimer <= 0) {
       const index = floor(random(0, 3));
       if (index === 0) {
@@ -289,7 +302,10 @@ class GameBoard implements IScene {
                 this.localScore += 20;
               }
               this.explosions.push({
-                position: createVector(asteroid.position.x, asteroid.position.y),
+                position: createVector(
+                  asteroid.position.x,
+                  asteroid.position.y
+                ),
                 frameCount: 0,
               });
             }

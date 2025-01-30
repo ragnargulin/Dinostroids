@@ -1,6 +1,6 @@
 class MainMenu implements IScene {
   private backgroundImage: p5.Image;
-  private backgroundMusic: p5.SoundFile;
+
   private logoSign: p5.Image;
   private logoDino: p5.Image;
   private aboutBtn: Button;
@@ -10,7 +10,12 @@ class MainMenu implements IScene {
   private startGameBtn: Button;
   private musicOnOffBtn: Button;
 
+  //private isMusicPlaying: boolean;
+
+
   private buttonClickedSound: p5.SoundFile;
+
+  //private menuMusic: p5.SoundFile;
 
   constructor(dinoStroids: IChangeableScene) {
     this.dinoStroids = dinoStroids;
@@ -18,7 +23,13 @@ class MainMenu implements IScene {
     this.logoSign = imageAssets.logoSign;
     this.logoDino = imageAssets.logoDino;
     this.buttonClickedSound = soundeffects.buttonClick;
-    this.backgroundMusic = music.mystery;
+
+
+    if (!music.menuMusic.isPlaying()) { //justerar så att menuMusic bara startar om den inte redan är igång
+      music.menuMusic.setVolume(1);
+      music.menuMusic.loop();
+    }
+
 
     this.dinoStroids = dinoStroids;
     console.log("MainMenu created");
@@ -34,11 +45,10 @@ class MainMenu implements IScene {
         "SCOREBOARD",
         createVector(width * 0.5, height * 0.58)
       )),
-      (this.musicOnOffBtn = new Button(
-        this.backgroundMusic.isPlaying() ? "MUSIC OFF" : "MUSIC ON",
-        createVector(width * 0.5, height * 0.68)
-      ));
-    this.startGameBtn = new Button(
+      this.musicOnOffBtn = new Button("MUSIC ON", createVector(width * 0.5, height * 0.68));
+    //this.isMusicPlaying = false;
+    (this.startGameBtn = new Button(
+
       "START GAME",
       createVector(width * 0.5, height * 0.78),
       250,
@@ -63,7 +73,11 @@ class MainMenu implements IScene {
     }
     if (this.startGameBtn.isClicked()) {
       this.buttonClickedSound.play();
-      this.backgroundMusic.pause();
+
+      //Makes sure menuMusic stops when the game is being started, but this unfortunately makes the menumusic stop while in inputpopup
+      if (music.menuMusic.isPlaying()) {
+        music.menuMusic.stop();
+      }
       this.dinoStroids.changeActiveScene(new InputNamePopup(this.dinoStroids));
     }
     if (this.musicOnOffBtn.isClicked()) {
@@ -99,19 +113,17 @@ class MainMenu implements IScene {
     this.startGameBtn.draw();
     this.musicOnOffBtn.draw();
   }
-  private shiftMusicOnOff(): void {
-    if (this.backgroundMusic.isPlaying()) {
-      music.mystery.setVolume(0);
-      music.menuMusic.setVolume(0);
 
-      this.backgroundMusic.loop();
-      this.musicOnOffBtn.setLabel("MUSIC OFF");
-    } else {
-      music.mystery.setVolume(1);
-      music.menuMusic.setVolume(1);
-
-      this.backgroundMusic.pause();
+  private shiftMusicOnOff(): void { //tillagt så att det kontrolleras att musiken inte försöker starta om den redan är igång
+    if (music.menuMusic.isPlaying()) {
+      music.menuMusic.pause();
       this.musicOnOffBtn.setLabel("MUSIC ON");
+    } else {
+      if (!music.menuMusic.isPlaying()) {
+        music.menuMusic.loop();
+      }
+      this.musicOnOffBtn.setLabel("MUSIC OFF");
+
     }
   }
 }

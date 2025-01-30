@@ -4,7 +4,9 @@ class Player extends MoveableObject {
   private spaceKeyWasPressedInPrevFrame: boolean;
 
   public isShieldActive: boolean;
+  public isSuperLaserActive: boolean
   private shieldTimer: number;         // Now used to track shield expiration
+  private superLaserTimer: number;         // Now used to track shield expiration
   private powerupSound: p5.SoundFile;  // Now played when shield activates
   private shieldSound: p5.SoundFile;   // Loops while shield is active
 
@@ -18,6 +20,7 @@ class Player extends MoveableObject {
 
     this.isShieldActive = false;
     this.shieldTimer = 0;
+    this.superLaserTimer = 0;
     this.powerupSound = soundeffects.powerupSound;
     this.shieldSound = soundeffects.shieldSound;
   }
@@ -33,6 +36,10 @@ class Player extends MoveableObject {
       if (millis() > this.shieldTimer) {
         this.deactivateShield();
       }
+    }
+    if (this.isSuperLaserActive) {
+      if (millis() > this.superLaserTimer) {
+        this.deactivateSuperLaser();}
     }
 
     // --------------------------
@@ -63,8 +70,13 @@ class Player extends MoveableObject {
     }
 
     // Create a laser slightly above the player's position
-    const laser = new Laser(laserStartX, this.position.y - 50, imageAssets.laser);
-    this.gameBoard.addGameObject(laser);
+    if (this.isSuperLaserActive) {
+      const laser = new SuperLaserBeam(laserStartX, this.position.y - 50, imageAssets.laser);
+      this.gameBoard.addGameObject(laser);
+    } else {
+      const laser = new Laser(laserStartX, this.position.y - 50, imageAssets.laser);
+      this.gameBoard.addGameObject(laser);
+    }
   }
 
   /**
@@ -88,6 +100,13 @@ class Player extends MoveableObject {
     this.shieldSound.loop();
   }
 
+  public activateSuperLaser(duration: number, rampageDino: p5.Image) {
+    this.isSuperLaserActive = true;
+    this.image = rampageDino;
+    this.superLaserTimer = millis() + duration;
+    console.log("Super Laser Activated");
+  }
+
   /**
    * Called automatically once shieldTimer is reached, or if something else
    * needs to end the shield early.
@@ -96,6 +115,12 @@ class Player extends MoveableObject {
     this.isShieldActive = false;
     this.image = imageAssets.dino;
     this.shieldSound.stop();
+  }
+
+  private deactivateSuperLaser(): void {
+    this.isSuperLaserActive = false;
+    this.image = imageAssets.dino;
+    console.log("Super Laser Deactivated");
   }
 
   public draw() {
@@ -121,7 +146,7 @@ class Player extends MoveableObject {
       translate(this.position.x, this.position.y);
     }
 
-    image(this.image, 0, 0, this.size.x, this.size.y);
+    image(this.image, 0, 0, this.size.x, this.size.y); //BILDSTORLEKSSPÖKE???!
     pop();
   }
 }

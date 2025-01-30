@@ -15,6 +15,7 @@ let soundeffects: {
 };
 let imageAssets: {
   dino: p5.Image;
+  rampageDino: p5.Image;
   dinoWithSheild: p5.Image;
   background: p5.Image;
   gameTitle: p5.Image;
@@ -32,6 +33,7 @@ let imageAssets: {
   explosion: p5.Image;
   logoSign: p5.Image;
   logoDino: p5.Image;
+
 };
 
 /**
@@ -55,6 +57,7 @@ function preload() {
   };
   imageAssets = {
     dino: loadImage("../assets/images/dino (2).gif"),
+    rampageDino: loadImage("../assets/images/rampageDino.gif"),
     background: loadImage("../assets/images/background.png"),
     gameTitle: loadImage("../assets/images/gameTitle.png"),
     moveImage: loadImage("../assets/images/Frame1.png"),

@@ -111,6 +111,15 @@ class GameBoard implements IScene {
         });
       }
     }
+
+    // public decreaseLives(amount: number) {
+    //   this.lives -= amount;
+    //   if (this.lives <= 0) {
+    //     this.handleGameOver();
+    //   }
+    //   // Keep lives at max 5
+    //   if (this.lives > 5) this.lives = 5;
+    // }
   
     private handleGameOver(): void {
       this.memory.playerScore = this.localScore;
@@ -161,7 +170,7 @@ class GameBoard implements IScene {
         console.log("Spawned power-up:", powerUps[index].constructor.name);
   
         // 10s in ms. If testing, reduce to e.g. 2000 or 1000 to see them spawn more often.
-        this.powerSpawnTimer = 10000;
+        this.powerSpawnTimer = 1000;
       }
   
       // deltaTime is ms elapsed since previous frame
@@ -187,8 +196,7 @@ class GameBoard implements IScene {
           this.moveableObjects.push(new SuperAstro(this.localScore));
         }
   
-        // Base spawn time random between 2-5 seconds
-        const baseSpawnTime = random(2000, 5000);
+        const baseSpawnTime = random(1000, 2000);
         // Speed up spawns a bit as score increases
         const spawnTimeReduction = Math.floor(this.localScore / 200) * 300;
         this.astroSpawnTimer = Math.max(baseSpawnTime - spawnTimeReduction, 1000);

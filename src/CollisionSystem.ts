@@ -67,6 +67,7 @@ class CollisionSystem {
                         onCollision.decreaseLives(-1);
                     } else if (obj instanceof SuperLaser) {
                         console.log("Player picked up Super Laser");
+                        player.activateSuperLaser(5000, imageAssets.rampageDino);
                         soundeffects.powerupSound.play();
                     }
                     onCollision.removeObject(obj);

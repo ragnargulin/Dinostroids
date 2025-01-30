@@ -1,6 +1,5 @@
 // GameBoard.ts
 class GameBoard implements IScene {
-
   private dinoStroids: IChangeableScene;
   private memory: GameMemory;
 
@@ -43,15 +42,13 @@ class GameBoard implements IScene {
 
     // Start with a single player in the game
     this.moveableObjects = [new Player(this)];
-
     this.explosions = [];
     this.astroSpawnTimer = 0;
     this.powerSpawnTimer = 0;
 
-    //Stopp menu music if its playing
+    //Stop menu music when game starts
     if (music.menuMusic.isPlaying()) {
-      music.menuMusic.pause();
-
+      music.menuMusic.stop();
     }
 
     //Start in game music 
@@ -78,7 +75,6 @@ class GameBoard implements IScene {
     // Check if menu button is clicked
     if (this.menuButton.isClicked()) {
       console.log("Menu button => pause game)");
-
       this.memory.playerScore = this.localScore;
       this.paused = true;
       this.dinoStroids.changeActiveScene(
@@ -144,7 +140,6 @@ class GameBoard implements IScene {
     // Draw moveable objects
     for (const gameObject of this.moveableObjects) {
       gameObject.draw();
-
     }
 
     // Draw explosions

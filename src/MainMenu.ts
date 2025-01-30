@@ -47,7 +47,7 @@ class MainMenu implements IScene {
       )),
       this.musicOnOffBtn = new Button("MUSIC ON", createVector(width * 0.5, height * 0.68));
     //this.isMusicPlaying = false;
-    (this.startGameBtn = new Button(
+    this.startGameBtn = new Button(
 
       "START GAME",
       createVector(width * 0.5, height * 0.78),

@@ -57,7 +57,7 @@ function preload() {
     shieldSound: loadSound("../assets/soundeffects/powerupSound.mp3"),
   };
   imageAssets = {
-    dino: loadImage("../assets/images/dino (2).gif"),
+    dino: loadImage("../assets/images/dino.gif"),
     rampageDino: loadImage("../assets/images/rampageDino.gif"),
     sadDino: loadImage("assets/images/dinoGameOver.gif"),
     background: loadImage("../assets/images/background.png"),
@@ -76,7 +76,7 @@ function preload() {
     bigAstro: loadImage("../assets/images/BigAstroid.gif"),
     superAstro: loadImage("../assets/images/superAstro.gif"),
     explosion: loadImage("../assets/images/Pixelexplotion.gif"),
-    dinoWithSheild: loadImage("../assets/images/dinowithshield2.gif"),
+    dinoWithSheild: loadImage("../assets/images/dinoWithShield.gif"),
     logoSign: loadImage("../assets/images/logoSign.png"),
     logoDino: loadImage("../assets/images/logoDino.gif"),
   };

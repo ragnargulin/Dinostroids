@@ -9,8 +9,8 @@ class SuperLaserBeam extends MoveableObject {
     public update() {
         // Follow the player's horizontal position
         this.position.x = this.player.position.x + 
-            (this.player.isFacingRight ? 53 : -17);
-        this.position.y = -10;
+            (this.player.isFacingRight ? 55 : -19);
+        this.position.y = 7;
     }
 
  

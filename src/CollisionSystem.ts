@@ -58,16 +58,21 @@ class CollisionSystem {
             } else if (obj instanceof Heart || obj instanceof Sheild || obj instanceof SuperLaser) {
                 // Only remove the power-up if the player actually collides with it
                 if (player.collidesWith(obj)) {
-                    if (obj instanceof Sheild) {
+
+                    if (player.isSuperLaserActive || player.isShieldActive) {
+                        return;
+                    }
+
+                    else if (obj instanceof Sheild) {
                         console.log("Player picked up Shield");
-                        player.activateShield(5000, imageAssets.dinoWithSheild);
+                        player.activateShield(7000, imageAssets.dinoWithSheild);
                         soundeffects.powerupSound.play();
                     } else if (obj instanceof Heart) {
                         console.log("Player picked up a Heart");
                         onCollision.decreaseLives(-1);
                     } else if (obj instanceof SuperLaser) {
                         console.log("Player picked up Super Laser");
-                        player.activateSuperLaser(5000, imageAssets.rampageDino);
+                        player.activateSuperLaser(10000, imageAssets.rampageDino);
                         soundeffects.powerupSound.play();
                     }
                     onCollision.removeObject(obj);

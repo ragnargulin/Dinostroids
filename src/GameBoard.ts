@@ -170,7 +170,7 @@ class GameBoard implements IScene {
         console.log("Spawned power-up:", powerUps[index].constructor.name);
   
         // 10s in ms. If testing, reduce to e.g. 2000 or 1000 to see them spawn more often.
-        this.powerSpawnTimer = 1000;
+        this.powerSpawnTimer = 5000;
       }
   
       // deltaTime is ms elapsed since previous frame

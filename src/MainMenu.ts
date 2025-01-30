@@ -43,7 +43,7 @@ class MainMenu implements IScene {
         createVector(width * 0.5, height * 0.58)
       )),
       this.musicOnOffBtn = new Button("MUSIC ON", createVector(width * 0.5, height * 0.68));
-    this.isMusicPlaying = false;
+    //this.isMusicPlaying = false;
     (this.startGameBtn = new Button(
       "START GAME",
       createVector(width * 0.5, height * 0.78),
@@ -69,6 +69,11 @@ class MainMenu implements IScene {
     }
     if (this.startGameBtn.isClicked()) {
       this.buttonClickedSound.play();
+
+      //Makes sure menuMusic stops when the game is being started, but this unfortunately makes the menumusic stop while in inputpopup
+      if (music.menuMusic.isPlaying()) {
+        music.menuMusic.stop();
+      }
       this.dinoStroids.changeActiveScene(new InputNamePopup(this.dinoStroids));
     }
     if (this.musicOnOffBtn.isClicked()) {

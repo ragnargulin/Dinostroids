@@ -64,6 +64,7 @@ class CollisionSystem {
                         soundeffects.powerupSound.play();
                     } else if (obj instanceof Heart) {
                         console.log("Player picked up a Heart");
+                        soundeffects.powerupSound.play();
                         onCollision.decreaseLives(-1);
                     } else if (obj instanceof SuperLaser) {
                         console.log("Player picked up Super Laser");

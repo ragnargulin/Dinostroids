@@ -1,5 +1,6 @@
 class InGameMenuPopup implements IScene {
 
+
     private backgroundMusic: p5.SoundFile;
     private dinoStroids: IChangeableScene;
     private quitBtn: Button;
@@ -37,8 +38,9 @@ class InGameMenuPopup implements IScene {
             music.menuMusic.setVolume(1);
             music.menuMusic.loop();
         }
-    }
 
+
+<
     public update(): void {
         if (this.quitBtn.isClicked()) {
             soundeffects.buttonClick.play();
@@ -106,17 +108,8 @@ class InGameMenuPopup implements IScene {
 
         // this.closeButton.draw();
     }
+    
 
-    private drawTextInsideBox(): void {
-        push();
-        fill("black");
-        textStyle(BOLD);
-        textAlign("center");
-        textFont("Pixelify Sans");
-        textSize(width * 0.05);
-        text("MENU", width * 0.5, height * 0.3);
-        pop();
-    }
 
     private shiftMusicOnOff(): void {
         if (this.isMusicPlaying) {
@@ -127,5 +120,7 @@ class InGameMenuPopup implements IScene {
             this.musicOnOffBtn.setLabel("MUSIC OFF");
         }
         this.isMusicPlaying = !this.isMusicPlaying;
+
     }
+  }
 }

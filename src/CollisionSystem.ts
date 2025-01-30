@@ -58,9 +58,14 @@ class CollisionSystem {
             } else if (obj instanceof Heart || obj instanceof Sheild || obj instanceof SuperLaser) {
                 // Only remove the power-up if the player actually collides with it
                 if (player.collidesWith(obj)) {
-                    if (obj instanceof Sheild) {
+
+                    if (player.isSuperLaserActive || player.isShieldActive) {
+                        return;
+                    }
+
+                    else if (obj instanceof Sheild) {
                         console.log("Player picked up Shield");
-                        player.activateShield(5000, imageAssets.dinoWithSheild);
+                        player.activateShield(7000, imageAssets.dinoWithSheild);
                         soundeffects.powerupSound.play();
                     } else if (obj instanceof Heart) {
                         console.log("Player picked up a Heart");
@@ -68,6 +73,7 @@ class CollisionSystem {
                         onCollision.decreaseLives(-1);
                     } else if (obj instanceof SuperLaser) {
                         console.log("Player picked up Super Laser");
+                        player.activateSuperLaser(10000, imageAssets.rampageDino);
                         soundeffects.powerupSound.play();
                     }
                     onCollision.removeObject(obj);
@@ -90,7 +96,8 @@ class CollisionSystem {
         }
     ): void {
         for (const laser of moveableObjects) {
-            if (laser instanceof Laser) {
+            // Check for both regular Laser and SuperLaserBeam
+            if (laser instanceof Laser || laser instanceof SuperLaserBeam) {
                 for (const asteroid of moveableObjects) {
                     if (
                         asteroid instanceof RegularAsteroid ||
@@ -99,9 +106,7 @@ class CollisionSystem {
                     ) {
                         if (laser.collidesWith(asteroid)) {
                             console.log("Laser hit an asteroid!");
-                            // Remove the laser once it collides
-                            onCollision.removeObject(laser);
-
+    
                             // If it's a SuperAstro
                             if (asteroid instanceof SuperAstro) {
                                 if (asteroid.takeDamage()) {
@@ -125,7 +130,12 @@ class CollisionSystem {
                                 onCollision.removeObject(asteroid);
                                 onCollision.increaseScore(5);
                             }
-
+    
+                            // Only remove regular laser on first hit
+                            if (laser instanceof Laser) {
+                                onCollision.removeObject(laser);
+                            }
+    
                             soundeffects.explosion?.play();
                             onCollision.addExplosion(asteroid.position);
                         }
@@ -133,5 +143,6 @@ class CollisionSystem {
                 }
             }
         }
+    
     }
 }

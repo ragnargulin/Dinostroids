@@ -15,7 +15,9 @@ let soundeffects: {
 };
 let imageAssets: {
   dino: p5.Image;
+  rampageDino: p5.Image;
   dinoWithSheild: p5.Image;
+  sadDino: p5.Image;
   background: p5.Image;
   gameTitle: p5.Image;
   moveImage: p5.Image;
@@ -27,11 +29,13 @@ let imageAssets: {
   bigAstro: p5.Image;
   superAstro: p5.Image;
   laser: p5.Image;
+  superLaserBeam: p5.Image;
   powerupImage: p5.Image;
   asteroidtypeImage: p5.Image;
   explosion: p5.Image;
   logoSign: p5.Image;
   logoDino: p5.Image;
+
 };
 
 /**
@@ -51,16 +55,18 @@ function preload() {
     explosion: loadSound("../assets/soundeffects/explosion.mp3"),
     playerHit: loadSound("../assets/soundeffects/failSound.mp3"),
     shieldSound: loadSound("../assets/soundeffects/powerupSound.mp3"),
-
   };
   imageAssets = {
-    dino: loadImage("../assets/images/dino (2).gif"),
+    dino: loadImage("../assets/images/dino.gif"),
+    rampageDino: loadImage("../assets/images/rampageDino.gif"),
+    sadDino: loadImage("assets/images/dinoGameOver.gif"),
     background: loadImage("../assets/images/background.png"),
     gameTitle: loadImage("../assets/images/gameTitle.png"),
     moveImage: loadImage("../assets/images/Frame1.png"),
     shootImage: loadImage("../assets/images/Frame2.png"),
     hearts: loadImage("../assets/images/heart.png"),
     laser: loadImage("../assets/images/NormalLaser.gif"),
+    superLaserBeam: loadImage("../assets/images/SuperLaserBeam.gif"),
     powerupImage: loadImage("../assets/images/powerupsPrtSc2.png"),
     asteroidtypeImage: loadImage("../assets/images/asteroidtypesPrtSc2.png"),
 
@@ -70,7 +76,7 @@ function preload() {
     bigAstro: loadImage("../assets/images/BigAstroid.gif"),
     superAstro: loadImage("../assets/images/superAstro.gif"),
     explosion: loadImage("../assets/images/Pixelexplotion.gif"),
-    dinoWithSheild: loadImage("../assets/images/dinowithshield2.gif"),
+    dinoWithSheild: loadImage("../assets/images/dinoWithShield.gif"),
     logoSign: loadImage("../assets/images/logoSign.png"),
     logoDino: loadImage("../assets/images/logoDino.gif"),
   };

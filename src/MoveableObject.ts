@@ -53,13 +53,7 @@ class MoveableObject {
     );
     pop();
 
-    // for development
-    push()
-    const pos = p5.Vector.add(this.position, this.hitbox.position)
-    noFill();
-    stroke("red")
-    rect(pos.x, pos.y, this.hitbox.size.x, this.hitbox.size.y)
-    pop()
+    
   }
 
   public collidesWith(other: MoveableObject): boolean {

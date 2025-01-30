@@ -1,5 +1,4 @@
 class MainMenu implements IScene {
-
   private backgroundImage: p5.Image;
 
   private logoSign: p5.Image;
@@ -10,7 +9,9 @@ class MainMenu implements IScene {
   private scoreBoardBtn: Button;
   private startGameBtn: Button;
   private musicOnOffBtn: Button;
+
   //private isMusicPlaying: boolean;
+
 
   private buttonClickedSound: p5.SoundFile;
 
@@ -23,17 +24,19 @@ class MainMenu implements IScene {
     this.logoDino = imageAssets.logoDino;
     this.buttonClickedSound = soundeffects.buttonClick;
 
+
     if (!music.menuMusic.isPlaying()) { //justerar så att menuMusic bara startar om den inte redan är igång
       music.menuMusic.setVolume(1);
       music.menuMusic.loop();
     }
 
+
     this.dinoStroids = dinoStroids;
     console.log("MainMenu created");
-    (this.aboutBtn = new Button(
+    this.aboutBtn = new Button(
       "ABOUT",
       createVector(width * 0.5, height * 0.38)
-    )),
+    );
       (this.howToPlayBtn = new Button(
         "HOW TO PLAY",
         createVector(width * 0.5, height * 0.48)
@@ -45,12 +48,13 @@ class MainMenu implements IScene {
       this.musicOnOffBtn = new Button("MUSIC ON", createVector(width * 0.5, height * 0.68));
     //this.isMusicPlaying = false;
     (this.startGameBtn = new Button(
+
       "START GAME",
       createVector(width * 0.5, height * 0.78),
       250,
       60,
       "green"
-    ));
+    );
   }
 
   public update(): void {
@@ -109,6 +113,7 @@ class MainMenu implements IScene {
     this.startGameBtn.draw();
     this.musicOnOffBtn.draw();
   }
+
   private shiftMusicOnOff(): void { //tillagt så att det kontrolleras att musiken inte försöker starta om den redan är igång
     if (music.menuMusic.isPlaying()) {
       music.menuMusic.pause();
@@ -118,10 +123,7 @@ class MainMenu implements IScene {
         music.menuMusic.loop();
       }
       this.musicOnOffBtn.setLabel("MUSIC OFF");
+
     }
   }
 }
-
-
-
-

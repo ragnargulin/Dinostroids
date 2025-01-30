@@ -4,9 +4,9 @@ class Player extends MoveableObject {
   private spaceKeyWasPressedInPrevFrame: boolean;
 
   public isShieldActive: boolean;
-  private shieldTimer: number;         // Now used to track shield expiration
-  private powerupSound: p5.SoundFile;  // Now played when shield activates
-  private shieldSound: p5.SoundFile;   // Loops while shield is active
+  private shieldTimer: number;         
+  private powerupSound: p5.SoundFile; 
+  private shieldSound: p5.SoundFile;   
 
   constructor(gameBoard: GameBoard) {
     super(width * 0.5 - 60, height - 120, 120, 120, 0, 0, imageAssets.dino);
@@ -25,19 +25,13 @@ class Player extends MoveableObject {
   public update() {
     super.update();
 
-    // --------------------------
-    // 1) Shield Timer Check
-    // --------------------------
-    // If shield is active and enough time has passed, turn it off
     if (this.isShieldActive) {
       if (millis() > this.shieldTimer) {
         this.deactivateShield();
       }
     }
 
-    // --------------------------
-    // 2) Movement Logic
-    // --------------------------
+    // Movement Logic
     if (keyIsDown(LEFT_ARROW)) {
       this.velocity.x = -5;
       this.isFacingRight = false;
@@ -55,10 +49,8 @@ class Player extends MoveableObject {
   private shootLaser() {
     soundeffects.laserSound.play();
 
-    // Adjust X based on facing direction
     let laserStartX = this.position.x + this.size.x / 2 + 25;
     if (!this.isFacingRight) {
-      // Shift a bit more to the left for left-facing Dino
       laserStartX = this.position.x - this.size.x / 2 + 74;
     }
 
@@ -67,31 +59,17 @@ class Player extends MoveableObject {
     this.gameBoard.addGameObject(laser);
   }
 
-  /**
-   * Activates the shield for "duration" ms, switching to a shield image,
-   * playing a one-time power-up sound, and looping shield sound while active.
-   *
-   * We store the "end time" in shieldTimer, then check in update() if
-   * we've exceeded that time (millis() > shieldTimer).
-   */
   public activateShield(duration: number, dinowithshield2: p5.Image) {
     this.isShieldActive = true;
     this.image = dinowithshield2;
 
-    // We'll end the shield after "duration" ms from now
     this.shieldTimer = millis() + duration;
 
-    // Play a quick "power-up" sound once
     this.powerupSound.play();
 
-    // Loop a shield hum or effect while active
     this.shieldSound.loop();
   }
 
-  /**
-   * Called automatically once shieldTimer is reached, or if something else
-   * needs to end the shield early.
-   */
   private deactivateShield(): void {
     this.isShieldActive = false;
     this.image = imageAssets.dino;
@@ -99,20 +77,14 @@ class Player extends MoveableObject {
   }
 
   public draw() {
-    // --------------------------
-    // 1) Shooting Logic
-    // --------------------------
+    //Shooting Logic
     if (keyIsDown(32) && !this.spaceKeyWasPressedInPrevFrame) {
       this.shootLaser();
     }
     this.spaceKeyWasPressedInPrevFrame = keyIsDown(32);
 
-    // Just to double-check boundary in draw (slightly redundant but harmless)
     this.position.x = constrain(this.position.x, 0, width - this.size.x);
 
-    // --------------------------
-    // 2) Draw Player (flip if left)
-    // --------------------------
     push();
     if (!this.isFacingRight) {
       translate(this.position.x + this.size.x, this.position.y);

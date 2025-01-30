@@ -52,7 +52,7 @@ class InGameMenuPopup implements IScene {
             this.dinoStroids.changeActiveScene(this.pausedBoard);
         }
         if (this.musicOnOffBtn.isClicked()) {
-            this.shiftMusicOnOff(); //Möjliggör att växla till MUSIC ON/OFF när man klickar
+            this.shiftMusicOnOff();
         }
     }
 

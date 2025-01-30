@@ -14,7 +14,7 @@ class BigAsteroid extends MoveableObject {
       
       // Decrease spawn time based on localScore
       const baseSpawnTime = random(3000, 7000);
-      const spawnTimeReduction = localScore * 4000; // Justera spawn time baserat på score
+      const spawnTimeReduction = localScore * 1000; // Justera spawn time baserat på score
       this.spawnTimer = baseSpawnTime - spawnTimeReduction; // Justera spawntime baserat på score
       
       this.speed = finalSpeed;

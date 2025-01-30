@@ -18,7 +18,7 @@ class GameBoard implements IScene {
   private powerSpawnTimer: number;
   private astroSpawnTimer: number;
 
-  private moveableObjects: MoveableObject[];
+  public moveableObjects: MoveableObject[];
   private collisionSystem: CollisionSystem;
 
   private paused: boolean = false;
@@ -219,7 +219,7 @@ class GameBoard implements IScene {
     this.moveableObjects.push(someObject);
   }
 
-  private removeGameObject(obj: MoveableObject) {
+  public removeGameObject(obj: MoveableObject) {
     const index = this.moveableObjects.indexOf(obj);
     if (index !== -1) {
       this.moveableObjects.splice(index, 1);

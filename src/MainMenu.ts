@@ -1,7 +1,7 @@
 class MainMenu implements IScene {
 
   private backgroundImage: p5.Image;
-  private backgroundMusic: p5.SoundFile;
+
   private logoSign: p5.Image;
   private logoDino: p5.Image;
   private aboutBtn: Button;
@@ -10,9 +10,11 @@ class MainMenu implements IScene {
   private scoreBoardBtn: Button;
   private startGameBtn: Button;
   private musicOnOffBtn: Button;
-  private isMusicPlaying: boolean;
+  //private isMusicPlaying: boolean;
 
   private buttonClickedSound: p5.SoundFile;
+
+  //private menuMusic: p5.SoundFile;
 
   constructor(dinoStroids: IChangeableScene) {
     this.dinoStroids = dinoStroids;
@@ -20,8 +22,11 @@ class MainMenu implements IScene {
     this.logoSign = imageAssets.logoSign;
     this.logoDino = imageAssets.logoDino;
     this.buttonClickedSound = soundeffects.buttonClick;
-    this.backgroundMusic = music.mystery;
 
+    if (!music.menuMusic.isPlaying()) { //justerar så att menuMusic bara startar om den inte redan är igång
+      music.menuMusic.setVolume(1);
+      music.menuMusic.loop();
+    }
 
     this.dinoStroids = dinoStroids;
     console.log("MainMenu created");
@@ -99,20 +104,15 @@ class MainMenu implements IScene {
     this.startGameBtn.draw();
     this.musicOnOffBtn.draw();
   }
-  private shiftMusicOnOff(): void {
-    if (this.isMusicPlaying) {
-      this.backgroundMusic.loop();
-      this.musicOnOffBtn.setLabel("MUSIC OFF");
-    } else {
-      this.backgroundMusic.pause();
+  private shiftMusicOnOff(): void { //tillagt så att det kontrolleras att musiken inte försöker starta om den redan är igång
+    if (music.menuMusic.isPlaying()) {
+      music.menuMusic.pause();
       this.musicOnOffBtn.setLabel("MUSIC ON");
-    }
-
-    //Växlar musiken
-    if (this.isMusicPlaying) {
-      this.isMusicPlaying = false;
     } else {
-      this.isMusicPlaying = true;
+      if (!music.menuMusic.isPlaying()) {
+        music.menuMusic.loop();
+      }
+      this.musicOnOffBtn.setLabel("MUSIC OFF");
     }
   }
 }

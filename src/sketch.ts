@@ -16,6 +16,7 @@ let soundeffects: {
 let imageAssets: {
   dino: p5.Image;
   dinoWithSheild: p5.Image;
+  sadDino: p5.Image;
   background: p5.Image;
   gameTitle: p5.Image;
   moveImage: p5.Image;
@@ -51,10 +52,10 @@ function preload() {
     explosion: loadSound("../assets/soundeffects/explosion.mp3"),
     playerHit: loadSound("../assets/soundeffects/failSound.mp3"),
     shieldSound: loadSound("../assets/soundeffects/powerupSound.mp3"),
-
   };
   imageAssets = {
     dino: loadImage("../assets/images/dino (2).gif"),
+    sadDino: loadImage("assets/images/dinoGameOver.gif"),
     background: loadImage("../assets/images/background.png"),
     gameTitle: loadImage("../assets/images/gameTitle.png"),
     moveImage: loadImage("../assets/images/Frame1.png"),

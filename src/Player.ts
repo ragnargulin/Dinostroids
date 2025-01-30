@@ -1,5 +1,5 @@
 class Player extends MoveableObject {
-  private isFacingRight: boolean;
+  public isFacingRight: boolean;
   private gameBoard: GameBoard;
   private spaceKeyWasPressedInPrevFrame: boolean;
 
@@ -19,6 +19,7 @@ class Player extends MoveableObject {
     this.spaceKeyWasPressedInPrevFrame = keyIsDown(32);
 
     this.isShieldActive = false;
+    this.isSuperLaserActive = false;
     this.shieldTimer = 0;
     this.superLaserTimer = 0;
     this.powerupSound = soundeffects.powerupSound;
@@ -65,19 +66,22 @@ class Player extends MoveableObject {
     // Adjust X based on facing direction
     let laserStartX = this.position.x + this.size.x / 2 + 25;
     if (!this.isFacingRight) {
-      // Shift a bit more to the left for left-facing Dino
-      laserStartX = this.position.x - this.size.x / 2 + 74;
+        // Shift a bit more to the left for left-facing Dino
+        laserStartX = this.position.x - this.size.x / 2 + 74;
     }
 
     // Create a laser slightly above the player's position
     if (this.isSuperLaserActive) {
-      const laser = new SuperLaserBeam(laserStartX, this.position.y - 50, imageAssets.laser);
-      this.gameBoard.addGameObject(laser);
+        console.log("Super Laser Fired");
+        const superLaserBeam = new SuperLaserBeam(laserStartX, this.position.y - 50, imageAssets.superLaserBeam, this);
+        this.gameBoard.addGameObject(superLaserBeam);
     } else {
-      const laser = new Laser(laserStartX, this.position.y - 50, imageAssets.laser);
-      this.gameBoard.addGameObject(laser);
+        console.log("Laser Fired");
+        const laser = new Laser(laserStartX, this.position.y - 50, imageAssets.laser);
+        this.gameBoard.addGameObject(laser);
     }
-  }
+}
+
 
   /**
    * Activates the shield for "duration" ms, switching to a shield image,
@@ -120,6 +124,12 @@ class Player extends MoveableObject {
   private deactivateSuperLaser(): void {
     this.isSuperLaserActive = false;
     this.image = imageAssets.dino;
+
+    const superLaserBeam = this.gameBoard.moveableObjects.find(obj => obj instanceof SuperLaserBeam);
+    if (superLaserBeam) {
+        this.gameBoard.removeGameObject(superLaserBeam);
+    }
+    
     console.log("Super Laser Deactivated");
   }
 

@@ -15,6 +15,7 @@ let soundeffects: {
 };
 let imageAssets: {
   dino: p5.Image;
+  rampageDino: p5.Image;
   dinoWithSheild: p5.Image;
   sadDino: p5.Image;
   background: p5.Image;
@@ -28,11 +29,13 @@ let imageAssets: {
   bigAstro: p5.Image;
   superAstro: p5.Image;
   laser: p5.Image;
+  superLaserBeam: p5.Image;
   powerupImage: p5.Image;
   asteroidtypeImage: p5.Image;
   explosion: p5.Image;
   logoSign: p5.Image;
   logoDino: p5.Image;
+
 };
 
 /**
@@ -55,6 +58,7 @@ function preload() {
   };
   imageAssets = {
     dino: loadImage("../assets/images/dino (2).gif"),
+    rampageDino: loadImage("../assets/images/rampageDino.gif"),
     sadDino: loadImage("assets/images/dinoGameOver.gif"),
     background: loadImage("../assets/images/background.png"),
     gameTitle: loadImage("../assets/images/gameTitle.png"),
@@ -62,6 +66,7 @@ function preload() {
     shootImage: loadImage("../assets/images/Frame2.png"),
     hearts: loadImage("../assets/images/heart.png"),
     laser: loadImage("../assets/images/NormalLaser.gif"),
+    superLaserBeam: loadImage("../assets/images/SuperLaserBeam.gif"),
     powerupImage: loadImage("../assets/images/powerupsPrtSc2.png"),
     asteroidtypeImage: loadImage("../assets/images/asteroidtypesPrtSc2.png"),
 

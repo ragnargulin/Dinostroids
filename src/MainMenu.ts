@@ -1,5 +1,4 @@
 class MainMenu implements IScene {
-
   private backgroundImage: p5.Image;
   private backgroundMusic: p5.SoundFile;
   private logoSign: p5.Image;
@@ -10,7 +9,6 @@ class MainMenu implements IScene {
   private scoreBoardBtn: Button;
   private startGameBtn: Button;
   private musicOnOffBtn: Button;
-  private isMusicPlaying: boolean;
 
   private buttonClickedSound: p5.SoundFile;
 
@@ -22,13 +20,12 @@ class MainMenu implements IScene {
     this.buttonClickedSound = soundeffects.buttonClick;
     this.backgroundMusic = music.mystery;
 
-
     this.dinoStroids = dinoStroids;
     console.log("MainMenu created");
-    (this.aboutBtn = new Button(
+    this.aboutBtn = new Button(
       "ABOUT",
       createVector(width * 0.5, height * 0.38)
-    )),
+    );
       (this.howToPlayBtn = new Button(
         "HOW TO PLAY",
         createVector(width * 0.5, height * 0.48)
@@ -37,15 +34,17 @@ class MainMenu implements IScene {
         "SCOREBOARD",
         createVector(width * 0.5, height * 0.58)
       )),
-      this.musicOnOffBtn = new Button("MUSIC ON", createVector(width * 0.5, height * 0.68));
-    this.isMusicPlaying = false;
-    (this.startGameBtn = new Button(
+      (this.musicOnOffBtn = new Button(
+        this.backgroundMusic.isPlaying() ? "MUSIC OFF" : "MUSIC ON",
+        createVector(width * 0.5, height * 0.68)
+      ));
+    this.startGameBtn = new Button(
       "START GAME",
       createVector(width * 0.5, height * 0.78),
       250,
       60,
       "green"
-    ));
+    );
   }
 
   public update(): void {
@@ -64,6 +63,7 @@ class MainMenu implements IScene {
     }
     if (this.startGameBtn.isClicked()) {
       this.buttonClickedSound.play();
+      this.backgroundMusic.pause();
       this.dinoStroids.changeActiveScene(new InputNamePopup(this.dinoStroids));
     }
     if (this.musicOnOffBtn.isClicked()) {
@@ -100,23 +100,18 @@ class MainMenu implements IScene {
     this.musicOnOffBtn.draw();
   }
   private shiftMusicOnOff(): void {
-    if (this.isMusicPlaying) {
+    if (this.backgroundMusic.isPlaying()) {
+      music.mystery.setVolume(0);
+      music.menuMusic.setVolume(0);
+
       this.backgroundMusic.loop();
       this.musicOnOffBtn.setLabel("MUSIC OFF");
     } else {
+      music.mystery.setVolume(1);
+      music.menuMusic.setVolume(1);
+
       this.backgroundMusic.pause();
       this.musicOnOffBtn.setLabel("MUSIC ON");
     }
-
-    //Växlar musiken
-    if (this.isMusicPlaying) {
-      this.isMusicPlaying = false;
-    } else {
-      this.isMusicPlaying = true;
-    }
   }
 }
-
-
-
-

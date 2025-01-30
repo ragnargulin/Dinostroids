@@ -67,6 +67,7 @@ class CollisionSystem {
                         onCollision.decreaseLives(-1);
                     } else if (obj instanceof SuperLaser) {
                         console.log("Player picked up Super Laser");
+                        player.activateSuperLaser(5000, imageAssets.rampageDino);
                         soundeffects.powerupSound.play();
                     }
                     onCollision.removeObject(obj);
@@ -89,7 +90,8 @@ class CollisionSystem {
         }
     ): void {
         for (const laser of moveableObjects) {
-            if (laser instanceof Laser) {
+            // Check for both regular Laser and SuperLaserBeam
+            if (laser instanceof Laser || laser instanceof SuperLaserBeam) {
                 for (const asteroid of moveableObjects) {
                     if (
                         asteroid instanceof RegularAsteroid ||
@@ -98,9 +100,7 @@ class CollisionSystem {
                     ) {
                         if (laser.collidesWith(asteroid)) {
                             console.log("Laser hit an asteroid!");
-                            // Remove the laser once it collides
-                            onCollision.removeObject(laser);
-
+    
                             // If it's a SuperAstro
                             if (asteroid instanceof SuperAstro) {
                                 if (asteroid.takeDamage()) {
@@ -124,7 +124,12 @@ class CollisionSystem {
                                 onCollision.removeObject(asteroid);
                                 onCollision.increaseScore(5);
                             }
-
+    
+                            // Only remove regular laser on first hit
+                            if (laser instanceof Laser) {
+                                onCollision.removeObject(laser);
+                            }
+    
                             soundeffects.explosion?.play();
                             onCollision.addExplosion(asteroid.position);
                         }
@@ -132,5 +137,6 @@ class CollisionSystem {
                 }
             }
         }
+    
     }
 }

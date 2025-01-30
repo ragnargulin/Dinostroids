@@ -1,10 +1,12 @@
 class Player extends MoveableObject {
-  private isFacingRight: boolean;
+  public isFacingRight: boolean;
   private gameBoard: GameBoard;
   private spaceKeyWasPressedInPrevFrame: boolean;
 
   public isShieldActive: boolean;
+  public isSuperLaserActive: boolean
   private shieldTimer: number;         // Now used to track shield expiration
+  private superLaserTimer: number;         // Now used to track shield expiration
   private powerupSound: p5.SoundFile;  // Now played when shield activates
   private shieldSound: p5.SoundFile;   // Loops while shield is active
 
@@ -17,7 +19,9 @@ class Player extends MoveableObject {
     this.spaceKeyWasPressedInPrevFrame = keyIsDown(32);
 
     this.isShieldActive = false;
+    this.isSuperLaserActive = false;
     this.shieldTimer = 0;
+    this.superLaserTimer = 0;
     this.powerupSound = soundeffects.powerupSound;
     this.shieldSound = soundeffects.shieldSound;
   }
@@ -33,6 +37,10 @@ class Player extends MoveableObject {
       if (millis() > this.shieldTimer) {
         this.deactivateShield();
       }
+    }
+    if (this.isSuperLaserActive) {
+      if (millis() > this.superLaserTimer) {
+        this.deactivateSuperLaser();}
     }
 
     // --------------------------
@@ -58,14 +66,22 @@ class Player extends MoveableObject {
     // Adjust X based on facing direction
     let laserStartX = this.position.x + this.size.x / 2 + 25;
     if (!this.isFacingRight) {
-      // Shift a bit more to the left for left-facing Dino
-      laserStartX = this.position.x - this.size.x / 2 + 74;
+        // Shift a bit more to the left for left-facing Dino
+        laserStartX = this.position.x - this.size.x / 2 + 74;
     }
 
     // Create a laser slightly above the player's position
-    const laser = new Laser(laserStartX, this.position.y - 50, imageAssets.laser);
-    this.gameBoard.addGameObject(laser);
-  }
+    if (this.isSuperLaserActive) {
+        console.log("Super Laser Fired");
+        const superLaserBeam = new SuperLaserBeam(laserStartX, this.position.y - 50, imageAssets.superLaserBeam, this);
+        this.gameBoard.addGameObject(superLaserBeam);
+    } else {
+        console.log("Laser Fired");
+        const laser = new Laser(laserStartX, this.position.y - 50, imageAssets.laser);
+        this.gameBoard.addGameObject(laser);
+    }
+}
+
 
   /**
    * Activates the shield for "duration" ms, switching to a shield image,
@@ -88,6 +104,13 @@ class Player extends MoveableObject {
     this.shieldSound.loop();
   }
 
+  public activateSuperLaser(duration: number, rampageDino: p5.Image) {
+    this.isSuperLaserActive = true;
+    this.image = rampageDino;
+    this.superLaserTimer = millis() + duration;
+    console.log("Super Laser Activated");
+  }
+
   /**
    * Called automatically once shieldTimer is reached, or if something else
    * needs to end the shield early.
@@ -96,6 +119,18 @@ class Player extends MoveableObject {
     this.isShieldActive = false;
     this.image = imageAssets.dino;
     this.shieldSound.stop();
+  }
+
+  private deactivateSuperLaser(): void {
+    this.isSuperLaserActive = false;
+    this.image = imageAssets.dino;
+
+    const superLaserBeam = this.gameBoard.moveableObjects.find(obj => obj instanceof SuperLaserBeam);
+    if (superLaserBeam) {
+        this.gameBoard.removeGameObject(superLaserBeam);
+    }
+    
+    console.log("Super Laser Deactivated");
   }
 
   public draw() {
@@ -121,7 +156,7 @@ class Player extends MoveableObject {
       translate(this.position.x, this.position.y);
     }
 
-    image(this.image, 0, 0, this.size.x, this.size.y);
+    image(this.image, 0, 0, this.size.x, this.size.y); //BILDSTORLEKSSPÖKE???!
     pop();
   }
 }

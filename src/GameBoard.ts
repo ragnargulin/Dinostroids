@@ -204,7 +204,7 @@ class GameBoard implements IScene {
       // Base spawn time random between 2-5 seconds
       const baseSpawnTime = random(2000, 5000);
       // Speed up spawns a bit as score increases
-      const spawnTimeReduction = Math.floor(this.localScore / 200) * 300;
+      const spawnTimeReduction = Math.floor(this.localScore / 200) * 1000;
       this.astroSpawnTimer = Math.max(baseSpawnTime - spawnTimeReduction, 1000);
     }
     this.astroSpawnTimer -= deltaTime;

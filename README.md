@@ -1,5 +1,9 @@
 # 🦖 Dinostroids
 
+
+#[Spela här!](https://dinostroids.netlify.app/)
+
+
 ## 🚀 Om spelet
 **Dinostroids** är ett actionfyllt arkadspel där du spelar som en dinosaurie på Mars, beväpnad med en laserkanon, för att försvara planeten från fallande asteroider!
 

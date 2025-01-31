@@ -1,7 +1,7 @@
 # 🦖 Dinostroids
 
 
-#[Spela här!](https://dinostroids.netlify.app/)
+## 👾 [Spela här!](https://dinostroids.netlify.app/)
 
 
 ## 🚀 Om spelet
@@ -47,7 +47,7 @@ Långt innan människan ens kunde stava till "rymdresa" såg dinosaurierna katas
 ---
 
 ## 🛠️ Teknisk information
-**Utveckling:** Spelet är byggt med HTML5, JavaScript och Canvas API.
+**Utveckling:** Spelet är byggt med Typesript, P5.js Canvas API.
 
 **Installation:**
 1. Klona repo:  

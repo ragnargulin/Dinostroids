@@ -24,9 +24,9 @@ class InGameMenuPopup implements IScene {
 
         this.quitBtn = new Button('QUIT', createVector(width * 0.5, height * 0.37));
         this.restartBtn = new Button('RESTART', createVector(width * 0.5, height * 0.48));
-        this.continueBtn = new Button('CONTINUE', createVector(width * 0.5, height * 0.59), 200, 40, 'green');
-        this.musicOnOffBtn = new Button('MUSIC ON', createVector(width * 0.5, height * 0.70));
+        this.musicOnOffBtn = new Button('MUSIC ON', createVector(width * 0.5, height * 0.59));
         this.isMusicPlaying = this.backgroundMusic.isPlaying(); //Changed from boolean value false cause it caused the game to think the music wasnt playing although it was
+        this.continueBtn = new Button('CONTINUE', createVector(width * 0.5, height * 0.70), 200, 40, 'green');
 
         // Coordinates for the popuop box
         this.popupX = width * 0.25;
@@ -116,7 +116,7 @@ class InGameMenuPopup implements IScene {
       textAlign("center");
       textFont("Pixelify Sans");
       textSize(width * 0.05);
-      text("MENU", width * 0.5, height * 0.3);
+      text("MENU", width * 0.5, height * 0.27);
       pop();
     }
 

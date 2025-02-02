@@ -40,7 +40,7 @@ class MainMenu implements IScene {
 
     this.startGameBtn = new Button(
       "START GAME",
-      createVector(width * 0.5, height * 0.78),
+      createVector(width * 0.5, height * 0.8),
       250,
       60,
       "green"
@@ -79,10 +79,10 @@ class MainMenu implements IScene {
     // CSS
     fill("lightgrey");
     // HTML
-    rect(width * 0.25, height * 0.15, width * 0.5, height * 0.7);
+    rect(width * 0.25, height * 0.15, width * 0.5, height * 0.75);
 
     imageMode(CENTER);
-    image(this.logoDino, width / 4, height * 0.94, 320, 320);
+    image(this.logoDino, width / 5, height * 0.94, 320, 320);
     image(this.logoSign, width / 2, height * 0.47, 500, 500);
 
     textAlign(CENTER, CENTER);

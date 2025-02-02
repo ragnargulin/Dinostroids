@@ -11,10 +11,67 @@
       background: black;
       font-family: 'Press Start 2P', sans-serif;
     }
-    button{
+
+    button {
+      font-family: 'Press Start 2P', sans-serif;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 50px;
+      border-radius: 5px;
+      color: black;
+      text-align: left;
+      font-family: 'Press Start 2P', sans-serif;
+      width: 500px;
+    }
+
+    .modal button {
+      font-family: 'Press Start 2P', sans-serif;
+      color: grey;
+      background-color: transparent;
+      border: 2px solid white;
+      padding: 10px;
+      margin-top: 10px;
+      z-index: 9999;
+    }
+
+    .modal button:hover {
+      background-color: #444;
+    }
+
+    .modal li {
+      padding:10px
+    }
+
+    /* NES CSS button style */
+    .nes-btn {
       font-family: 'Press Start 2P', sans-serif;
     }
   </style>
+
   <link rel="stylesheet" href="https://unpkg.com/nes.css/css/nes.min.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,6 +84,43 @@
 
 <body>
   <!-- Code injected via JavaScript -->
+  <div class="footer" style="font-size: 14px;">
+    <a href="https://www.youtube.com/embed/bH5jDKPdKrw?rel=0" target="_blank"><i class="nes-icon youtube is-small"></i> Trailer</a>
+    <br>
+    <a href="javascript:void(0)" onclick="openModal()"><i class="nes-icon github is-small"></i> Creators</a>
+  </div>
+
+  <!-- Modal for Contributors -->
+  <div id="contributorsModal" class="modal" onclick="closeModal()" >
+    <div class="modal-content">
+      <h3>Creators</h3>
+      <br>
+      <ul style="padding-left: 0px;">
+        <li>Catharina During
+        </li>
+        <li>
+        <a href="https://github.com/ragnargulin">Ragnar Gulin
+        </a></li>
+        <li>Kevin Hellgren
+        </li>
+        <li><a href="https://github.com/Omar-Alme">Omar Mustafa al-mehdhar</a>
+        </li>
+        <li>Kasper Vikstrom
+        </li>
+
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    function openModal() {
+      document.getElementById('contributorsModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('contributorsModal').style.display = 'none';
+    }
+  </script>
 </body>
 
 </html>

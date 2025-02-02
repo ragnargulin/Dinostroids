@@ -2,24 +2,18 @@
 class GameBoard implements IScene {
   private dinoStroids: IChangeableScene;
   private memory: GameMemory;
-
   private localScore: number = 0;
   private secondTicker: number = 0;
   private lives: number = 5;
-
   private backgroundImage: p5.Image;
   private heartImage: p5.Image;
   private explosionImage: p5.Image;
   private explosions: { position: p5.Vector; frameCount: number }[] = [];
-
   private menuButton: Button;
-
   private powerSpawnTimer: number;
   private astroSpawnTimer: number;
-
   public moveableObjects: MoveableObject[];
   private collisionSystem: CollisionSystem;
-
   private paused: boolean = false;
 
   constructor(dinoStroids: IChangeableScene) {

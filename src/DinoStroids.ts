@@ -1,13 +1,11 @@
 class DinoStroids implements IChangeableScene {
     private activeScene: IScene;
     public memory: GameMemory;
-    public isMusicPlaying: boolean = true;
+    public isMusicPlaying: boolean = false;
 
     constructor() {
         this.activeScene = new MainMenu(this); // Start on the main menu
         this.memory = new GameMemory();
-
-        this.updateMusicState(); // Ensure music starts/stops correctly at initialization
     }
 
     public update() {
@@ -30,33 +28,14 @@ class DinoStroids implements IChangeableScene {
         return this.activeScene;
     }
 
-    // Method to toggle music on/off
+    // Set music state and handle playback
     public setMusicPlaying(state: boolean): void {
         this.isMusicPlaying = state;
-        this.updateMusicState();
+        state ? music.backgroundMusic.loop() : music.backgroundMusic.stop();
     }
 
-    // Toggle method for convenience
+    // Toggle music state
     public toggleMusic(): void {
-    this.isMusicPlaying = !this.isMusicPlaying;
-
-    if (this.isMusicPlaying) {
-      music.backgroundMusic.loop();
-    } else {
-      music.backgroundMusic.pause();
-    }
-  }
-
-    // Handles the actual music playback logic
-    private updateMusicState(): void {
-        if (this.isMusicPlaying) {
-            if (!music.backgroundMusic.isPlaying()) {
-                music.backgroundMusic.loop();
-            }
-        } else {
-            if (music.backgroundMusic.isPlaying()) {
-                music.backgroundMusic.pause();
-            }
-        }
+        this.setMusicPlaying(!this.isMusicPlaying);
     }
 }

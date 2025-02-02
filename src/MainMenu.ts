@@ -30,7 +30,7 @@ class MainMenu implements IScene {
         "SCOREBOARD",
         createVector(width * 0.5, height * 0.58)
       )),
-      this.musicOnOffBtn = new Button("MUSIC OFF", createVector(width * 0.5, height * 0.68));
+      this.musicOnOffBtn = new Button("MUSIC ON", createVector(width * 0.5, height * 0.68));
 
     this.startGameBtn = new Button(
       "START GAME",

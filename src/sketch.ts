@@ -44,7 +44,7 @@ let imageAssets: {
  */
 function preload() {
   music = {
-    backgroundMusic: loadSound("../assets/music/fullDinoThemeMusic.mp3"),
+    backgroundMusic: loadSound("../assets/music/backgroundMusic.ogg"),
   };
   soundeffects = {
     buttonClick: loadSound("../assets/soundeffects/buttonClick.mp3"),

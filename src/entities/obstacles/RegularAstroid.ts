@@ -1,5 +1,4 @@
 class RegularAsteroid extends MoveableObject {
-  private spawnTimer: number;
 
   constructor(localScore: number = 0) {
     // Calculate speed based on localScore
@@ -11,20 +10,6 @@ class RegularAsteroid extends MoveableObject {
       position: createVector(5,42),
       size: createVector(40,45)
     });
-    
-    const baseSpawnTime = random(3000, 7000);
-    const spawnTimeReduction = localScore * 4000; // Justera spawn time baserat på score
-    this.spawnTimer = baseSpawnTime - spawnTimeReduction; // Justera spawntime baserat på score
-  }
-
-
-  public updateSpawnTimer(deltaTime: number): boolean {
-      this.spawnTimer -= deltaTime;
-      if (this.spawnTimer <= 0) {
-          this.spawnTimer = random(2000, 5000);
-          return true;
-      }
-      return false;
   }
 
   public isOffCanvas(): boolean {

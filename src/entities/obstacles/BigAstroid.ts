@@ -1,5 +1,4 @@
 class BigAsteroid extends MoveableObject {
-    private spawnTimer: number;
     private speed: number;
   
     constructor(localScore: number = 0) {
@@ -11,25 +10,10 @@ class BigAsteroid extends MoveableObject {
         position: createVector(5,70),
         size: createVector(65,75)
       });
-      
-      // Decrease spawn time based on localScore
-      const baseSpawnTime = random(3000, 7000);
-      const spawnTimeReduction = localScore * 1000; // Justera spawn time baserat på score
-      this.spawnTimer = baseSpawnTime - spawnTimeReduction; // Justera spawntime baserat på score
-      
+    
       this.speed = finalSpeed;
     }
   
-    public updateSpawnTimer(deltaTime: number): boolean {
-
-      this.spawnTimer -= deltaTime;
-      if (this.spawnTimer <= 0) {
-        const baseSpawnTime = random(3000, 7000);
-        this.spawnTimer = baseSpawnTime;
-        return true;
-      }
-      return false;
-    }
   
     public split(): RegularAsteroid[] {
       // Pass the current speed to the small asteroids

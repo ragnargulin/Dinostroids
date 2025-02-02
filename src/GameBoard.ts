@@ -192,23 +192,28 @@ class GameBoard implements IScene {
    */
   private spawnAstro() {
     if (this.astroSpawnTimer <= 0) {
-      const index = floor(random(0, 3));
-      if (index === 0) {
-        this.moveableObjects.push(new RegularAsteroid(this.localScore));
-      } else if (index === 1) {
-        this.moveableObjects.push(new BigAsteroid(this.localScore));
-      } else {
-        this.moveableObjects.push(new SuperAstro(this.localScore));
-      }
+        // Assign asteroid types based on weighted probability
+        const index = floor(random(0, 7)); 
+        if (index <= 3) {
+            this.moveableObjects.push(new RegularAsteroid(this.localScore)); // Most common
+        } else if (index <= 5) {
+            this.moveableObjects.push(new BigAsteroid(this.localScore));
+        } else {
+            this.moveableObjects.push(new SuperAstro(this.localScore)); // Rarest
+        }
 
-      // Base spawn time random between 2-5 seconds
-      const baseSpawnTime = random(2000, 5000);
-      // Speed up spawns a bit as score increases
-      const spawnTimeReduction = Math.floor(this.localScore / 200) * 1000;
-      this.astroSpawnTimer = Math.max(baseSpawnTime - spawnTimeReduction, 1000);
+        // Base spawn time is between 1.5s and 4s, progressively decreasing
+        let baseSpawnTime = random(1500, 4000);
+
+        // Instead of a hard cap, use logarithmic scaling for smoother difficulty progression
+        let spawnTimeReduction = Math.log(this.localScore + 1) * 400; // Logarithmic growth for a gradual effect
+        this.astroSpawnTimer = Math.max(baseSpawnTime - spawnTimeReduction, 500); // Minimum 0.5s delay
     }
+
     this.astroSpawnTimer -= deltaTime;
-  }
+}
+
+
 
   public addGameObject(someObject: MoveableObject) {
     this.moveableObjects.push(someObject);

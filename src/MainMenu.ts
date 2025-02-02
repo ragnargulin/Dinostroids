@@ -76,10 +76,13 @@ class MainMenu implements IScene {
     imageMode(CORNER);
     image(this.backgroundImage, 0, 0, width, height);
 
-    // CSS
+    push();
+    stroke("#3b3b3b"); 
+    strokeWeight(8); // Thicker outline
     fill("lightgrey");
     // HTML
-    rect(width * 0.25, height * 0.15, width * 0.5, height * 0.75);
+    rect(width * 0.3, height * 0.15, width * 0.4, height * 0.75);
+    pop();
 
     imageMode(CENTER);
     image(this.logoDino, width / 5, height * 0.94, 320, 320);

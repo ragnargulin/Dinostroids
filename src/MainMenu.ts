@@ -17,12 +17,6 @@ class MainMenu implements IScene {
     this.logoDino = imageAssets.logoDino;
     this.buttonClickedSound = soundeffects.buttonClick;
 
-    //Starts menu music if it aint already playing
-    if (!music.menuMusic.isPlaying()) {
-      music.menuMusic.setVolume(1);
-      music.menuMusic.loop();
-    }
-
     console.log("MainMenu created");
     this.aboutBtn = new Button(
       "ABOUT",
@@ -36,7 +30,7 @@ class MainMenu implements IScene {
         "SCOREBOARD",
         createVector(width * 0.5, height * 0.58)
       )),
-      this.musicOnOffBtn = new Button("MUSIC ON", createVector(width * 0.5, height * 0.68));
+      this.musicOnOffBtn = new Button("MUSIC OFF", createVector(width * 0.5, height * 0.68));
 
     this.startGameBtn = new Button(
       "START GAME",
@@ -69,6 +63,11 @@ class MainMenu implements IScene {
     if (this.musicOnOffBtn.isClicked()) {
       this.buttonClickedSound.play();
       this.shiftMusicOnOff();
+    }
+    if (this.dinoStroids.isMusicPlaying) {
+      this.musicOnOffBtn.setLabel("MUSIC OFF");
+    } else {
+      this.musicOnOffBtn.setLabel("MUSIC ON");
     }
   }
 
@@ -103,12 +102,14 @@ class MainMenu implements IScene {
 
   //checks so the music isnt trying to restart if its already been started
   private shiftMusicOnOff(): void {
-    if (music.menuMusic.isPlaying()) {
-      music.menuMusic.pause();
-      this.musicOnOffBtn.setLabel("MUSIC ON");
-    } else {
-      music.menuMusic.loop();
+    // Toggle music using DinoStroids method
+    this.dinoStroids.toggleMusic();
+
+    // Update button text
+    if (this.dinoStroids.isMusicPlaying) {
       this.musicOnOffBtn.setLabel("MUSIC OFF");
+    } else {
+      this.musicOnOffBtn.setLabel("MUSIC ON");
     }
-  }
+}
 }

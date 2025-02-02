@@ -12,4 +12,6 @@ interface IScene {
 interface IChangeableScene {
   changeActiveScene(scene: IScene): void;
   getMemory(): GameMemory;
+  isMusicPlaying: boolean;
+  toggleMusic(): void;
 }

@@ -46,14 +46,7 @@ class GameBoard implements IScene {
     this.astroSpawnTimer = 0;
     this.powerSpawnTimer = 0;
 
-    //Stop menu music when game starts
-    if (music.menuMusic.isPlaying()) {
-      music.menuMusic.stop();
-    }
-
-    //Start in game music 
-    music.mystery.setVolume(1);
-    music.mystery.loop();
+    
   }
 
   public update(): void {
@@ -125,10 +118,6 @@ class GameBoard implements IScene {
   private handleGameOver(): void {
     this.memory.playerScore = this.localScore;
     this.memory.addScore(this.memory.playerName, this.memory.playerScore);
-
-    //Stop in game music and start menu music again
-    music.mystery.pause();
-    music.menuMusic.loop();
     this.dinoStroids.changeActiveScene(new GameOverPopup(this.dinoStroids));
   }
 
@@ -173,8 +162,6 @@ class GameBoard implements IScene {
       const powerUps = [new Heart(), new Sheild(), new SuperLaser()];
       this.moveableObjects.push(powerUps[index]);
       console.log("Spawned power-up:", powerUps[index].constructor.name);
-
-      // 10s in ms. If testing, reduce to e.g. 2000 or 1000 to see them spawn more often.
       this.powerSpawnTimer = 10000;
     }
 
@@ -201,19 +188,13 @@ class GameBoard implements IScene {
         } else {
             this.moveableObjects.push(new SuperAstro(this.localScore)); // Rarest
         }
-
         // Base spawn time is between 1.5s and 4s, progressively decreasing
         let baseSpawnTime = random(1500, 4000);
-
-        // Instead of a hard cap, use logarithmic scaling for smoother difficulty progression
         let spawnTimeReduction = Math.log(this.localScore + 1) * 400; // Logarithmic growth for a gradual effect
         this.astroSpawnTimer = Math.max(baseSpawnTime - spawnTimeReduction, 500); // Minimum 0.5s delay
     }
-
     this.astroSpawnTimer -= deltaTime;
 }
-
-
 
   public addGameObject(someObject: MoveableObject) {
     this.moveableObjects.push(someObject);

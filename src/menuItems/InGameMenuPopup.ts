@@ -1,13 +1,9 @@
 class InGameMenuPopup implements IScene {
-
-
-    private backgroundMusic: p5.SoundFile;
     private dinoStroids: IChangeableScene;
     private quitBtn: Button;
     private restartBtn: Button;
     private continueBtn: Button;
     private musicOnOffBtn: Button;
-    private isMusicPlaying: boolean;
     // Popup coordinates
     private popupX: number;
     private popupY: number;
@@ -18,14 +14,12 @@ class InGameMenuPopup implements IScene {
 
     constructor(dinoStroids: IChangeableScene, pausedBoard: GameBoard) {
 
-        this.backgroundMusic = music.mystery;
         this.dinoStroids = dinoStroids;
         this.pausedBoard = pausedBoard;
 
         this.quitBtn = new Button('QUIT', createVector(width * 0.5, height * 0.37));
         this.restartBtn = new Button('RESTART', createVector(width * 0.5, height * 0.48));
         this.musicOnOffBtn = new Button('MUSIC ON', createVector(width * 0.5, height * 0.59));
-        this.isMusicPlaying = this.backgroundMusic.isPlaying(); //Changed from boolean value false cause it caused the game to think the music wasnt playing although it was
         this.continueBtn = new Button('CONTINUE', createVector(width * 0.5, height * 0.70), 200, 40, 'green');
 
         // Coordinates for the popuop box
@@ -34,55 +28,35 @@ class InGameMenuPopup implements IScene {
         this.popupW = width * 0.5;
         this.popupH = height * 0.6;
 
-        if (!music.menuMusic.isPlaying() && !music.mystery.isPlaying()) { //ser till att musiken inte startas om i onödan när man öppnar menyn
-            music.menuMusic.setVolume(1);
-            music.menuMusic.loop();
-        }
       }
 
 
     public update(): void {
         if (this.quitBtn.isClicked()) {
             soundeffects.buttonClick.play();
-
-            //Checks that the menu music is playing and the in game music is stopped 
-            if (!music.menuMusic.isPlaying()) {
-                music.menuMusic.setVolume(1);
-                music.menuMusic.loop();
-            }
-            if (music.mystery.isPlaying()) {
-                music.mystery.pause();
-            }
-
             this.dinoStroids.changeActiveScene(new MainMenu(this.dinoStroids));
         }
         if (this.restartBtn.isClicked()) {
             soundeffects.buttonClick.play();
-
-            //Stops all music if the game is stopped
-            if (music.menuMusic.isPlaying()) {
-                music.menuMusic.pause();
-            }
-            if (music.mystery.isPlaying()) {
-                music.mystery.pause();
-            }
             this.dinoStroids.getMemory().playerScore = 0;
             this.dinoStroids.changeActiveScene(new GameBoard(this.dinoStroids));
         }
         if (this.continueBtn.isClicked()) {
             soundeffects.buttonClick.play();
-
-            //Stops menu music when the game continues
-            if (music.menuMusic.isPlaying()) {
-                music.menuMusic.pause();
-            }
-
             this.pausedBoard.resumeGame();
             this.dinoStroids.changeActiveScene(this.pausedBoard);
         }
         if (this.musicOnOffBtn.isClicked()) {
             this.shiftMusicOnOff();
         }
+
+      
+            if (this.dinoStroids.isMusicPlaying) {
+              this.musicOnOffBtn.setLabel("MUSIC OFF");
+            } else {
+              this.musicOnOffBtn.setLabel("MUSIC ON");
+            }
+        
     }
 
     public draw(): void {
@@ -121,15 +95,15 @@ class InGameMenuPopup implements IScene {
     }
 
     private shiftMusicOnOff(): void {
-        if (this.isMusicPlaying) {
-            this.backgroundMusic.pause();
-            this.musicOnOffBtn.setLabel("MUSIC ON");
+        // Toggle music using DinoStroids method
+        this.dinoStroids.toggleMusic();
+    
+        // Update button text
+        if (this.dinoStroids.isMusicPlaying) {
+          this.musicOnOffBtn.setLabel("MUSIC OFF");
         } else {
-            this.backgroundMusic.loop();
-            this.musicOnOffBtn.setLabel("MUSIC OFF");
+          this.musicOnOffBtn.setLabel("MUSIC ON");
         }
-        this.isMusicPlaying = !this.isMusicPlaying;
-
     }
   }
 

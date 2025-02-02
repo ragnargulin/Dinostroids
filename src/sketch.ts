@@ -2,8 +2,7 @@ let game: DinoStroids;
 let cnv: any;
 
 let music: {
-  mystery: p5.SoundFile;
-  menuMusic: p5.SoundFile;
+  backgroundMusic: p5.SoundFile;
 };
 let soundeffects: {
   laserSound: p5.SoundFile;
@@ -45,8 +44,7 @@ let imageAssets: {
  */
 function preload() {
   music = {
-    mystery: loadSound("../assets/music/fullDinoThemeMusic.mp3"),
-    menuMusic: loadSound("../assets/music/popupMenuMusic.mp3"),
+    backgroundMusic: loadSound("../assets/music/fullDinoThemeMusic.mp3"),
   };
   soundeffects = {
     buttonClick: loadSound("../assets/soundeffects/buttonClick.mp3"),

@@ -103,9 +103,6 @@ class Player extends MoveableObject {
 
     // Play a quick "power-up" sound once
     this.powerupSound.play();
-
-    // Loop a shield hum or effect while active
-    this.shieldSound.loop();
 }
 
   public activateSuperLaser(duration: number, rampageDino: p5.Image) {
